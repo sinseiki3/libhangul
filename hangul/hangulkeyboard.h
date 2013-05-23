@@ -2210,9 +2210,9 @@ static const ucschar hangul_keyboard_table_3_2011[] = {
     0x0000,     /* 0x20 space                                        */
     0x11a9,     /* 0x21 exclam:         jongseong ssanggieug         */
     0x0025,     /* 0x22 quotedbl:       percent sign                 */
-    0x0023,     /* 0x23 numbersign:     number sign                  */
+    0x11AC,     /* 0x23 numbersign:     jongseong nieun-jieuj        */
     0x0024,     /* 0x24 dollar:         dollar sign                  */
-    0x0025,     /* 0x25 percent:        percent sign                 */
+    0x0023,     /* 0x25 percent:        number sign                  */
     0x0026,     /* 0x26 ampersand:      ampersand                    */
     0x1110,     /* 0x27 apostrophe:     choseong tieuh               */
     0x0028,     /* 0x28 parenleft:      left parenthesis             */
