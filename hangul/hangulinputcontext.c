@@ -249,6 +249,11 @@ static const HangulCombination hangul_combination_3 = {
     (HangulCombinationItem*)hangul_combination_table_3
 };
 
+static const HangulCombination hangul_combination_3_loose = {
+    N_ELEMENTS(hangul_combination_table_default),
+    (HangulCombinationItem*)hangul_combination_table_default
+};
+
 static const HangulCombination hangul_combination_390 = {
     N_ELEMENTS(hangul_combination_table_390),
     (HangulCombinationItem*)hangul_combination_table_390
@@ -311,12 +316,28 @@ static const HangulKeyboard hangul_keyboard_390 = {
     &hangul_combination_390
 };
 
+static const HangulKeyboard hangul_keyboard_390_loose = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "39l",
+    N_("Sebeolsik 390 Loose"),
+    (ucschar*)hangul_keyboard_table_390,
+    &hangul_combination_3_loose
+};
+
 static const HangulKeyboard hangul_keyboard_3final = {
     HANGUL_KEYBOARD_TYPE_JASO,
     "3f",
     N_("Sebeolsik Final"),
     (ucschar*)hangul_keyboard_table_3final,
     &hangul_combination_3
+};
+
+static const HangulKeyboard hangul_keyboard_3final_loose = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3fl",
+    N_("Sebeolsik Final Loose"),
+    (ucschar*)hangul_keyboard_table_3final,
+    &hangul_combination_3_loose
 };
 
 static const HangulKeyboard hangul_keyboard_3sun = {
@@ -379,7 +400,9 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_2,
     &hangul_keyboard_2y,
     &hangul_keyboard_390,
+    &hangul_keyboard_390_loose,
     &hangul_keyboard_3final,
+    &hangul_keyboard_3final_loose,
     &hangul_keyboard_3sun,
     &hangul_keyboard_3yet,
     &hangul_keyboard_32,
