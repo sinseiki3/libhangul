@@ -388,12 +388,28 @@ static const HangulKeyboard hangul_keyboard_3_2011 = {
     &hangul_combination_390
 };
 
+static const HangulKeyboard hangul_keyboard_3_2011_loose = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3-2011l",
+    N_("Sebeolsik 3-2011"),
+    (ucschar*)hangul_keyboard_table_3_2011,
+    &hangul_combination_3_loose
+};
+
 static const HangulKeyboard hangul_keyboard_3_2012 = {
     HANGUL_KEYBOARD_TYPE_JASO,
     "3-2012",
     N_("Sebeolsik 3-2012"),
     (ucschar*)hangul_keyboard_table_3_2012,
     &hangul_combination_390
+};
+
+static const HangulKeyboard hangul_keyboard_3_2012_loose = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3-2012l",
+    N_("Sebeolsik 3-2012"),
+    (ucschar*)hangul_keyboard_table_3_2012,
+    &hangul_combination_3_loose
 };
 
 static const HangulKeyboard* hangul_keyboards[] = {
@@ -410,7 +426,9 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_ahn,
     &hangul_keyboard_3finalsun,
     &hangul_keyboard_3_2011,
+    &hangul_keyboard_3_2011_loose,
     &hangul_keyboard_3_2012,
+    &hangul_keyboard_3_2012_loose
 };
 
 
