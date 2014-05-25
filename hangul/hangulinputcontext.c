@@ -428,7 +428,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_2011,
     &hangul_keyboard_3_2011_loose,
     &hangul_keyboard_3_2012,
-    &hangul_keyboard_3_2012_loose
+    &hangul_keyboard_3_2012_loose,
 };
 
 
