@@ -412,6 +412,14 @@ static const HangulKeyboard hangul_keyboard_3_2012_loose = {
     &hangul_combination_3_loose
 };
 
+static const HangulKeyboard hangul_keyboard_3_2014 = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3-2014",
+    N_("Sebeolsik Moachigi 2014"),
+    (ucschar*)hangul_keyboard_table_3_2014,
+    &hangul_combination_3_2014
+};
+
 static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_2,
     &hangul_keyboard_2y,
@@ -429,6 +437,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_2011_loose,
     &hangul_keyboard_3_2012,
     &hangul_keyboard_3_2012_loose,
+    &hangul_keyboard_3_2014,
 };
 
 
