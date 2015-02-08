@@ -9,6 +9,8 @@ ucschar hangul_galmadeuli_shin_2003(ucschar c, bool conjoin);
 ucschar hangul_galmadeuli_shin_2012(ucschar c, bool conjoin);
 ucschar hangul_galmadeuli_3_2012(ucschar c, bool dummy);
 ucschar hangul_galmadeuli_3_2014(ucschar c, bool conjoin);
+ucschar hangul_galmadeuli_3_2015(ucschar c, bool conjoin);
+ucschar hangul_galmadeuli_3_2015_patal(ucschar c, bool conjoin);
 ucschar hangul_galmadeuli_3_14_proposal(ucschar c, bool dummy);
 
 // 확장 기호

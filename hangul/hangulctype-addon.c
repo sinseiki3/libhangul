@@ -472,6 +472,144 @@ hangul_galmadeuli_3_2014(ucschar c, bool conjoin)
 }
 
 ucschar
+hangul_galmadeuli_3_2015(ucschar c, bool conjoin)
+{
+    static const ucschar jung_to_jung_jong[][1] = {
+        {0x11c1},     /* 0x1161   ᅡ*/     /* Jongseong phieuph (ㅍ) */
+        {0x1164},     /* 0x1162   ᅢ*/     /* jungseong yae (ㅒ) */
+        {0x0000},     /* 0x1163   ᅣ*/     /*  */
+        {0x0000},     /* 0x1164   ᅤ*/     /*  */
+        {0x11be},     /* 0x1165   ᅥ*/     /* Jongseong chieuch (ㅊ) */
+        {0x11c0},     /* 0x1166   ᅦ*/     /* Jongseong thikeuth (ㅌ)  */
+        {0x11bd},     /* 0x1167   ᅧ*/     /* Jongseong cieuc (ㅈ) */
+        {0x0000},     /* 0x1168   ᅨ*/     /*  */
+        {0x11bf},     /* 0x1169   ᅩ*/     /* Jongseong khiyeok (ㅋ) */
+        {0x0000},     /* 0x116a   ᅪ*/     /*  */
+        {0x0000},     /* 0x116b   ᅫ*/     /*  */
+        {0x0000},     /* 0x116c   ᅬ*/     /*  */
+        {0x0000},     /* 0x116d   ᅭ*/     /*  */
+        {0x0000},     /* 0x116e   ᅮ*/     /*  */
+        {0x0000},     /* 0x116f   ᅯ*/     /*  */
+        {0x0000},     /* 0x1170   ᅰ*/     /*  */
+        {0x0000},     /* 0x1171   ᅱ*/     /*  */
+        {0x0000},     /* 0x1172   ᅲ*/     /*  */
+        {0x0000},     /* 0x1173   ᅳ*/     /*  */
+        {0x0000},     /* 0x1174   ᅴ*/     /*  */
+        {0x11c2},     /* 0x1175   ᅵ*/     /* Jongseong hieuh (ㅎ) */
+    };
+
+    static const ucschar jong_to_conjoin_jong[][1] = {// 윗글의 끝글쇠=겹받침
+      {0x0000},  /* 0x11a8 jongseong kiyeok (ㄱ)        ->   */
+      {0x0000},  /* 0x11a9 jongseong ssangkiyeok (ㄲ)   ->   */
+      {0x0000},  /* 0x11aa jongseong kiyeok-sios (ㄳ)   ->      */
+      {0x0000},  /* 0x11ab jongseong nieun (ㄴ)        ->    */
+      {0x0000},  /* 0x11ac jongseong nieun-cieuc (ㄵ)  ->         */
+      {0x0000},  /* 0x11ad jongseong nieun-hieuh (ㄶ)   ->         */
+      {0x0000},  /* 0x11ae jongseong tikeut (ㄷ)       ->        */
+      {0x0000},  /* 0x11af jongseong rieul (ㄹ)        ->     */
+      {0x0000},  /* 0x11b0 jongseong rieul-kiyeok (ㄺ)  ->        */
+      {0x0000},  /* 0x11b1 jongseong rieul-mieum (ㄻ)  ->        */
+      {0x0000},  /* 0x11b2 jongseong rieul-pieup (ㄼ)  ->         */
+      {0x0000},  /* 0x11b3 jongseong rieul-sios (ㄽ)   ->          */
+      {0x0000},  /* 0x11b4 jongseong rieul-thieuth (ㄾ) ->       */
+      {0x0000},  /* 0x11b5 jongseong rieul-phieuph (ㄿ) ->       */
+      {0x0000},  /* 0x11b6 jongseong rieul-hieuh (ㅀ)  ->         */
+      {0x0000},  /* 0x11b7 jongseong mieum (ㅁ)        ->        */
+      {0x0000},  /* 0x11b8 jongseong pieup (ㅂ)        ->       */
+      {0x0000},  /* 0x11b9 jongseong pieup-sios (ㅄ)   ->          */
+      {0x0000},  /* 0x11ba jongseong sios (ㅅ)         ->          */
+      {0x0000},  /* 0x11bb jongseong ssangsios (ㅆ)    ->  */
+      {0x0000},  /* 0x11bc jongseong ieung (ㅇ)        ->         */
+      {0x11ac},  /* 0x11bd jongseong cieuc (ㅈ)        ->  jongseong nieun-cieuc (ㄵ)       */
+      {0x11b6},  /* 0x11be jongseong chieuch (ㅊ)      ->  jongseong rieul-hieuh (ㅀ)     */
+      {0x11aa},  /* 0x11bf jongseong khieukh (ㅋ)      ->  jongseong kiyeok-sios (ㄳ)   */
+      {0x11b5},  /* 0x11c0 jongseong thieuth (ㅌ)      -> jongseong rieul-phieuph (ㄿ)      */
+      {0x11b1},  /* 0x11c1 jongseong phieuph (ㅍ)      -> jongseong rieul-mieum (ㄻ)      */
+      {0x11b2},  /* 0x11c2 jongseong hieuh (ㅎ)         -> jongseong rieul-pieup (ㄼ)        */
+    };
+
+	if (conjoin) {
+		if (c >= 0x11a8 && c <= 0x11c2) {
+			return jong_to_conjoin_jong[c - 0x11a8][0];
+		}
+	} else {
+		if (c >= 0x1161 && c <= 0x1175) {
+			return jung_to_jung_jong[c - 0x1161][0];
+		}
+    }
+    return 0;
+}
+
+ucschar
+hangul_galmadeuli_3_2015_patal(ucschar c, bool conjoin)
+{
+    static const ucschar jung_to_jung_jong[][1] = {
+        {0x11c1},     /* 0x1161   ᅡ*/     /* Jongseong phieuph (ㅍ) */
+        {0x1164},     /* 0x1162   ᅢ*/     /* jungseong yae (ㅒ) */
+        {0x0000},     /* 0x1163   ᅣ*/     /*  */
+        {0x0000},     /* 0x1164   ᅤ*/     /*  */
+        {0x11be},     /* 0x1165   ᅥ*/     /* Jongseong chieuch (ㅊ) */
+        {0x11c0},     /* 0x1166   ᅦ*/     /* Jongseong thikeuth (ㅌ)  */
+        {0x11bd},     /* 0x1167   ᅧ*/     /* Jongseong cieuc (ㅈ) */
+        {0x0000},     /* 0x1168   ᅨ*/     /*  */
+        {0x11bf},     /* 0x1169   ᅩ*/     /* Jongseong khiyeok (ㅋ) */
+        {0x0000},     /* 0x116a   ᅪ*/     /*  */
+        {0x0000},     /* 0x116b   ᅫ*/     /*  */
+        {0x0000},     /* 0x116c   ᅬ*/     /*  */
+        {0x0000},     /* 0x116d   ᅭ*/     /*  */
+        {0x0000},     /* 0x116e   ᅮ*/     /*  */
+        {0x0000},     /* 0x116f   ᅯ*/     /*  */
+        {0x0000},     /* 0x1170   ᅰ*/     /*  */
+        {0x0000},     /* 0x1171   ᅱ*/     /*  */
+        {0x0000},     /* 0x1172   ᅲ*/     /*  */
+        {0x0000},     /* 0x1173   ᅳ*/     /*  */
+        {0x0000},     /* 0x1174   ᅴ*/     /*  */
+        {0x11c2},     /* 0x1175   ᅵ*/     /* Jongseong hieuh (ㅎ) */
+    };
+
+    static const ucschar jong_to_conjoin_jong[][1] = {// 윗글의 끝글쇠=겹받침
+      {0x0000},  /* 0x11a8 jongseong kiyeok (ㄱ)        ->   */
+      {0x0000},  /* 0x11a9 jongseong ssangkiyeok (ㄲ)   ->   */
+      {0x0000},  /* 0x11aa jongseong kiyeok-sios (ㄳ)   ->      */
+      {0x0000},  /* 0x11ab jongseong nieun (ㄴ)        ->    */
+      {0x0000},  /* 0x11ac jongseong nieun-cieuc (ㄵ)  ->         */
+      {0x0000},  /* 0x11ad jongseong nieun-hieuh (ㄶ)   ->         */
+      {0x0000},  /* 0x11ae jongseong tikeut (ㄷ)       ->        */
+      {0x0000},  /* 0x11af jongseong rieul (ㄹ)        ->     */
+      {0x0000},  /* 0x11b0 jongseong rieul-kiyeok (ㄺ)  ->        */
+      {0x0000},  /* 0x11b1 jongseong rieul-mieum (ㄻ)  ->        */
+      {0x0000},  /* 0x11b2 jongseong rieul-pieup (ㄼ)  ->         */
+      {0x0000},  /* 0x11b3 jongseong rieul-sios (ㄽ)   ->          */
+      {0x0000},  /* 0x11b4 jongseong rieul-thieuth (ㄾ) ->       */
+      {0x0000},  /* 0x11b5 jongseong rieul-phieuph (ㄿ) ->       */
+      {0x0000},  /* 0x11b6 jongseong rieul-hieuh (ㅀ)  ->         */
+      {0x0000},  /* 0x11b7 jongseong mieum (ㅁ)        ->        */
+      {0x0000},  /* 0x11b8 jongseong pieup (ㅂ)        ->       */
+      {0x0000},  /* 0x11b9 jongseong pieup-sios (ㅄ)   ->          */
+      {0x0000},  /* 0x11ba jongseong sios (ㅅ)         ->          */
+      {0x0000},  /* 0x11bb jongseong ssangsios (ㅆ)    ->  */
+      {0x0000},  /* 0x11bc jongseong ieung (ㅇ)        ->         */
+      {0x11ac},  /* 0x11bd jongseong cieuc (ㅈ)        ->  jongseong nieun-cieuc (ㄵ)       */
+      {0x11b3},  /* 0x11be jongseong chieuch (ㅊ)      ->  jongseong rieul-sios (ㄽ)     */
+      {0x11aa},  /* 0x11bf jongseong khieukh (ㅋ)      ->  jongseong kiyeok-sios (ㄳ)   */
+      {0x11b4},  /* 0x11c0 jongseong thieuth (ㅌ)      -> jongseong rieul-thieuth (ㄾ)      */
+      {0x11b5},  /* 0x11c1 jongseong phieuph (ㅍ)      -> jongseong rieul-phieuph (ㄿ)      */
+      {0x11b2},  /* 0x11c2 jongseong hieuh (ㅎ)         -> jongseong rieul-pieup (ㄼ)        */
+    };
+
+	if (conjoin) {
+		if (c >= 0x11a8 && c <= 0x11c2) {
+			return jong_to_conjoin_jong[c - 0x11a8][0];
+		}
+	} else {
+		if (c >= 0x1161 && c <= 0x1175) {
+			return jung_to_jung_jong[c - 0x1161][0];
+		}
+    }
+    return 0;
+}
+
+ucschar
 hangul_galmadeuli_3_14_proposal(ucschar c, bool dummy)
 {// 원안에서 [ㅛ, ㅠ, ㅑ, ㅖ] 에는 터치입력식에서 추가하지만 편의를 위해 적용
     static const ucschar jung_to_jung_jong[][1] = {

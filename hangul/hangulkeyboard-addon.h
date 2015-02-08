@@ -625,11 +625,99 @@ static const HangulCombinationItem hangul_combination_table_full_3_2014_yet[] = 
 };
 
 // 3 에 조합을 더 넣은 것이다
+static const HangulCombinationItem hangul_combination_table_3_3_2015[] = {
+    /* choseong */
+    { 0x1100110b, 0x1101 }, /* choseong  kiyeok + ieung (ㄱ + ㅇ)  = ssangkiyeok   */
+    { 0x1100110c, 0x110d }, /* choseong  kiyeok  + cieuc (ㄱ + ㅈ)  = ssangcieuc    */
+    { 0x11031106, 0x1104 }, /* choseong  tikeut + mieum (ㄷ + ㅁ) = ssangtikeut   */
+    { 0x11061103, 0x1104 }, /* choseong  mieum + tikeut (ㅁ + ㄷ) = ssangtikeut   */
+    { 0x1107110c, 0x1108 }, /* choseong  pieup  + cieuc (ㅂ + ㅈ)  = ssangpieup    */
+    { 0x11091112, 0x110a }, /* choseong  sios   + hieuh (ㅅ + ㅎ)   = ssangsios     */
+    { 0x110b1100, 0x1101 }, /* choseong  ieung + kiyeok (ㅇ + ㄱ) = ssangkiyeok   */
+    { 0x110c1100, 0x110d }, /* choseong  cieuc  + kiyeok (ㅈ + ㄱ)  = ssangcieuc    */
+    { 0x110c1107, 0x1108 }, /* choseong  cieuc  + pieup (ㅈ + ㅂ)  = ssangpieup    */
+    { 0x11121109, 0x110a }, /* choseong  hieuh   + sios (ㅎ + ㅅ)   = ssangsios     */
+    /* jungseong */
+    /* jongseong */
+    // 갈마들이 글판에서 가윗소리 글쇠의 윗글에 끝소리가 있고
+    // 그 끝소리에 더해서 겹받침이 있다면 
+    // 끝소리 + 끝소리 = 겹받침
+    // 조합규칙을 넣어준다
+    {0x11a811a8,0x11b9}, /* jongseong kiyeok + kiyeok (ㄱ)  = pieup-sios (ㅄ) */
+    {0x11a811B7,0x11a9}, /* jongseong kiyeok + mieum (ㄱ + ㅁ)  = ssangekiyeok (ㄲ) */
+    {0x11AB11AB,0x11ad}, /* jongseong nieun + nieun (ㄴ) = nieun-hieuh (ㄶ) */
+    {0x11AF11AF,0x11b0}, /* jongseong rieul + rieul (ㄹ) = rieul-kiyeok (ㄺ) */
+    {0x11B711a8,0x11a9}, /* jongseong mieum + kiyeok (ㅁ + ㄱ)  = ssangekiyeok (ㄲ) */
+    {0x11B711B7,0x11b3}, /* jongseong mieum + mieum (ㅁ) = rieul-sios (ㄽ) */
+    {0x11BA11BA,0x11a9}, /* jongseong sios + sios (ㅅ) = ssangekiyeok (ㄲ) */
+    {0x11BC11BC,0x11b4}, /* jongseong ieung + ieung (ㅇ) = rieul-thieuth (ㄾ) */
+    {0x11bd11bd,0x11ac}, /* jongseong cieuc + cieuc (ㅈ) = nieun-cieuc (ㄵ) */
+    {0x11be11be,0x11b6}, /* jongseong chieuch + chieuch (ㅊ) = rieul-hieuh (ㅀ) */
+    {0x11bf11bf,0x11aa}, /* jongseong khiyeok + khiyeok (ㅋ) = kiyeok-sois (ㄳ) */
+    {0x11c011c0,0x11b5}, /* jongseong thieuth + thieuth (ㅌ) = rieul-phieuph (ㄿ) */
+    {0x11c111c1,0x11b1}, /* jongseong phieuph + phieuph (ㅍ) = rieul-mieum (ㄻ) */
+    {0x11c211c2,0x11b2}, /* jongseong hieuh + hieuh (ㅎ) = rieul-pieup (ㄼ) */
+};
+
+// 3 에 조합을 더 넣은 것이다
+static const HangulCombinationItem hangul_combination_table_3_3_2015_patal[] = {
+    /* choseong */
+    /* jungseong */
+    /* jongseong */
+    // 갈마들이 글판에서 가윗소리 글쇠의 윗글에 끝소리가 있고
+    // 그 끝소리에 더해서 겹받침이 있다면 
+    // 끝소리 + 끝소리 = 겹받침
+    // 조합규칙을 넣어준다
+    {0x11AB11AB,0x11ad}, /* jongseong nieun + nieun (ㄴ) = nieun-hieuh (ㄶ) */
+    {0x11AF11AF,0x11b0}, /* jongseong rieul + rieul (ㄹ) = rieul-kiyeok (ㄺ) */
+    {0x11B711B7,0x11b1}, /* jongseong mieum + mieum (ㅁ) = rieul-mieum (ㄻ) */
+    {0x11BA11BA,0x11b6}, /* jongseong sios + sios (ㅅ) = rieul-hieuh (ㅀ) */
+    {0x11BC11BC,0x11b9}, /* jongseong ieung + ieung (ㅇ) = pieup-sios (ㅄ) */
+    {0x11bd11bd,0x11ac}, /* jongseong cieuc + cieuc (ㅈ) = nieun-cieuc (ㄵ) */
+    {0x11be11be,0x11b3}, /* jongseong chieuch + chieuch (ㅊ) = rieul-sios (ㄽ) */
+    {0x11bf11bf,0x11aa}, /* jongseong khiyeok + khiyeok (ㅋ) = kiyeok-sois (ㄳ) */
+    {0x11c011c0,0x11b4}, /* jongseong thieuth + thieuth (ㅌ) = rieul-thieuth (ㄾ) */
+    {0x11c111c1,0x11b5}, /* jongseong phieuph + phieuph (ㅍ) = rieul-phieuph (ㄿ) */
+    {0x11c211c2,0x11b2}, /* jongseong hieuh + hieuh (ㅎ) = rieul-pieup (ㄼ) */
+};
+
+// full 에 조합을 더 넣은 것이다
+static const HangulCombinationItem hangul_combination_table_full_3_2015_patal_yet[] = {
+    { 0x11611167, 0x119e }, /* jungseong a + yeo               = arae-a */ // 옛한글++
+    { 0x116C1162, 0x11A7 }, /* jungseong oe + ae              = o-yae */ // 옛한글++
+    { 0x116C1166, 0x1181 }, /* jungseong oe + e               = o-ye */ // 옛한글++
+    { 0x11711166, 0x118C }, /* jungseong wi + e                 = u-ye */ // 옛한글++
+    { 0x11751162, 0x1164 }, /* jungseong i + ae                    = yae */ // 옛한글++
+    { 0x11751166, 0x1168 }, /* jungseong i + e                    = ye */ // 옛한글++
+    { 0x11881162, 0x1185 }, /* jungseong yo-i + ae              = yo-yae */ // 옛한글++
+    { 0x11911175, 0x1192 }, /* jungseong yu-yeo + i             = yu-ye */ // 옛한글++
+    { 0x11941166, 0x1192 }, /* jungseong yu-i + e               = yu-ye */ // 옛한글++
+    { 0x11981161, 0x119d }, /* jungseong i-a + a                      = i-araea */ // 옛한글++
+    { 0x11981167, 0x119d }, /* jungseong i-a + yeo                 = i-araea */ // 옛한글++
+    {0x11AB11AB,0x11ad}, /* jongseong nieun + nieun (ㄴ) = nieun-hieuh (ㄶ) */
+    {0x11AF11AF,0x11b0}, /* jongseong rieul + rieul (ㄹ) = rieul-kiyeok (ㄺ) */
+    {0x11B711B7,0x11b1}, /* jongseong mieum + mieum (ㅁ) = rieul-mieum (ㄻ) */
+    {0x11BA11BA,0x11b6}, /* jongseong sios + sios (ㅅ) = rieul-hieuh (ㅀ) */
+    {0x11BC11BC,0x11b9}, /* jongseong ieung + ieung (ㅇ) = pieup-sios (ㅄ) */
+    {0x11bd11bd,0x11ac}, /* jongseong cieuc + cieuc (ㅈ) = nieun-cieuc (ㄵ) */
+    {0x11be11be,0x11b3}, /* jongseong chieuch + chieuch (ㅊ) = rieul-sios (ㄽ) */
+    {0x11bf11bf,0x11aa}, /* jongseong khiyeok + khiyeok (ㅋ) = kiyeok-sois (ㄳ) */
+    {0x11c011c0,0x11b4}, /* jongseong thieuth + thieuth (ㅌ) = rieul-thieuth (ㄾ) */
+    {0x11c111c1,0x11b5}, /* jongseong phieuph + phieuph (ㅍ) = rieul-phieuph (ㄿ) */
+    {0x11c211c2,0x11b2}, /* jongseong hieuh + hieuh (ㅎ) = rieul-pieup (ㄼ) */
+    { 0xD7B01175, 0x1181 }, /* jungseong o-yeo + i                    = o-ye */ // 옛한글++
+    { 0xD7B51175, 0x118C }, /* jungseong u-yeo + i              = u-ye */ // 옛한글++
+    { 0xD7BF1175, 0xD7C0 }, /* jungseong i-yeo + i          = i-ye */ // 옛한글++
+    { 0xD7C41162, 0xD7BE }, /* jungseong i-i + ae           = i-yae */ // 옛한글++
+    { 0xD7C41166, 0xD7C0 }, /* jungseong i-i + e            = i-ye */ // 옛한글++
+    { 0xd7c51167, 0x11a2 }, /* jungseong araea-a + yeo                 = ssangaraea */ // 옛한글++
+};
+
+// 3 에 조합을 더 넣은 것이다
 // ㅣ+ㅐ= ㅣ+ ㄵ 이 되도록 한다
 static const HangulCombinationItem hangul_combination_table_3_3_14_proposal[] = {
     { 0x11751162, 0x11ac }, /* jungseong i + ae = jongseong nieun-cieuc (ㄵ) */
 };
-
 
 static const HangulCombinationItem hangul_combination_table_3_91_noshift[] = {
     { 0x11001100, 0x1101 }, /* choseong  kiyeok + kiyeok  = ssangkiyeok   */
@@ -882,7 +970,6 @@ static const HangulCombinationItem hangul_combination_table_3_91_noshift[] = {
     { 0x11ff11bc, 0x11ae }, // autogen
     { 0x11ff11c2, 0x11a9 }, // autogen
 };
-
 
 // 3 에 조합을 더 넣은 것이다
 static const HangulCombinationItem hangul_combination_table_3_3sun_2014[] = {
