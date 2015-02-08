@@ -1,6 +1,9 @@
 #ifndef libhangul_hangulctype_addon_h
 #define libhangul_hangulctype_addon_h
 
+// 두벌식 바꿔놓기
+inline ucschar choseong_compress_addon(ucschar a, ucschar b);
+
 // 갈마들이
 ucschar hangul_galmadeuli_shin_2003(ucschar c, bool conjoin);
 ucschar hangul_galmadeuli_shin_2012(ucschar c, bool conjoin);

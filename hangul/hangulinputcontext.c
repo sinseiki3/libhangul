@@ -1329,7 +1329,7 @@ hangul_ic_process(HangulInputContext *hic, int ascii)
         case HANGUL_KEYBOARD_TYPE_ROMAJA:
             return hangul_ic_process_romaja(hic, ascii, c);
         default:    //case HANGUL_KEYBOARD_TYPE_JAMO:
-            return hangul_ic_process_jamo(hic, c);
+            return hangul_ic_process_jamo_dubeol(hic, c);
     }
 }
 

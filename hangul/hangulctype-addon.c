@@ -36,6 +36,28 @@
  */
 
 
+inline ucschar
+choseong_compress_addon(ucschar a, ucschar b)
+{// 두벌식 바꿔놓기
+    if (a == 0) {
+        return b;
+    }
+
+    if (a == 0x1100 && b == 0x1100) {
+        return 0x1101;
+    } else if (a == 0x1103 && b == 0x1103) {
+        return 0x1104;
+    } else if (a == 0x1107 && b == 0x1107) {
+        return 0x1108;
+    } else if (a == 0x1109 && b == 0x1109) {
+        return 0x110A;
+    } else if (a == 0x110c && b == 0x110c) {
+        return 0x110d;
+    } else {
+        return 0;
+    }
+}
+
 
 ucschar
 hangul_galmadeuli_shin_2003(ucschar c, bool conjoin)

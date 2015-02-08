@@ -80,6 +80,196 @@ hangul_ic_get_layout_flags (HangulInputContext *hic)
 
 
 static bool
+hangul_ic_process_jamo_dubeol (HangulInputContext *hic, ucschar ch)
+{
+    ucschar jong;
+    ucschar combined = 0;
+
+    // ch 가 한글자모가 아닐 경우, 조합하던 글자를 
+    // commit_string 에 넣고 ch 를 뒤에 덧붙인다.
+    if (!hangul_is_jamo(ch) && ch > 0) {
+        hangul_ic_save_commit_string(hic);
+        hangul_ic_append_commit_string(hic, ch);
+        return true;
+    }
+
+    if (hic->buffer.jongseong) {// 끝소리가 있다
+        if (hangul_is_choseong(ch)) {// 첫소리가 들어오면
+            // 들어온 첫소리를 끝소리로 바꾸어서 있던 끝소리와 조합을 해본다.
+            jong = hangul_ic_choseong_to_jongseong(hic, ch);
+            if (hic->keyboard_addon != NULL) {
+                if (hic->keyboard_addon->combination_addon != NULL) {
+                    combined = hangul_combination_combine(hic->keyboard_addon->combination_addon,
+                                                                                hic->buffer.jongseong, jong);
+                }
+            }
+            if (combined == 0) {
+                combined = hangul_combination_combine(hic->keyboard->combination,
+                                                                                hic->buffer.jongseong, jong);
+            }
+
+            if (hangul_is_jongseong(combined)) {// 조합된 것이 끝소리면
+                if (!hangul_ic_push(hic, combined)) {// 있던 끝소리 대신 넣는다
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                }
+            } else {// 조합된 것이 끝소리가 아니면
+                // 조합하던 글자를 commit_string 에 넣고
+                // 첫소리 ch 를 넣어 글자조합을 새로 시작한다
+                hangul_ic_save_commit_string(hic);
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+        } else if (hangul_is_jungseong(ch)) {// 가윗소리가 들어오면
+            ucschar pop, peek;
+            //stack 에서 마지막에 들어온 것 (끝소리) 을 빼낸다
+            pop = hangul_ic_pop(hic);
+            // 마지막 것을 빼낸 뒤의 것을 읽어온다
+            peek = hangul_ic_peek(hic);
+            // 끝소리 ㄺ 이 있었다면 peek : ㄹ, pop : ㄱ, 
+            if (hangul_is_jongseong(peek)) {// 하나 빼낸 뒤의 것도 끝소리면
+                // 끝소리를 앞의 것은 끝소리, 뒤의 것은 첫소리로 나누어 본다.
+                // 끝소리 ㄺ 있었을 때, 나누어 진다면 끝소리 ㄱ 을 첫소리 ㄱ 으로 바꾸어 줄 것이다.
+                ucschar choseong = hangul_jongseong_get_diff(peek,
+                                                hic->buffer.jongseong);
+                if (choseong == 0) {// 나누어지지 않는다면
+                    hangul_ic_save_commit_string(hic);
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                } else {// 끝소리, 첫소리로 나누어 진다면
+                    hic->buffer.jongseong = peek;
+                    hangul_ic_save_commit_string(hic);
+                    hangul_ic_push(hic, choseong);
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                }
+            } else {// 하나 빼낸 뒤의 것이 끝소리가 아니면
+                hic->buffer.jongseong = 0;
+                hangul_ic_save_commit_string(hic);
+                // 빼낸 끝소리 pop 을 첫소리로 바꾸어 넣는다
+                hangul_ic_push(hic, hangul_jongseong_to_choseong(pop));
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+        } else {// 첫소리, 가윗소리는 앞에서 확인했으니 끝소리
+            goto flush;
+        }
+    } else if (hic->buffer.jungseong) {// 끝소리 없이 가윗소리가 있다
+        if (hangul_is_choseong(ch)) {// 첫소리가 들어왔다
+            if (hic->buffer.choseong) {// 첫소리가 있다
+                // 들어온 첫소리를 끝소리로 바꾼다
+                jong = hangul_ic_choseong_to_jongseong(hic, ch);
+                if (hangul_is_jongseong(jong)) {// 첫소리가 끝소리로 바뀌었다
+                    if (!hangul_ic_push(hic, jong)) {
+                        if (!hangul_ic_push(hic, ch)) {
+                            return false;
+                        }
+                    }
+                } else {// 첫소리가 끝소리로 바뀌지 않았다
+                    hangul_ic_save_commit_string(hic);
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                }
+            } else {// 첫소리가 없다
+                if (!hangul_ic_push(hic, ch)) {
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                }
+            }
+        } else if (hangul_is_jungseong(ch)) {// 가윗소리가 들어왔다
+            ucschar compress = 0;
+            // 바꿔놓기를 위한 곳이다. <두벌 순아래>, < 북한 국규>
+            // 첫소리 + 가윗소리 + 가윗소리 = 된소리 + 가윗소리
+            if (hic->buffer.choseong) {// 첫소리가 있으면 된소리로 바꾸어 본다
+                if (hic->keyboard_addon != NULL) {
+                    if (hic->keyboard_addon->replace_it) {// 낱소리 바꿔놓기가 참이다
+                        if (ch == hangul_ic_peek(hic)) {
+                            //compress = choseong_compress(hic->buffer.choseong, hic->buffer.choseong);//좋은데, static 이네.
+                            compress = choseong_compress_addon(hic->buffer.choseong, hic->buffer.choseong);
+                        }
+                    }
+                }
+            }
+
+            if (compress) {// 첫소리가 된소리로 바뀌었다
+                if (!hangul_ic_push(hic, compress)) {
+                    return false;
+                }
+            } else {// 첫소리가 된소리로 바뀌지 않았다
+                // 있던 가윗소리와 들어온 가윗소리를 하나로 만들어 본다
+                if (hic->keyboard_addon != NULL) {
+                    if (hic->keyboard_addon->combination_addon != NULL) {
+                        combined = hangul_combination_combine(hic->keyboard_addon->combination_addon,
+                                                                                    hic->buffer.jungseong, ch);
+                    }
+                }
+                if (combined == 0) {
+                    combined = hangul_combination_combine(hic->keyboard->combination,
+                                                                                    hic->buffer.jungseong, ch);
+                }
+
+                if (hangul_is_jungseong(combined)) {// 가윗소리 둘이 하나가 되었다
+                    if (!hangul_ic_push(hic, combined)) {
+                        return false;
+                    }
+                } else {// 가윗소리 둘이 하나가 되지 못했다
+                    hangul_ic_save_commit_string(hic);
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                }
+            }
+        } else { // 남은 것은 끝소리
+            goto flush;
+        }
+    } else if (hic->buffer.choseong) {// 끝소리, 가윗소리 없이 첫소리가 있다
+        if (hangul_is_choseong(ch)) {// 첫소리가 들어왔다
+            // 있던 첫소리와 하나로 만들어 본다
+            if (hic->keyboard_addon != NULL) {
+                if (hic->keyboard_addon->combination_addon != NULL) {
+                    combined = hangul_combination_combine(hic->keyboard_addon->combination_addon,
+                                                                                hic->buffer.choseong, ch);
+                }
+            }
+            if (combined == 0) {
+                combined = hangul_combination_combine(hic->keyboard->combination,
+                                                                                hic->buffer.choseong, ch);
+            }
+
+            if (!hangul_ic_push(hic, combined)) {// 첫소리 둘이 하나가 되었다
+                if (!hangul_ic_push(hic, ch)) {// 첫소리 둘이 하나가 되지 못했으니 그냥 넣는다
+                    return false;
+                }
+            }
+        } else {// 나머지 가윗소리, 끝소리는 없으니 그냥 넣는다
+            if (!hangul_ic_push(hic, ch)) {
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+        }
+    } else {// 아무것도 없다. 그냥 넣는다
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+    }
+
+    hangul_ic_save_preedit_string(hic);
+    return true;
+
+flush:
+    hangul_ic_flush_internal(hic);
+    return false;
+}
+
+static bool
 hangul_ic_process_jaso_shin_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
 {
     if (hic->extended_layout_enable) {

@@ -29,14 +29,14 @@ static const HangulCombination hangul_combination_default_3 = {
     (HangulCombinationItem*)hangul_combination_table_default_3
 };
 
-static const HangulCombination hangul_combination_romaja = {
-    N_ELEMENTS(hangul_combination_table_romaja),
-    (HangulCombinationItem*)hangul_combination_table_romaja
-};
-
 static const HangulCombination hangul_combination_full = {
     N_ELEMENTS(hangul_combination_table_full),
     (HangulCombinationItem*)hangul_combination_table_full
+};
+
+static const HangulCombination hangul_combination_romaja = {
+    N_ELEMENTS(hangul_combination_table_romaja),
+    (HangulCombinationItem*)hangul_combination_table_romaja
 };
 
 static const HangulCombination hangul_combination_ahn = {
@@ -53,12 +53,28 @@ static const HangulKeyboard hangul_keyboard_2 = {
     &hangul_combination_default_2
 };
 
+static const HangulKeyboard hangul_keyboard_2noshift = {
+    HANGUL_KEYBOARD_TYPE_JAMO,
+    "2noshift", 
+    N_("Dubeolsik Noshift"), 
+    (ucschar*)hangul_keyboard_table_2,
+    &hangul_combination_default_2
+};
+
 static const HangulKeyboard hangul_keyboard_2y = {
     HANGUL_KEYBOARD_TYPE_JAMO,
     "2y", 
     N_("Dubeolsik Yetgeul"), 
     (ucschar*)hangul_keyboard_table_2y,
     &hangul_combination_full
+};
+
+static const HangulKeyboard hangul_keyboard_2north9256 = {
+    HANGUL_KEYBOARD_TYPE_JAMO,
+    "2n9256", 
+    N_("Dubeolsik North 9256"), 
+    (ucschar*)hangul_keyboard_table_2north9256,
+    &hangul_combination_default_2
 };
 
 static const HangulKeyboard hangul_keyboard_32 = {
@@ -192,7 +208,9 @@ static const HangulKeyboard hangul_keyboard_3shin_2012 = {
 
 static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_2,
+    &hangul_keyboard_2noshift,
     &hangul_keyboard_2y,
+    &hangul_keyboard_2north9256,
     &hangul_keyboard_3_90,
     &hangul_keyboard_3_91_final,
     &hangul_keyboard_3_93_yet,
@@ -248,6 +266,40 @@ static const HangulCombination hangul_combination_3_14_proposal = {
     (HangulCombinationItem*)hangul_combination_table_3_3_14_proposal
 };
 
+
+static const HangulKeyboardAddon hangul_keyboard_addon_2noshift = {
+    "2noshift", // id
+    0x0001, // replace_it // ucschar // 0x0000 : FALSE , else : TRUE
+    0x00, // flag
+    NULL, // ext_key
+    NULL, // ext_value
+    NULL, // (*symbolFunc)(int, int, int)
+    NULL, // han_key
+    NULL, // han_value
+    NULL, // (*yethanguelFunc)(int, int, int)
+    NULL, // ext_step
+    NULL, // moeum_key
+    NULL, // moeum_value
+    NULL, // (*galmadeuliFunc)(ucschar, bool)
+    NULL // combination_addon
+};
+
+static const HangulKeyboardAddon hangul_keyboard_addon_2north9256 = {
+    "2n9256", // id
+    0x0001, // replace_it // ucschar // 0x0000 : FALSE , else : TRUE
+    0x00, // flag
+    NULL, // ext_key
+    NULL, // ext_value
+    NULL, // (*symbolFunc)(int, int, int)
+    NULL, // han_key
+    NULL, // han_value
+    NULL, // (*yethanguelFunc)(int, int, int)
+    NULL, // ext_step
+    NULL, // moeum_key
+    NULL, // moeum_value
+    NULL, // (*galmadeuliFunc)(ucschar, bool)
+    NULL // combination_addon
+};
 
 static const HangulKeyboardAddon hangul_keyboard_addon_3_90 = {
     "3-90", // id
@@ -455,6 +507,8 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3shin_2012 = {
 
 
 static const HangulKeyboardAddon* hangul_keyboard_addons[] = {
+    &hangul_keyboard_addon_2noshift,
+    &hangul_keyboard_addon_2north9256,
     &hangul_keyboard_addon_3_90,
     &hangul_keyboard_addon_3_91,
     &hangul_keyboard_addon_3_93_yet,
@@ -514,6 +568,7 @@ static bool hangul_ic_process_jaso(HangulInputContext *hic, ucschar ch);
 static bool hangul_ic_process_romaja(HangulInputContext *hic, int ascii, ucschar ch);
 
 /*** 3beol ***/
+static bool hangul_ic_process_jamo_dubeol (HangulInputContext *hic, ucschar ch);
 static bool hangul_ic_process_jaso_shin_sebeol (HangulInputContext *hic, int ascii, ucschar ch);
 static bool hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch);
 /************/
