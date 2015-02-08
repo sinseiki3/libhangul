@@ -631,4 +631,257 @@ static const HangulCombinationItem hangul_combination_table_3_3_14_proposal[] = 
 };
 
 
+static const HangulCombinationItem hangul_combination_table_3_91_noshift[] = {
+    { 0x11001100, 0x1101 }, /* choseong  kiyeok + kiyeok  = ssangkiyeok   */
+    { 0x1100110b, 0x1101 }, /* choseong  kiyeok + ieung   = ssangkiyeok   */
+    { 0x1100110c, 0x110d }, /* choseong  kiyeok + cieuc   = ssangcieuc    */
+    { 0x11031103, 0x1104 }, /* choseong  tikeut + tikeut  = ssangtikeut   */
+    { 0x11031106, 0x1104 }, /* choseong  tikeut + mieum   = ssangtikeut   */
+    { 0x11061103, 0x1104 }, /* choseong  mieum  + tikeut  = ssangtikeut   */
+    { 0x11071107, 0x1108 }, /* choseong  pieup  + pieup   = ssangpieup    */
+    { 0x1107110c, 0x1108 }, /* choseong  pieup  + cieuc   = ssangpieup    */
+    { 0x11091109, 0x110a }, /* choseong  sios   + sios    = ssangsios     */
+    { 0x11091112, 0x110a }, /* choseong  sios   + hieuh   = ssangsios     */
+    { 0x110b1100, 0x1101 }, /* choseong  ieung  + kiyeok  = ssangkiyeok   */
+    { 0x110c1100, 0x110d }, /* choseong  cieuc  + kiyeok  = ssangcieuc    */
+    { 0x110c1107, 0x1108 }, /* choseong  cieuc  + pieup   = ssangpieup    */
+    { 0x110c110c, 0x110d }, /* choseong  cieuc  + cieuc   = ssangcieuc    */
+    { 0x11121109, 0x110a }, /* choseong  hieuh  + sios    = ssangsios     */
+    /* jungseong */
+    { 0x1161116c, 0x116a }, /* jungseong a ㅏ     + oe ㅚ     = wa ㅘ           */
+    { 0x1162116c, 0x116b }, /* jungseong ae ㅐ    + oe ㅚ     = wae ᅟㅙ          */
+    { 0x11651171, 0x116f }, /* jungseong eo ㅓ    + wi ㅟ     = weo ㅝ          */
+    { 0x1166116c, 0x1170 }, /* jungseong e ㅔ     + oe ㅚ     = we ㅞ           */
+    { 0x11661171, 0x1170 }, /* jungseong e ㅔ     + wi ㅟ     = we ㅞ           */
+    { 0x116c1161, 0x116a }, /* jungseong oe ㅚ    + a ㅏ      = wa ㅘ           */
+    { 0x116c1162, 0x116b }, /* jungseong oe ㅚ    + ae ㅐ     = wae ㅙ          */
+    { 0x116c1165, 0x116f }, /* jungseong oe ㅚ    + eo ㅓ     = weo ㅝ          */
+    { 0x116c1166, 0x1170 }, /* jungseong oe ㅚ    + e ㅔ      = we ㅞ           */
+    { 0x116c1167, 0x1168 }, /* jungseong oe ㅚ    + yeo ㅕ     =  ye  ㅖ        */
+    { 0x116c1169, 0x1174 }, /* jungseong oe ㅚ    + o ㅗ      = yi ㅢ           */
+    { 0x116c116e, 0x1171 }, /* jungseong oe ㅚ    + u ㅜ      = wi ㅟ           */
+    { 0x116c1173, 0x1164 }, /* jungseong oe ㅚ    + eu ㅡ     = yae ㅒ          */
+    { 0x116c1175, 0x116c }, /* jungseong oe ㅚ    + i ㅣ      = oe ㅚ           */
+    { 0x11711165, 0x116f }, /* jungseong wi ㅟ    + eo ㅓ     = weo ㅝ          */
+    { 0x11711166, 0x1170 }, /* jungseong wi ㅟ    + e ㅔ      = we ㅞ           */
+    { 0x11711175, 0x1171 }, /* jungseong wi ㅟ    + i ㅣ      = wi ㅟ           */
+    { 0x1173116c, 0x1164 }, /* jungseong eu ㅡ    + oe ㅚ     = yae ㅒ          */
+    //{ 0x11731175, 0x1174 }, /* jungseong eu ㅡ    + i ㅣ      = yi ㅢ           */
+    { 0x11751171, 0x1171 }, /* jungseong i ㅣ     + wi ㅟ     = wi ㅟ           */
+    { 0x1175116c, 0x116c }, /* jungseong i ㅣ     + oe ㅚ     = oe ㅚ           */
+    //{ 0x11751173, 0x1174 }, /* jungseong i ㅣ     + eu ㅡ     = yi ㅢ           */
+    /* jongseong *//* autogen */
+    { 0x11a811aa, 0x11b9 }, // autogen
+    { 0x11a811ac, 0x11b9 }, // autogen
+    { 0x11a811b1, 0x11b9 }, // autogen
+    { 0x11a811b2, 0x11b9 }, // autogen
+    { 0x11a811b3, 0x11b9 }, // autogen
+    { 0x11a811b4, 0x11b9 }, // autogen
+    { 0x11a811b5, 0x11b9 }, // autogen
+    { 0x11a811b6, 0x11b9 }, // autogen
+    { 0x11a811b9, 0x11b9 }, // autogen
+    { 0x11a811bf, 0x11b9 }, // autogen
+    { 0x11a811ff, 0x11b9 }, // autogen
+    { 0x11aa11a8, 0x11b9 }, // autogen
+    { 0x11aa11ab, 0x11ad }, // autogen
+    { 0x11aa11af, 0x11c0 }, // autogen
+    { 0x11aa11b7, 0x11be }, // autogen
+    { 0x11aa11b8, 0x11bd }, // autogen
+    { 0x11aa11ba, 0x11c1 }, // autogen
+    { 0x11aa11bb, 0x11b0 }, // autogen
+    { 0x11aa11bc, 0x11ae }, // autogen
+    { 0x11aa11c2, 0x11a9 }, // autogen
+    { 0x11ab11aa, 0x11ad }, // autogen
+    { 0x11ab11ac, 0x11ad }, // autogen
+    { 0x11ab11b1, 0x11ad }, // autogen
+    { 0x11ab11b2, 0x11ad }, // autogen
+    { 0x11ab11b3, 0x11ad }, // autogen
+    { 0x11ab11b4, 0x11ad }, // autogen
+    { 0x11ab11b5, 0x11ad }, // autogen
+    { 0x11ab11b6, 0x11ad }, // autogen
+    { 0x11ab11b9, 0x11ad }, // autogen
+    { 0x11ab11bf, 0x11ad }, // autogen
+    { 0x11ab11ff, 0x11ad }, // autogen
+    { 0x11ac11a8, 0x11b9 }, // autogen
+    { 0x11ac11ab, 0x11ad }, // autogen
+    { 0x11ac11af, 0x11c0 }, // autogen
+    { 0x11ac11b7, 0x11be }, // autogen
+    { 0x11ac11b8, 0x11bd }, // autogen
+    { 0x11ac11ba, 0x11c1 }, // autogen
+    { 0x11ac11bb, 0x11b0 }, // autogen
+    { 0x11ac11bc, 0x11ae }, // autogen
+    { 0x11ac11c2, 0x11a9 }, // autogen
+    { 0x11af11aa, 0x11c0 }, // autogen
+    { 0x11af11ac, 0x11c0 }, // autogen
+    { 0x11af11b1, 0x11c0 }, // autogen
+    { 0x11af11b2, 0x11c0 }, // autogen
+    { 0x11af11b3, 0x11c0 }, // autogen
+    { 0x11af11b4, 0x11c0 }, // autogen
+    { 0x11af11b5, 0x11c0 }, // autogen
+    { 0x11af11b6, 0x11c0 }, // autogen
+    { 0x11af11b9, 0x11c0 }, // autogen
+    { 0x11af11bf, 0x11c0 }, // autogen
+    { 0x11af11ff, 0x11c0 }, // autogen
+    { 0x11b111a8, 0x11b9 }, // autogen
+    { 0x11b111ab, 0x11ad }, // autogen
+    { 0x11b111af, 0x11c0 }, // autogen
+    { 0x11b111b7, 0x11be }, // autogen
+    { 0x11b111b8, 0x11bd }, // autogen
+    { 0x11b111ba, 0x11c1 }, // autogen
+    { 0x11b111bb, 0x11b0 }, // autogen
+    { 0x11b111bc, 0x11ae }, // autogen
+    { 0x11b111c2, 0x11a9 }, // autogen
+    { 0x11b211a8, 0x11b9 }, // autogen
+    { 0x11b211ab, 0x11ad }, // autogen
+    { 0x11b211af, 0x11c0 }, // autogen
+    { 0x11b211b7, 0x11be }, // autogen
+    { 0x11b211b8, 0x11bd }, // autogen
+    { 0x11b211ba, 0x11c1 }, // autogen
+    { 0x11b211bb, 0x11b0 }, // autogen
+    { 0x11b211bc, 0x11ae }, // autogen
+    { 0x11b211c2, 0x11a9 }, // autogen
+    { 0x11b311a8, 0x11b9 }, // autogen
+    { 0x11b311ab, 0x11ad }, // autogen
+    { 0x11b311af, 0x11c0 }, // autogen
+    { 0x11b311b7, 0x11be }, // autogen
+    { 0x11b311b8, 0x11bd }, // autogen
+    { 0x11b311ba, 0x11c1 }, // autogen
+    { 0x11b311bb, 0x11b0 }, // autogen
+    { 0x11b311bc, 0x11ae }, // autogen
+    { 0x11b311c2, 0x11a9 }, // autogen
+    { 0x11b411a8, 0x11b9 }, // autogen
+    { 0x11b411ab, 0x11ad }, // autogen
+    { 0x11b411af, 0x11c0 }, // autogen
+    { 0x11b411b7, 0x11be }, // autogen
+    { 0x11b411b8, 0x11bd }, // autogen
+    { 0x11b411ba, 0x11c1 }, // autogen
+    { 0x11b411bb, 0x11b0 }, // autogen
+    { 0x11b411bc, 0x11ae }, // autogen
+    { 0x11b411c2, 0x11a9 }, // autogen
+    { 0x11b511a8, 0x11b9 }, // autogen
+    { 0x11b511ab, 0x11ad }, // autogen
+    { 0x11b511af, 0x11c0 }, // autogen
+    { 0x11b511b7, 0x11be }, // autogen
+    { 0x11b511b8, 0x11bd }, // autogen
+    { 0x11b511ba, 0x11c1 }, // autogen
+    { 0x11b511bb, 0x11b0 }, // autogen
+    { 0x11b511bc, 0x11ae }, // autogen
+    { 0x11b511c2, 0x11a9 }, // autogen
+    { 0x11b611a8, 0x11b9 }, // autogen
+    { 0x11b611ab, 0x11ad }, // autogen
+    { 0x11b611af, 0x11c0 }, // autogen
+    { 0x11b611b7, 0x11be }, // autogen
+    { 0x11b611b8, 0x11bd }, // autogen
+    { 0x11b611ba, 0x11c1 }, // autogen
+    { 0x11b611bb, 0x11b0 }, // autogen
+    { 0x11b611bc, 0x11ae }, // autogen
+    { 0x11b611c2, 0x11a9 }, // autogen
+    { 0x11b711aa, 0x11be }, // autogen
+    { 0x11b711ac, 0x11be }, // autogen
+    { 0x11b711b1, 0x11be }, // autogen
+    { 0x11b711b2, 0x11be }, // autogen
+    { 0x11b711b3, 0x11be }, // autogen
+    { 0x11b711b4, 0x11be }, // autogen
+    { 0x11b711b5, 0x11be }, // autogen
+    { 0x11b711b6, 0x11be }, // autogen
+    { 0x11b711b9, 0x11be }, // autogen
+    { 0x11b711bf, 0x11be }, // autogen
+    { 0x11b711ff, 0x11be }, // autogen
+    { 0x11b811aa, 0x11bd }, // autogen
+    { 0x11b811ac, 0x11bd }, // autogen
+    { 0x11b811b1, 0x11bd }, // autogen
+    { 0x11b811b2, 0x11bd }, // autogen
+    { 0x11b811b3, 0x11bd }, // autogen
+    { 0x11b811b4, 0x11bd }, // autogen
+    { 0x11b811b5, 0x11bd }, // autogen
+    { 0x11b811b6, 0x11bd }, // autogen
+    { 0x11b811b9, 0x11bd }, // autogen
+    { 0x11b811bf, 0x11bd }, // autogen
+    { 0x11b811ff, 0x11bd }, // autogen
+    { 0x11b911a8, 0x11b9 }, // autogen
+    { 0x11b911ab, 0x11ad }, // autogen
+    { 0x11b911af, 0x11c0 }, // autogen
+    { 0x11b911b7, 0x11be }, // autogen
+    { 0x11b911b8, 0x11bd }, // autogen
+    { 0x11b911ba, 0x11c1 }, // autogen
+    { 0x11b911bb, 0x11b0 }, // autogen
+    { 0x11b911bc, 0x11ae }, // autogen
+    { 0x11b911c2, 0x11a9 }, // autogen
+    { 0x11ba11aa, 0x11c1 }, // autogen
+    { 0x11ba11ac, 0x11c1 }, // autogen
+    { 0x11ba11b1, 0x11c1 }, // autogen
+    { 0x11ba11b2, 0x11c1 }, // autogen
+    { 0x11ba11b3, 0x11c1 }, // autogen
+    { 0x11ba11b4, 0x11c1 }, // autogen
+    { 0x11ba11b5, 0x11c1 }, // autogen
+    { 0x11ba11b6, 0x11c1 }, // autogen
+    { 0x11ba11b9, 0x11c1 }, // autogen
+    { 0x11ba11bf, 0x11c1 }, // autogen
+    { 0x11ba11ff, 0x11c1 }, // autogen
+    { 0x11bb11aa, 0x11b0 }, // autogen
+    { 0x11bb11ac, 0x11b0 }, // autogen
+    { 0x11bb11b1, 0x11b0 }, // autogen
+    { 0x11bb11b2, 0x11b0 }, // autogen
+    { 0x11bb11b3, 0x11b0 }, // autogen
+    { 0x11bb11b4, 0x11b0 }, // autogen
+    { 0x11bb11b5, 0x11b0 }, // autogen
+    { 0x11bb11b6, 0x11b0 }, // autogen
+    { 0x11bb11b9, 0x11b0 }, // autogen
+    { 0x11bb11bf, 0x11b0 }, // autogen
+    { 0x11bb11ff, 0x11b0 }, // autogen
+    { 0x11bc11aa, 0x11ae }, // autogen
+    { 0x11bc11ac, 0x11ae }, // autogen
+    { 0x11bc11b1, 0x11ae }, // autogen
+    { 0x11bc11b2, 0x11ae }, // autogen
+    { 0x11bc11b3, 0x11ae }, // autogen
+    { 0x11bc11b4, 0x11ae }, // autogen
+    { 0x11bc11b5, 0x11ae }, // autogen
+    { 0x11bc11b6, 0x11ae }, // autogen
+    { 0x11bc11b9, 0x11ae }, // autogen
+    { 0x11bc11bf, 0x11ae }, // autogen
+    { 0x11bc11ff, 0x11ae }, // autogen
+    { 0x11bf11a8, 0x11b9 }, // autogen
+    { 0x11bf11ab, 0x11ad }, // autogen
+    { 0x11bf11af, 0x11c0 }, // autogen
+    { 0x11bf11b7, 0x11be }, // autogen
+    { 0x11bf11b8, 0x11bd }, // autogen
+    { 0x11bf11ba, 0x11c1 }, // autogen
+    { 0x11bf11bb, 0x11b0 }, // autogen
+    { 0x11bf11bc, 0x11ae }, // autogen
+    { 0x11bf11c2, 0x11a9 }, // autogen
+    { 0x11c211aa, 0x11a9 }, // autogen
+    { 0x11c211ac, 0x11a9 }, // autogen
+    { 0x11c211b1, 0x11a9 }, // autogen
+    { 0x11c211b2, 0x11a9 }, // autogen
+    { 0x11c211b3, 0x11a9 }, // autogen
+    { 0x11c211b4, 0x11a9 }, // autogen
+    { 0x11c211b5, 0x11a9 }, // autogen
+    { 0x11c211b6, 0x11a9 }, // autogen
+    { 0x11c211b9, 0x11a9 }, // autogen
+    { 0x11c211bf, 0x11a9 }, // autogen
+    { 0x11c211ff, 0x11a9 }, // autogen
+    /* quick shift jongseong part */
+    { 0x11ff1161, 0x11b1 }, /* jongseong rieul-mieum */
+    { 0x11ff1162, 0x11b6 }, /* jongseong rieul-hieuh */
+    { 0x11ff1163, 0x11b3 }, /* jongseong rieul-siot additional */
+    { 0x11ff1165, 0x11b9 }, /* jongseong pieup-sios */
+    { 0x11ff1166, 0x11bf }, /* jongseong khieukh */    
+    { 0x11ff1167, 0x11ac }, /* jongseong nieun-cieuc */
+    { 0x11ff1169, 0x11aa }, /* jongseong kiyeok-sios */
+    { 0x11ff116d, 0x11b5 }, /* jongseong rieul-phieuph */
+    { 0x11ff1172, 0x11b4 }, /* jongseong rieul-thieuth */
+    { 0x11ff1175, 0x11b2 }, /* jongseong rieul-pieup */   
+    /* autogen */
+    { 0x11ff11a8, 0x11b9 }, // autogen
+    { 0x11ff11ab, 0x11ad }, // autogen
+    { 0x11ff11af, 0x11c0 }, // autogen
+    { 0x11ff11b7, 0x11be }, // autogen
+    { 0x11ff11b8, 0x11bd }, // autogen
+    { 0x11ff11ba, 0x11c1 }, // autogen
+    { 0x11ff11bb, 0x11b0 }, // autogen
+    { 0x11ff11bc, 0x11ae }, // autogen
+    { 0x11ff11c2, 0x11a9 }, // autogen
+};
+
+
 #endif /* libhangul_hangulkeyboard_addon_h */

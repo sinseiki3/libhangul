@@ -585,6 +585,7 @@ hangul_buffer_clear(HangulBuffer *buffer)
     buffer->jungseong = 0;
     buffer->jongseong = 0;
 
+    buffer->shift = 0;
     buffer->right_oua = 0;
 
     buffer->index = -1;
@@ -743,6 +744,7 @@ hangul_buffer_backspace(HangulBuffer *buffer)
 	    buffer->jungseong = 0;
 	    buffer->jongseong = 0;
 
+        buffer->shift = 0;
         buffer->right_oua = 0;
 
 	    return true;
@@ -1326,6 +1328,8 @@ hangul_ic_process(HangulInputContext *hic, int ascii)
             return hangul_ic_process_jaso_sebeol (hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_JASO_SHIN:
             return hangul_ic_process_jaso_shin_sebeol (hic, ascii, c);
+        case HANGUL_KEYBOARD_TYPE_3FINALSUN:
+            return hangul_ic_process_3finalsun(hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_ROMAJA:
             return hangul_ic_process_romaja(hic, ascii, c);
         default:    //case HANGUL_KEYBOARD_TYPE_JAMO:

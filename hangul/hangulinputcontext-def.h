@@ -44,6 +44,11 @@ static const HangulCombination hangul_combination_ahn = {
     (HangulCombinationItem*)hangul_combination_table_ahn
 };
 
+static const HangulCombination hangul_combination_3_91_noshift = {
+    N_ELEMENTS(hangul_combination_table_3_91_noshift),
+    (HangulCombinationItem*)hangul_combination_table_3_91_noshift
+};
+
 
 static const HangulKeyboard hangul_keyboard_2 = {
     HANGUL_KEYBOARD_TYPE_JAMO,
@@ -99,6 +104,14 @@ static const HangulKeyboard hangul_keyboard_3_91_final = {
     N_("Sebeolsik 3-91 Final"),
     (ucschar*)hangul_keyboard_table_3final,
     &hangul_combination_default_3
+};
+
+static const HangulKeyboard hangul_keyboard_3_91_final_noshift = {
+    HANGUL_KEYBOARD_TYPE_3FINALSUN,
+    "3-91-noshift",
+    N_("Sebeolsik 3-91 Final Noshift"),
+    (ucschar*)hangul_keyboard_table_3_91_final_noshift,
+    &hangul_combination_3_91_noshift
 };
 
 static const HangulKeyboard hangul_keyboard_3sun_1990 = {
@@ -213,6 +226,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_2north9256,
     &hangul_keyboard_3_90,
     &hangul_keyboard_3_91_final,
+    &hangul_keyboard_3_91_final_noshift,
     &hangul_keyboard_3_93_yet,
     &hangul_keyboard_32,
     &hangul_keyboard_romaja,
@@ -571,6 +585,7 @@ static bool hangul_ic_process_romaja(HangulInputContext *hic, int ascii, ucschar
 static bool hangul_ic_process_jamo_dubeol (HangulInputContext *hic, ucschar ch);
 static bool hangul_ic_process_jaso_shin_sebeol (HangulInputContext *hic, int ascii, ucschar ch);
 static bool hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch);
+static bool hangul_ic_process_3finalsun(HangulInputContext *hic, int ascii, ucschar ch);
 /************/
 
 static const HangulKeyboard* hangul_ic_get_keyboard_by_id(const char* id);

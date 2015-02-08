@@ -84,6 +84,8 @@ struct _HangulBuffer {
     ucschar jungseong;
     ucschar jongseong;
 
+	// 종성 쉬프트를 쓰는 3-91 최종 순아래 글판에서 쓰인다 
+    ucschar shift;
     // 신세벌식, 한글문와원 314 같은 왼/오른 ㅗㅜaraea 를 구분하는 글판에서 쓰인다
     ucschar right_oua;
 

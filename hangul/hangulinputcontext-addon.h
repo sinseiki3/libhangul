@@ -78,7 +78,6 @@ hangul_ic_get_layout_flags (HangulInputContext *hic)
 }
 
 
-
 static bool
 hangul_ic_process_jamo_dubeol (HangulInputContext *hic, ucschar ch)
 {
@@ -1146,6 +1145,202 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
     return true;
 }
 
+static bool
+hangul_ic_process_3finalsun (HangulInputContext *hic, int ascii, ucschar ch)
+{
+    #define SHKEY            0x11ff
+    ucschar orig_ch = ch;
+
+    if (ascii == '[') {//
+        if (hangul_buffer_is_empty (&hic->buffer) == FALSE) {
+            if (hic->buffer.shift == 0) {
+                ch = SHKEY;
+            }
+        }
+    }
+
+    if (hangul_is_choseong(ch)) {
+        if (hic->buffer.choseong == 0) {
+            if (!hangul_ic_push(hic, ch)) {
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+        } else {
+            ucschar choseong = 0;
+            if (hangul_is_choseong(hangul_ic_peek(hic))) {
+                choseong = hangul_combination_combine(hic->keyboard->combination,
+                                                      hic->buffer.choseong, ch);
+            }
+            if (choseong) {
+                if (!hangul_ic_push(hic, choseong)) {
+                    if (!hangul_ic_push(hic, choseong)) {
+                        return false;
+                    }
+                }
+            } else {
+                hangul_ic_save_commit_string(hic);
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+        }
+    } else if (hangul_is_jungseong(ch)) {
+		if (hic->buffer.jungseong == 0) {
+            if (!hangul_ic_push(hic, ch)) {// 가윗소리가 없으면 들어온 가윗소리를 넣는다
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+			if (hic->buffer.jongseong == 0) {// 
+				if (hic->buffer.shift) {
+                    // 끝소리가 없고 종성시프트가 있다면 기윗소리에 놓인 겹받침을 넣는다
+					ucschar jongseong = 0;
+					jongseong = hangul_combination_combine(hic->keyboard->combination,
+															   hic->buffer.shift, ch);
+					if (jongseong) {
+						hic->buffer.shift = 0;
+						if (!hangul_ic_push(hic, jongseong)) {
+							if (!hangul_ic_push(hic, jongseong)) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+        } else {// 들어온 가윗소리와 조합을 해본다
+            ucschar jungseong = 0;
+            jungseong = hangul_combination_combine(hic->keyboard->combination,
+                                                       hic->buffer.jungseong, ch);
+            if (jungseong) {
+                if (!hangul_ic_push(hic, jungseong)) {
+                    if (!hangul_ic_push(hic, jungseong)) {
+                        return false;
+                    }
+                }
+            } else {// 가윗소리 조합이 되지 않고 종성시프트가 있다면 가윗소리에 놓인 겹받침으로 바꿔본다
+				if (hic->buffer.jongseong == 0) {// 
+					if (hic->buffer.shift) {
+						ucschar jongseong = 0;
+						jongseong = hangul_combination_combine(hic->keyboard->combination,
+																   hic->buffer.shift, ch);
+						if (jongseong) {
+							if (!hangul_ic_push(hic, jongseong)) {
+								if (!hangul_ic_push(hic, jongseong)) {
+									return false;
+								}
+							}
+						} else {
+							hangul_ic_save_commit_string(hic);
+							if (!hangul_ic_push(hic, ch)) {
+								if (!hangul_ic_push(hic, ch)) {
+									return false;
+								}
+							}
+						}
+					}
+				}
+            }
+        }
+    } else if (hangul_is_jongseong(ch)) {
+        if (ch == SHKEY) {// 종성시프트가 눌렸다면
+            if (hic->buffer.jongseong == 0) {// 끝소리가 없을 때는 있는 가윗소리에 놓인 겹받침을 넣는다
+                ucschar jongseong = 0;
+                jongseong = hangul_combination_combine(hic->keyboard->combination,
+                                                       ch, hic->buffer.jungseong);
+                if (jongseong) {
+                    if (!hangul_ic_push(hic, jongseong)) {
+                        if (!hangul_ic_push(hic, jongseong)) {
+                            return false;
+                        }
+                    }
+                } else {
+                    hic->buffer.shift = ch;
+                }
+            } else {// 끝소리가 있으면 겹받침으로 바꾼다
+                ucschar jongseong = 0;
+                jongseong = hangul_combination_combine(hic->keyboard->combination,
+                                                           ch, hic->buffer.jongseong);
+                if (jongseong) {
+                    if (!hangul_ic_push(hic, jongseong)) {
+                        if (!hangul_ic_push(hic, jongseong)) {
+                            return false;
+                        }
+                    }
+                } else {
+                    hangul_ic_save_commit_string(hic);
+                    hangul_ic_append_commit_string(hic, orig_ch);
+                }
+            }
+        } else {
+            if (hic->buffer.shift) {// 종성시프트가 있으면 끝소리는 겹받침이 된다
+                if (hic->buffer.jongseong == 0) {
+                    ucschar jongseong = 0;
+                    jongseong = hangul_combination_combine(hic->keyboard->combination,
+                                                           hic->buffer.shift, ch);
+                    if (jongseong) {
+                        if (!hangul_ic_push(hic, jongseong)) {
+                            if (!hangul_ic_push(hic, jongseong)) {
+                                return false;
+                            }
+                        }
+                    } else {
+                        hangul_ic_save_commit_string(hic);
+                        if (!hangul_ic_push(hic, ch)) {
+                            if (!hangul_ic_push(hic, ch)) {
+                                return false;
+                            }
+                        }
+                    }
+                } else {
+                    hangul_ic_save_commit_string(hic);
+                    if (!hangul_ic_push(hic, ch)) {
+                        if (!hangul_ic_push(hic, ch)) {
+                            return false;
+                        }
+                    }
+                }
+            } else {
+                if (hic->buffer.jongseong == 0) {
+                    if (!hangul_ic_push(hic, ch)) {
+                        if (!hangul_ic_push(hic, ch)) {
+                            return false;
+                        }
+                    }
+                } else {
+                    ucschar jongseong = 0;
+                    if (hangul_is_jongseong(hangul_ic_peek(hic))) {
+                        jongseong = hangul_combination_combine(hic->keyboard->combination,
+                                                               hic->buffer.jongseong, ch);
+                    }
+                    if (jongseong) {
+                        if (!hangul_ic_push(hic, jongseong)) {
+                            if (!hangul_ic_push(hic, jongseong)) {
+                                return false;
+                            }
+                        }
+                    } else {
+                        hangul_ic_save_commit_string(hic);
+                        if (!hangul_ic_push(hic, ch)) {
+                            if (!hangul_ic_push(hic, ch)) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else if (ch > 0) {
+        hangul_ic_save_commit_string(hic);
+        hangul_ic_append_commit_string(hic, ch);
+    } else {
+        hangul_ic_save_commit_string(hic);
+        return false;
+    }
+
+    hangul_ic_save_preedit_string(hic);
+    return true;
+}
 
 
 #endif /* libhangul_hangulinputcontext_addon_h */
