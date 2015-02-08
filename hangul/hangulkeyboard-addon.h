@@ -884,4 +884,41 @@ static const HangulCombinationItem hangul_combination_table_3_91_noshift[] = {
 };
 
 
+// 3 에 조합을 더 넣은 것이다
+static const HangulCombinationItem hangul_combination_table_3_3sun_2014[] = {
+    {0x11621162,0x1164}, /* jungseong ae + ae = yae */ // 2014
+    {0x11A911A8,0x11BF}, /* jongseong ssangkiyeok + kiyeok = khieukh */ // 2014
+    {0x11AB11AB,0x11C0}, /* jongseong nieun + nieun = thieuth */ // 2014
+    {0x11AB11BA,0x11AC}, /* jongseong nieun + sios = nieun-cieuc */ // 2014
+    {0x11AF11AB,0x11B4},  /* jongseong rieul + nieun = rieul-thieuth */ //2014
+    {0x11AF11AF,0x11BE}, /* jongseong rieul + rieul = chieuch */ //2014
+    {0x11B111B7,0x11B5}, /* jongseong rieul-mieum + mieum = rieul-phieuph */ // 2014
+    {0x11B711B7,0x11C1}, /* jongseong mieum + mieum = phieuph */ // 2014
+    {0x11ba11ba, 0x11BD}, /* jongseong sios + sios = cieuc */ // 2014
+    {0x11BC11BC,0x11AE}, /* jongseong ieung + ieung = tikeut */ // 2014
+};
+
+// full 에 옛한글 조합을 더 넣은 것이다
+static const HangulCombinationItem hangul_combination_table_full_3gimguk_38A_yet[] = {
+    {0x110C113C,0x114E}, /* jieuj + ap-sieus = ap-jieuj */
+    {0x110C113E,0x1150}, /* jieuj + dwit-sieus = dwit-jieuj */
+    {0x110D113C,0x114F}, /* ssang-jieuj + ap-sieus = ssang-ap-jieuj */
+    {0x110D113E,0x1151}, /* ssang-jieuj + dwit-sieus = ssang-dwit-jieuj */
+    {0x110E113C,0x1154}, /* chieuch + ap-sieus = ap-chieuch */
+    {0x110E113E,0x1155}, /* chieuch + dwit-sieus = dwit-chieuch */    
+    {0x117F1175,0x1180}, /* o-eo + i = o-e */
+    {0x11841175,0x1185}, /* yo-ya + i = yo-yae */
+    {0x11891175,0x118A}, /* u-a + i = u-ae */
+    {0x118E1175,0xD7B7}, /* yu-a + i = yu-ae */
+    {0x118F1175,0x1190}, /* yu-eo + i = yu-e */
+    {0x11991175,0xD7BE}, /* i-ya + i =	i-yae */
+    {0x119F1175,0xD7C6}, /* araea-eo + i = aeara-e */
+    {0x11A61175,0x11A7}, /* o-ya + i = o-yae */
+    {0xD7B21175,0xD7B3}, /* yo-a + i = yo-ae */
+    {0xD7B51175,0x118C}, /* u-yeo + i = u-ye */
+    {0xD7BA1175,0xD7BB}, /* eu-eo + i = eu-e */
+    {0xD7BF1175,0xD7C0}, /* i-yeo + i = i-ye */
+};
+
+
 #endif /* libhangul_hangulkeyboard_addon_h */

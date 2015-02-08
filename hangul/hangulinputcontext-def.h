@@ -90,6 +90,14 @@ static const HangulKeyboard hangul_keyboard_32 = {
     &hangul_combination_default_2
 };
 
+static const HangulKeyboard hangul_keyboard_3_89 = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3-89",
+    N_("Sebeolsik 3-89"),
+    (ucschar*)hangul_keyboard_table_3_89,
+    &hangul_combination_default_3
+};
+
 static const HangulKeyboard hangul_keyboard_3_90 = {
     HANGUL_KEYBOARD_TYPE_JASO,
     "3-90",
@@ -143,6 +151,14 @@ static const HangulKeyboard hangul_keyboard_ahn = {
     "ahn",
     N_("Ahnmatae"),
     (ucschar*)hangul_keyboard_table_ahn,
+    &hangul_combination_ahn
+};
+
+static const HangulKeyboard hangul_keyboard_3ahnmatae = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3ahn",
+    N_("Sebeolsik 3Ahnmatae"),
+    (ucschar*)hangul_keyboard_table_3ahnmatae,
     &hangul_combination_ahn
 };
 
@@ -202,6 +218,22 @@ static const HangulKeyboard hangul_keyboard_3_14_proposal = {
     &hangul_combination_default_3
 };
 
+static const HangulKeyboard hangul_keyboard_3sun_2014 = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3sun-2014",
+    N_("Sebeolsik Noshift 2014"),
+    (ucschar*)hangul_keyboard_table_3sun_2014,
+    &hangul_combination_default_3
+};
+
+static const HangulKeyboard hangul_keyboard_3gimguk_38a_yet = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3gimguk-38a-yet",
+    N_("Sebeolsik 3Gimguk-38A Yetgeul"),
+    (ucschar*)hangul_keyboard_table_3gimguk_38A_yet,
+    &hangul_combination_full
+};
+
 static const HangulKeyboard hangul_keyboard_3shin_2003 = {
     HANGUL_KEYBOARD_TYPE_JASO_SHIN,
     "3shin-2003",
@@ -224,6 +256,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_2noshift,
     &hangul_keyboard_2y,
     &hangul_keyboard_2north9256,
+    &hangul_keyboard_3_89,
     &hangul_keyboard_3_90,
     &hangul_keyboard_3_91_final,
     &hangul_keyboard_3_91_final_noshift,
@@ -231,6 +264,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_32,
     &hangul_keyboard_romaja,
     &hangul_keyboard_ahn,
+    &hangul_keyboard_3ahnmatae,
     &hangul_keyboard_3_2011,
     &hangul_keyboard_3_2011_yet,
     &hangul_keyboard_3_2012,
@@ -239,6 +273,8 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_2014_yet,
     &hangul_keyboard_3_14_proposal,
     &hangul_keyboard_3sun_1990,
+    &hangul_keyboard_3sun_2014,
+    &hangul_keyboard_3gimguk_38a_yet,
     &hangul_keyboard_3shin_2003,
     &hangul_keyboard_3shin_2012,
 };
@@ -278,6 +314,16 @@ static const HangulCombination hangul_combination_3_2014_yet = {
 static const HangulCombination hangul_combination_3_14_proposal = {
     N_ELEMENTS(hangul_combination_table_3_3_14_proposal),
     (HangulCombinationItem*)hangul_combination_table_3_3_14_proposal
+};
+
+static const HangulCombination hangul_combination_3sun_2014 = {
+    N_ELEMENTS(hangul_combination_table_3_3sun_2014),
+    (HangulCombinationItem*)hangul_combination_table_3_3sun_2014
+};
+
+static const HangulCombination hangul_combination_3gimguk_38a_yet = {
+    N_ELEMENTS(hangul_combination_table_full_3gimguk_38A_yet),
+    (HangulCombinationItem*)hangul_combination_table_full_3gimguk_38A_yet
 };
 
 
@@ -485,6 +531,40 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_14_proposal = {
     &hangul_combination_3_14_proposal // combination_addon
 };
 
+static const HangulKeyboardAddon hangul_keyboard_addon_3sun_2014 = {
+    "3sun-2014", // id
+    0x0000, // replace_it // FALSE
+    0x00, // flag
+    NULL, // ext_key
+    NULL, // ext_value
+    NULL, // (*symbolFunc)(int, int, int)
+    NULL, // han_key
+    NULL, // han_value
+    NULL, // (*yethanguelFunc)(int, int, int)
+    NULL, // ext_step
+    sebeol_3_moeum_key, // moeum_key
+    sebeol_3_moeum_value, // moeum_value
+    NULL, // (*galmadeuliFunc)(ucschar, bool)
+    &hangul_combination_3sun_2014 // combination_addon
+};
+
+static const HangulKeyboardAddon hangul_keyboard_addon_3gimguk_38a_yet = {
+    "3gimguk-38a-yet", // id
+    0x0000, // replace_it // FALSE
+    0x00, // flag
+    NULL, // ext_key
+    NULL, // ext_value
+    NULL, // (*symbolFunc)(int, int, int)
+    NULL, // han_key
+    NULL, // han_value
+    NULL, // (*yethanguelFunc)(int, int, int)
+    NULL, // ext_step
+    NULL, // moeum_key
+    NULL, // moeum_value
+    NULL, // (*galmadeuliFunc)(ucschar, bool)
+    &hangul_combination_3gimguk_38a_yet // combination_addon
+};
+
 static const HangulKeyboardAddon hangul_keyboard_addon_3shin_2003 = {
     "3shin-2003", // id
     0x0000, // replace_it // FALSE
@@ -533,6 +613,8 @@ static const HangulKeyboardAddon* hangul_keyboard_addons[] = {
     &hangul_keyboard_addon_3_2014,
     &hangul_keyboard_addon_3_2014_yet,
     &hangul_keyboard_addon_3_14_proposal,
+    &hangul_keyboard_addon_3sun_2014,
+    &hangul_keyboard_addon_3gimguk_38a_yet,
     &hangul_keyboard_addon_3shin_2003,
     &hangul_keyboard_addon_3shin_2012,
 };
