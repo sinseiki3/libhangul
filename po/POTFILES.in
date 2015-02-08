@@ -2,4 +2,5 @@
 
 hangul/hangulctype.c
 hangul/hangulinputcontext.c
+hangul/hangulinputcontext-def.h
 hangul/hanja.c
