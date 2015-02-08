@@ -71,9 +71,25 @@ int     hangul_jamos_to_syllables(ucschar* dest, int destlen,
 
 /* hangulinputcontext.c */
 typedef struct _HangulKeyboard        HangulKeyboard;
+/*** 3beol ***/ // 확장
+typedef struct _HangulKeyboardAddon        HangulKeyboardAddon;
+/************/
 typedef struct _HangulCombination     HangulCombination;
 typedef struct _HangulBuffer          HangulBuffer;
 typedef struct _HangulInputContext    HangulInputContext;
+
+/* hangulinputcontext.h 에서 */
+typedef void   (*HangulOnTranslate)  (HangulInputContext*,
+				      int,
+				      ucschar*,
+				      void*);
+typedef bool   (*HangulOnTransition) (HangulInputContext*,
+				      ucschar,
+				      const ucschar*,
+				      void*);
+
+typedef struct _HangulCombinationItem HangulCombinationItem;
+/****/
 
 enum {
     HANGUL_OUTPUT_SYLLABLE,
@@ -83,8 +99,15 @@ enum {
 enum {
     HANGUL_KEYBOARD_TYPE_JAMO,
     HANGUL_KEYBOARD_TYPE_JASO,
+    HANGUL_KEYBOARD_TYPE_JASO_SHIN,
     HANGUL_KEYBOARD_TYPE_ROMAJA
 };
+
+#define HANGUL_KEYBOARD_FLAG_EXTENDED 0x01
+#define HANGUL_KEYBOARD_FLAG_GALMADEULI 0x02
+#define HANGUL_KEYBOARD_FLAG_LOOSE_ORDER 0x04
+#define HANGUL_KEYBOARD_FLAG_RIGHT_OU 0x08
+
 
 /* keyboard */
 HangulKeyboard* hangul_keyboard_new(void);
@@ -119,6 +142,13 @@ void hangul_ic_select_keyboard(HangulInputContext *hic,
 			       const char* id);
 void hangul_ic_set_combination(HangulInputContext *hic,
 			       const HangulCombination *combination);
+
+void hangul_ic_connect_translate (HangulInputContext* hic,
+                             HangulOnTranslate callback,
+                             void* user_data);
+void hangul_ic_connect_transition(HangulInputContext* hic,
+                             HangulOnTransition callback,
+                             void* user_data);
 void hangul_ic_connect_callback(HangulInputContext* hic, const char* event,
 				void* callback, void* user_data);
 
@@ -129,6 +159,12 @@ const char* hangul_ic_get_keyboard_name(unsigned index_);
 const ucschar* hangul_ic_get_preedit_string(HangulInputContext *hic);
 const ucschar* hangul_ic_get_commit_string(HangulInputContext *hic);
 const ucschar* hangul_ic_flush(HangulInputContext *hic);
+
+/* hangulinputcontext-addon.h */
+int          hangul_ic_get_extended_layout_index (HangulInputContext *hic);
+void        hangul_ic_set_extended_layout_mode (HangulInputContext *hic, bool enable);
+void        hangul_ic_set_galmadeuli_method_mode (HangulInputContext *hic, bool enable);
+unsigned char hangul_ic_get_layout_flags (HangulInputContext *hic);
 
 /* hanja.c */
 typedef struct _Hanja Hanja;

@@ -585,6 +585,8 @@ hangul_buffer_clear(HangulBuffer *buffer)
     buffer->jungseong = 0;
     buffer->jongseong = 0;
 
+    buffer->right_oua = 0;
+
     buffer->index = -1;
     buffer->stack[0]  = 0;
     buffer->stack[1]  = 0;
@@ -727,6 +729,9 @@ hangul_buffer_backspace(HangulBuffer *buffer)
 	    } else if (hangul_is_jungseong(ch)) {
 		ch = hangul_buffer_peek(buffer);
 		buffer->jungseong = hangul_is_jungseong(ch) ? ch : 0;
+        if (buffer->jungseong == 0) {
+            buffer->right_oua = 0;
+        }
 		return true;
 	    } else if (hangul_is_jongseong(ch)) {
 		ch = hangul_buffer_peek(buffer);
@@ -737,6 +742,9 @@ hangul_buffer_backspace(HangulBuffer *buffer)
 	    buffer->choseong = 0;
 	    buffer->jungseong = 0;
 	    buffer->jongseong = 0;
+
+        buffer->right_oua = 0;
+
 	    return true;
 	}
     }
@@ -842,6 +850,9 @@ hangul_ic_save_commit_string(HangulInputContext *hic)
     } else {
 	hangul_buffer_get_string(&hic->buffer, string, len);
     }
+
+    hic->extended_layout_index = 0;
+    hic->extended_layout_prevkey = 0;
 
     hangul_buffer_clear(&hic->buffer);
 }
@@ -1309,12 +1320,17 @@ hangul_ic_process(HangulInputContext *hic, int ascii)
     if (hic->on_translate != NULL)
 	hic->on_translate(hic, ascii, &c, hic->on_translate_data);
 
-    if (hangul_keyboard_get_type(hic->keyboard) == HANGUL_KEYBOARD_TYPE_JAMO)
-	return hangul_ic_process_jamo(hic, c);
-    else if (hangul_keyboard_get_type(hic->keyboard) == HANGUL_KEYBOARD_TYPE_JASO)
-	return hangul_ic_process_jaso(hic, c);
-    else
-	return hangul_ic_process_romaja(hic, ascii, c);
+    int type = hangul_keyboard_get_type(hic->keyboard);
+    switch (type) {
+        case HANGUL_KEYBOARD_TYPE_JASO:
+            return hangul_ic_process_jaso(hic, c);
+        case HANGUL_KEYBOARD_TYPE_JASO_SHIN:
+            return hangul_ic_process_jaso_shin_sebeol (hic, ascii, c);
+        case HANGUL_KEYBOARD_TYPE_ROMAJA:
+            return hangul_ic_process_romaja(hic, ascii, c);
+        default:    //case HANGUL_KEYBOARD_TYPE_JAMO:
+            return hangul_ic_process_jamo(hic, c);
+    }
 }
 
 /**
@@ -1383,6 +1399,9 @@ hangul_ic_reset(HangulInputContext *hic)
     hic->commit_string[0] = 0;
     hic->flushed_string[0] = 0;
 
+    hic->extended_layout_index = 0;
+    hic->extended_layout_prevkey = 0;
+
     hangul_buffer_clear(&hic->buffer);
 }
 
@@ -1425,6 +1444,9 @@ hangul_ic_flush(HangulInputContext *hic)
     hic->commit_string[0] = 0;
     hic->flushed_string[0] = 0;
 
+    hic->extended_layout_index = 0;
+    hic->extended_layout_prevkey = 0;
+
     if (hic->output_mode == HANGUL_OUTPUT_JAMO) {
 	hangul_buffer_get_jamo_string(&hic->buffer, hic->flushed_string,
 				 N_ELEMENTS(hic->flushed_string));
@@ -1463,8 +1485,12 @@ hangul_ic_backspace(HangulInputContext *hic)
     hic->commit_string[0] = 0;
 
     ret = hangul_buffer_backspace(&hic->buffer);
-    if (ret)
-	hangul_ic_save_preedit_string(hic);
+    if (ret) {
+        // 신세벌식은 단계별 글쇠가 따로 있기때문에 확장모드에서 바로 빠져나온다
+        hic->extended_layout_index = 0;
+
+        hangul_ic_save_preedit_string(hic);
+    }
     return ret;
 }
 
@@ -1603,6 +1629,25 @@ hangul_ic_get_keyboard_by_id(const char* id)
     return NULL;
 }
 
+static const HangulKeyboardAddon *
+hangul_ic_get_keyboard_addon_by_id(const char *id)
+{
+    unsigned i;
+    unsigned n;
+
+    /* hangul_keyboard_addons 테이블은 id 순으로 정렬되어 있지 않으므로
+     * binary search를 할수 없고 linear search를 한다. */
+    n = hangul_ic_get_n_keyboard_addons();
+    for (i = 0; i < n; ++i) {
+        const HangulKeyboardAddon *keyboard_addon = hangul_keyboard_addons[i];
+        if (strcmp(id, keyboard_addon->id) == 0) {
+            return keyboard_addon;
+        }
+    }
+
+    return NULL;
+}
+
 /**
  * @ingroup hangulic
  * @brief @ref HangulInputContext 의 자판 배열을 바꾸는 함수
@@ -1630,6 +1675,7 @@ void
 hangul_ic_select_keyboard(HangulInputContext *hic, const char* id)
 {
     const HangulKeyboard* keyboard;
+    const HangulKeyboardAddon *keyboard_addon = NULL;
 
     if (hic == NULL)
 	return;
@@ -1643,6 +1689,17 @@ hangul_ic_select_keyboard(HangulInputContext *hic, const char* id)
     } else {
 	hic->keyboard = &hangul_keyboard_2;
     }
+
+    // 확장
+    keyboard_addon = hangul_ic_get_keyboard_addon_by_id(id);
+    if (keyboard_addon != NULL) {
+        hic->keyboard_addon = keyboard_addon;
+    } else {
+        hic->keyboard_addon = NULL;
+    }
+
+    hangul_ic_set_extended_layout_mode (hic, TRUE);
+    hangul_ic_set_galmadeuli_method_mode (hic, TRUE);
 }
 
 void
@@ -1687,6 +1744,11 @@ hangul_ic_new(const char* keyboard)
     hangul_ic_set_output_mode(hic, HANGUL_OUTPUT_SYLLABLE);
     hangul_ic_select_keyboard(hic, keyboard);
 
+    hic->extended_layout_enable = TRUE;
+    hic->extended_layout_index = 0;
+    hic->extended_layout_prevkey = 0;
+    hic->galmadeuli_method_enable = TRUE;
+
     hangul_buffer_clear(&hic->buffer);
 
     return hic;
@@ -1716,6 +1778,12 @@ unsigned int
 hangul_ic_get_n_keyboards()
 {
     return N_ELEMENTS(hangul_keyboards);
+}
+
+static unsigned int
+hangul_ic_get_n_keyboard_addons()
+{
+    return N_ELEMENTS(hangul_keyboard_addons);
 }
 
 const char*
