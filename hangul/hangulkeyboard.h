@@ -2757,4 +2757,137 @@ static const ucschar hangul_keyboard_table_3gimguk_38A_yet[] = {
 };
 
 
+static const ucschar hangul_keyboard_table_3moachigi_2014[] = {// 신세기 모아치기 2014
+    0x0000,     /* 0x00 null                                         */
+    0x0000,     /* 0x01 start of heading                             */
+    0x0000,     /* 0x02 start of text                                */
+    0x0000,     /* 0x03 end of text                                  */
+    0x0000,     /* 0x04 end of transmission                          */
+    0x0000,     /* 0x05 enquiry                                      */
+    0x0000,     /* 0x06 acknowledge                                  */
+    0x0000,     /* 0x07 bell                                         */
+    0x0000,     /* 0x08 backspace                                    */
+    0x0000,     /* 0x09 character tabulation                         */
+    0x0000,     /* 0x0A line feed (lf)                               */
+    0x0000,     /* 0x0B line tabulation                              */
+    0x0000,     /* 0x0C form feed (ff)                               */
+    0x0000,     /* 0x0D carriage return (cr)                         */
+    0x0000,     /* 0x0E shift out                                    */
+    0x0000,     /* 0x0F shift in                                     */
+    0x0000,     /* 0x10 data link escape                             */
+    0x0000,     /* 0x11 device control one                           */
+    0x0000,     /* 0x12 device control two                           */
+    0x0000,     /* 0x13 device control three                         */
+    0x0000,     /* 0x14 device control four                          */
+    0x0000,     /* 0x15 negative acknowledge                         */
+    0x0000,     /* 0x16 synchronous idle                             */
+    0x0000,     /* 0x17 end of transmission block                    */
+    0x0000,     /* 0x18 cancel                                       */
+    0x0000,     /* 0x19 end of medium                                */
+    0x0000,     /* 0x1A substitute                                   */
+    0x0000,     /* 0x1B escape                                       */
+    0x0000,     /* 0x1C information separator four                   */
+    0x0000,     /* 0x1D information separator three                  */
+    0x0000,     /* 0x1E information separator two                    */
+    0x0000,     /* 0x1F information separator one                    */
+    0x0000,     /* 0x20 space                                        */
+    0x0021,     /* 0x21 exclam:         exclamation mark             */
+    0x0022,     /* 0x22 quotedbl:       quotatioin mark              */
+    0x0023,     /* 0x23 numbersign:     number sign                  */
+    0x0024,     /* 0x24 dollar:         dollar sign                  */
+    0x0025,     /* 0x25 percent:        percent sign                 */
+    0x0026,     /* 0x26 ampersand:      ampersand                    */
+    0x1169,     /* 0x27 apostrophe:     jungseong o                  */
+    0x0028,     /* 0x28 parenleft:      left parenthesis             */
+    0x0029,     /* 0x29 parenright:     right parenthesis            */
+    0x002a,     /* 0x2A asterisk:       asterisk                     */
+    0x002b,     /* 0x2B plus:           plus sign                    */
+    0x002c,     /* 0x2C comma:          comma                        */
+    0x002d,     /* 0x2D minus:          minus sign                   */
+    0x002e,     /* 0x2E period:         period                       */
+    0x002f,     /* 0x2F slash:          slash                        */
+    0x1159,     /* 0x30 0:              choseong yeorinhieuh         */
+    0x11b9,     /* 0x31 1:              jongseong pieup-sios         */
+    0x11ae,     /* 0x32 2:              jongseong tikeut             */
+    0x11b8,     /* 0x33 3:              jongseong pieup              */
+    0x116d,     /* 0x34 4:              jungseong yo                 */
+    0x1163,     /* 0x35 5:              jungseong ya                 */
+    0x119e,     /* 0x36 6:              jungseong araea              */
+    0x11a1,     /* 0x37 7:              jungseong araeae             */
+    0x1140,     /* 0x38 8:              choseong pansios             */
+    0x1147,     /* 0x39 9:              choseong ssangieung          */
+    0x0034,     /* 0x3A colon:          4                            */
+    0x11bb,     /* 0x3B semicolon:      jongseong ssangsios          */
+    0x003c,     /* 0x3C less:           less-than sign               */
+    0x003d,     /* 0x3D equal:          euals sign                   */
+    0x003e,     /* 0x3E greater:        greater-than sign            */
+    0x003f,     /* 0x3F question:       question mark                */
+    0x0040,     /* 0x40 at:             commertial at                */
+    0x2606,     /* 0x41 A:              ☆ white star                */
+    0x003b,     /* 0x42 B:              semicolon                    */
+    0x300c,     /* 0x43 C:              「 left corner bracket       */
+    0x25B2,     /* 0x44 D:              ▲ black up-pointing triangle */
+    0x2192,     /* 0x45 E:              → rightwards arrow          */
+    0x00b7,     /* 0x46 F:              middle dot                   */
+    0x003a,     /* 0x47 G:              colon                        */
+    0x0030,     /* 0x48 H:              0                            */
+    0x0037,     /* 0x49 I:              7                            */
+    0x0031,     /* 0x4A J:              1                            */
+    0x0032,     /* 0x4B K:              2                            */
+    0x0033,     /* 0x4C L:              3                            */
+    0x0022,     /* 0x4D M:              quotatioin mark              */
+    0x0027,     /* 0x4E N:              apostrophe                   */
+    0x0038,     /* 0x4F O:              8                            */
+    0x0039,     /* 0x50 P:              9                            */
+    0x2661,     /* 0x51 Q:              ♡ white heart suit          */
+    0x2194,     /* 0x52 R:              ↔ left right arrow          */
+    0x25bd,     /* 0x53 S:              ▽ white down-pointing triangle */
+    0x203b,     /* 0x54 T:              ※ reference mark            */
+    0x0036,     /* 0x55 U:              6                            */
+    0x300d,     /* 0x56 V:              」 right corner bracket      */
+    0x2190,     /* 0x57 W:              ← leftwards arrow           */
+    0x25ce,     /* 0x58 X:              ◎ bullseye                  */
+    0x0035,     /* 0x59 Y:              5                            */
+    0x25a1,     /* 0x5A Z:              □ white square              */
+    0x005b,     /* 0x5B bracketleft:    left bracket                 */
+    0x005c,     /* 0x5C backslash:      backslash                    */
+    0x005d,     /* 0x5D bracketright:   right bracket                */
+    0x005e,     /* 0x5E asciicircum:    circumflex accent            */
+    0x005f,     /* 0x5F underscore:     underscore                   */
+    0x0060,     /* 0x60 quoteleft:      grave accent                 */
+    0x11bc,     /* 0x61 a:              jongseong ieung              */
+    0x1166,     /* 0x62 b:              jungseong e                  */
+    0x116e,     /* 0x63 c:              jungseong u                  */
+    0x1175,     /* 0x64 d:              jungseong i                  */
+    0x11af,     /* 0x65 e:              jongseong rieul              */
+    0x1161,     /* 0x66 f:              jungseong a                  */
+    0x1173,     /* 0x67 g:              jungseong eu                 */
+    0x1102,     /* 0x68 h:              choseong  nieun              */
+    0x1106,     /* 0x69 i:              choseong  mieum              */
+    0x110b,     /* 0x6A j:              choseong  ieung              */
+    0x1100,     /* 0x6B k:              choseong  kiyeok             */
+    0x110c,     /* 0x6C l:              choseong  cieuc              */
+    0x1112,     /* 0x6D m:              choseong  hieuh              */
+    0x1109,     /* 0x6E n:              choseong  sios               */
+    0x1107,     /* 0x6F o:              choseong  pieup              */
+    0x116e,     /* 0x70 p:              jungseong u                  */
+    0x11c2,     /* 0x71 q:              jongseong hieuh              */
+    0x1165,     /* 0x72 r:              jungseong eo                 */
+    0x11ab,     /* 0x73 s:              jongseong nieun              */
+    0x1167,     /* 0x74 t:              jungseong yeo                */
+    0x1103,     /* 0x75 u:              choseong  tikeut             */
+    0x1169,     /* 0x76 v:              jungseong o                  */
+    0x11ba,     /* 0x77 w:              jongseong sios               */
+    0x11a8,     /* 0x78 x:              jongseong kiyeok             */
+    0x1105,     /* 0x79 y:              choseong  rieul              */
+    0x11b7,     /* 0x7A z:              jongseong mieum              */
+    0x007b,     /* 0x7B braceleft:      left brace                   */
+    0x007c,     /* 0x7C bar:            vertical line(bar)           */
+    0x007d,     /* 0x7D braceright:     right brace                  */
+    0x007e,     /* 0x7E asciitilde:     tilde                        */
+    0x0000      /* 0x7F delete                                       */
+};
+
+
+
 #endif /* libhangul_hangulkeyboard_h */
