@@ -29,6 +29,7 @@
 #include "hangul-gettext.h"
 #include "hangul.h"
 #include "hangulinternals.h"
+#include "hangulctype-addon.h"
 
 /**
  * @defgroup hangulic 한글 입력 기능 구현
@@ -167,6 +168,9 @@
  * 참조하여야 한다.
  */
 
+#include "hangulinputcontext.h"
+/** hangulinputcontext.h 로... 
+ * 
 #ifndef TRUE
 #define TRUE 1
 #endif
@@ -235,9 +239,15 @@ struct _HangulInputContext {
 
     unsigned int use_jamo_mode_only : 1;
 };
+* hangulinputcontext.h 로... 
+*****/
 
 #include "hangulkeyboard.h"
+#include "hangulkeyboard-addon.h"
 
+#include "hangulinputcontext-def.h"
+#include "hangulinputcontext-addon.h"
+/** hangulinputcontext-def.h 로... 
 static const HangulCombination hangul_combination_default = {
     N_ELEMENTS(hangul_combination_table_default),
     (HangulCombinationItem*)hangul_combination_table_default
@@ -352,6 +362,9 @@ static int     hangul_buffer_get_string(HangulBuffer *buffer, ucschar*buf, int b
 static int     hangul_buffer_get_jamo_string(HangulBuffer *buffer, ucschar *buf, int buflen);
 
 static void    hangul_ic_flush_internal(HangulInputContext *hic);
+* 
+*** hangulinputcontext-def.h 로... ****/
+
 
 HangulKeyboard*
 hangul_keyboard_new()
