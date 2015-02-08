@@ -1323,7 +1323,7 @@ hangul_ic_process(HangulInputContext *hic, int ascii)
     int type = hangul_keyboard_get_type(hic->keyboard);
     switch (type) {
         case HANGUL_KEYBOARD_TYPE_JASO:
-            return hangul_ic_process_jaso(hic, c);
+            return hangul_ic_process_jaso_sebeol (hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_JASO_SHIN:
             return hangul_ic_process_jaso_shin_sebeol (hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_ROMAJA:
@@ -1486,8 +1486,12 @@ hangul_ic_backspace(HangulInputContext *hic)
 
     ret = hangul_buffer_backspace(&hic->buffer);
     if (ret) {
-        // 신세벌식은 단계별 글쇠가 따로 있기때문에 확장모드에서 바로 빠져나온다
-        hic->extended_layout_index = 0;
+        if (hic->extended_layout_index >= 1 && hic->extended_layout_index <= 5) {
+            hic->extended_layout_index -= 1;
+        } else {
+            // 신세벌식은 단계별 글쇠가 따로 있기때문에 확장모드에서 바로 빠져나온다
+            hic->extended_layout_index = 0;
+        }
 
         hangul_ic_save_preedit_string(hic);
     }
