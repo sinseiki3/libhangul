@@ -855,11 +855,7 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
         } else {// 첫소리가 있다
             ucschar choseong = 0;
             bool combine = false;
-            if ( (hic->buffer.choseong == ch) && 
-                    ( (hic->keyboard_addon != NULL) && 
-                        (hic->keyboard_addon->flag & HANGUL_KEYBOARD_FLAG_NOT_REPEAT_CHOSEONG) ) ) {
-                combine = false;// 첫소리 연타 (ㄱ + ㄱ) 의 조합을 하지 않는다
-            } else if (hangul_is_choseong(hangul_ic_peek(hic))) {
+            if (hangul_is_choseong(hangul_ic_peek(hic))) {
                 // 바로 앞의 것이 첫소리면 하나로 만들어 본다
                 combine = true;
             } else if ( (hic->keyboard_addon != NULL) && 
@@ -1009,11 +1005,7 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
                             } else {
                                 ucschar jongseong = 0;
                                 combine = false;
-                                if ( (hic->buffer.jongseong == jung_jongseong) && 
-                                        ( (hic->keyboard_addon != NULL) && 
-                                            (hic->keyboard_addon->flag & HANGUL_KEYBOARD_FLAG_NOT_REPEAT_JONGSEONG) ) ) {
-                                    combine = false;// 끝소리 연타 (ㄱ + ㄱ) 의 조합을 하지 않는다
-                                } else if (hangul_is_jongseong(hangul_ic_peek(hic))) {
+                                if (hangul_is_jongseong(hangul_ic_peek(hic))) {
                                     combine = true;
                                 } else if ( (hic->keyboard_addon != NULL) && 
                                         (hic->keyboard_addon->flag & HANGUL_KEYBOARD_FLAG_LOOSE_ORDER) ) {
@@ -1030,12 +1022,18 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
                                         jongseong = hangul_combination_combine(hic->keyboard->combination,
                                                                                                         hic->buffer.jongseong, jung_jongseong);
                                     }
-                                    if ((jongseong == 0) && hic->galmadeuli_method_enable) {
+                                    if (jongseong == 0) {
                                         // 끝소리 조합이 안 되고 끝홑닿소리와 갈마들이 끝홑닿소리가 같으면, 갈마들이 연타 겹받침으로
-                                        if (hic->buffer.jongseong == jung_jongseong) {
-                                            if (hic->keyboard_addon != NULL) {
-                                                if (hic->keyboard_addon->galmadeuliFunc != NULL) {
-                                                    jongseong = hic->keyboard_addon->galmadeuliFunc(ch, TRUE);    // conjoin
+                                        if (hic->galmadeuli_method_enable) {
+                                            if ( (hic->keyboard_addon->flag & 
+                                                    HANGUL_KEYBOARD_FLAG_NO_REPEAT_GALMADEULI) == 
+                                                    FALSE) {
+                                                if (hic->buffer.jongseong == jung_jongseong) {
+                                                    if (hic->keyboard_addon != NULL) {
+                                                        if (hic->keyboard_addon->galmadeuliFunc != NULL) {
+                                                            jongseong = hic->keyboard_addon->galmadeuliFunc(ch, TRUE);    // conjoin
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -1101,11 +1099,7 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
             bool combine = false;
             // 바로 앞의 소리가 끝소리면, 끝소리 둘을 하나로 만들어 본다
             // 모아치기 2014 에서는 바로 앞에서 끝소리를 넣지 않았어도 끝소리가 있으면 조합해 본다
-            if ( (hic->buffer.jongseong == ch) && 
-                    ( (hic->keyboard_addon != NULL) && 
-                        (hic->keyboard_addon->flag & HANGUL_KEYBOARD_FLAG_NOT_REPEAT_JONGSEONG) ) ) {
-                combine = false;// 끝소리 연타 (ㄱ + ㄱ) 의 조합을 하지 않는다
-            } else if (hangul_is_jongseong(hangul_ic_peek(hic))) {
+            if (hangul_is_jongseong(hangul_ic_peek(hic))) {
                 combine = true;
             } else if ( (hic->keyboard_addon != NULL) && 
                     (hic->keyboard_addon->flag & HANGUL_KEYBOARD_FLAG_LOOSE_ORDER) ) {
@@ -1123,12 +1117,18 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
                     jongseong = hangul_combination_combine(hic->keyboard->combination,
                                                                                     hic->buffer.jongseong, ch);
                 }
-                if ((jongseong == 0) && hic->galmadeuli_method_enable) {
-                    // 끝소리 조합이 안 되고 끝홑닿소리와들어온 끝홑닿소리가 같으면, 갈마들이 연타 겹받침으로
-                    if (hic->buffer.jongseong == ch) {
-                        if (hic->keyboard_addon != NULL) {
-                            if (hic->keyboard_addon->galmadeuliFunc != NULL) {
-                                jongseong = hic->keyboard_addon->galmadeuliFunc(ch, TRUE);    // conjoin
+                if (jongseong == 0) {
+                    if (hic->galmadeuli_method_enable) {
+                        if ( (hic->keyboard_addon->flag & 
+                                HANGUL_KEYBOARD_FLAG_NO_REPEAT_GALMADEULI) == 
+                                FALSE) {
+                            // 끝소리 조합이 안 되고 끝홑닿소리와들어온 끝홑닿소리가 같으면, 갈마들이 연타 겹받침으로
+                            if (hic->buffer.jongseong == ch) {
+                                if (hic->keyboard_addon != NULL) {
+                                    if (hic->keyboard_addon->galmadeuliFunc != NULL) {
+                                        jongseong = hic->keyboard_addon->galmadeuliFunc(ch, TRUE);    // conjoin
+                                    }
+                                }
                             }
                         }
                     }

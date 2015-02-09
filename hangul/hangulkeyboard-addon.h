@@ -610,10 +610,12 @@ static const HangulCombinationItem hangul_combination_table_full_3_2015_yet[] = 
     { 0x11bc11a9, 0x11ed }, /* jongseong ieung    + ssangkiyeok  = yesieung-ssangkiyeok */
     { 0x11bc11b7, 0xd7f5 }, /* jongseong ieung    + mieum        = yesieung-mieum */
     { 0x11bc11ba, 0x11f1 }, /* jongseong ieung    + sios         = yesieung-sios */
+    { 0x11bc11bc, 0x11ee }, /* jongseong ieung    + ieung        = ssangyesieung */
     { 0x11bc11bf, 0x11ef }, /* jongseong ieung    + khieukh      = yesieung-khieukh */
     { 0x11bc11c2, 0xd7f6 }, /* jongseong ieung    + hieuh        = yesieung-hieuh */
     { 0x11bc11eb, 0x11f2 }, /* jongseong ieung    + pansios      = yesieung-pansios */
     { 0x11bc11f0, 0x11ee }, /* jongseong ieung    + yesieung     = ssangyesieung */
+    { 0x11f011bc, 0x11ee }, /* jongseong yesieung + ieung        = ssangyesieung */
 };
 
 // 3 에 조합을 더 넣은 것이다

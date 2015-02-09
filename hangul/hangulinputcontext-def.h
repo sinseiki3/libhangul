@@ -573,7 +573,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2014_yet = {
 static const HangulKeyboardAddon hangul_keyboard_addon_3_2015 = {
     "3-2015", // id
     0x0000, // replace_it // 아래아
-    0x3a, // flag
+    0x1a, // flag
     NULL, // ext_key
     NULL, // ext_value
     NULL, // (*symbolFunc)(int, int, int)
