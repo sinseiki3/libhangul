@@ -2180,7 +2180,7 @@ static const ucschar hangul_keyboard_table_3_2015_patal[] = {// 팥알
     0x0027,	/* 0x4E N: apostrophe */
     0x0038,	/* 0x4F O: 8 */
     0x0039,	/* 0x50 P: 9 */
-    0x11b3,	/* 0x51 Q: jongseong lieul-sieus */
+    0x11b6, /* 0x51 Q: jongseong lieul-hieuh */
     0x11be,	/* 0x52 R: jongseong chieuch */
     0x11ad,	/* 0x53 S: jongseong nieun-hieuh */
     0x1164,	/* 0x54 T: jungseong yae */
