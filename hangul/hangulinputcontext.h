@@ -55,7 +55,9 @@ struct _HangulKeyboardAddon {
     const char *id;
     // 3beol
     const ucschar replace_it; // 바꿔 놓기 : 두벌식의 치환, 세벌식의 ] -> 아래아
-    const unsigned char flag; // bit:00000000:0, 0, 0, 0, 왼/오른ㅗㅜ구분, 입력순서안따짐, 갈마들이, 확장배열
+    // bit:00000000:0, 0, ㄱ+ㄱ같은첫소리연타허용〈안〉함, ㄱ+ㄱ같은끝소리연타허용〈안〉함, 
+    //                        왼/오른ㅗㅜ구분, 입력순서〈안〉따짐, 갈마들이, 확장배열
+    const unsigned char flag; // 
     const char *ext_key; // 확장 기호 배열로 바꾸는 글쇠
     const ucschar *ext_value; // ext_key 에 놓인 한글 낱소리의 유니코드 값
     ucschar (*symbolFunc)(int, int, int); // 기호 확장 함수

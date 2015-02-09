@@ -222,6 +222,14 @@ static const HangulKeyboard hangul_keyboard_3_2015 = {
     (ucschar*)hangul_keyboard_table_3_2015,
     &hangul_combination_default_3
 };
+ 
+static const HangulKeyboard hangul_keyboard_3_2015_yet = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3-2015-yet",
+    N_("Sebeolsik 3-2015 Yetgeul"),
+    (ucschar*)hangul_keyboard_table_3_2015_yet,
+    &hangul_combination_full
+};
 
 static const HangulKeyboard hangul_keyboard_3_2015_patal = {
     HANGUL_KEYBOARD_TYPE_JASO,
@@ -309,6 +317,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_2014,
     &hangul_keyboard_3_2014_yet,
     &hangul_keyboard_3_2015,
+    &hangul_keyboard_3_2015_yet,
     &hangul_keyboard_3_2015_patal,
     &hangul_keyboard_3_2015_patal_yet,
     &hangul_keyboard_3_14_proposal,
@@ -338,34 +347,24 @@ static const char sebeol_3moachigi_moeum_key[2] = {'\'', 'p'}; // ㅗ, ㅜ  // �
 static const ucschar sebeol_3_moeum_value[2] = {0x1169, 0x116e};  // ㅗ, ㅜ 
 
 
-static const HangulCombination hangul_combination_full_yet = {
-    N_ELEMENTS(hangul_combination_table_full_yet),
-    (HangulCombinationItem*)hangul_combination_table_full_yet
-};
-
 static const HangulCombination hangul_combination_3_2014 = {
     N_ELEMENTS(hangul_combination_table_3_3_2014),
     (HangulCombinationItem*)hangul_combination_table_3_3_2014
-};
-
-static const HangulCombination hangul_combination_3_2014_yet = {
-    N_ELEMENTS(hangul_combination_table_full_3_2014_yet),
-    (HangulCombinationItem*)hangul_combination_table_full_3_2014_yet
 };
 
 static const HangulCombination hangul_combination_3_2015 = {
     N_ELEMENTS(hangul_combination_table_3_3_2015),
     (HangulCombinationItem*)hangul_combination_table_3_3_2015
 };
+ 
+static const HangulCombination hangul_combination_3_2015_yet = {
+    N_ELEMENTS(hangul_combination_table_full_3_2015_yet),
+    (HangulCombinationItem*)hangul_combination_table_full_3_2015_yet
+};
 
 static const HangulCombination hangul_combination_3_2015_patal = {
     N_ELEMENTS(hangul_combination_table_3_3_2015_patal),
     (HangulCombinationItem*)hangul_combination_table_3_3_2015_patal
-};
-
-static const HangulCombination hangul_combination_3_2015_patal_yet = {
-    N_ELEMENTS(hangul_combination_table_full_3_2015_patal_yet),
-    (HangulCombinationItem*)hangul_combination_table_full_3_2015_patal_yet
 };
 
 static const HangulCombination hangul_combination_3_14_proposal = {
@@ -500,7 +499,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2011_yet = {
     sebeol_3_moeum_key, // moeum_key
     sebeol_3_moeum_value, // moeum_value
     NULL, // (*galmadeuliFunc)(ucschar, bool)
-    &hangul_combination_full_yet // combination_addon
+    NULL // combination_addon
 };
 
 static const HangulKeyboardAddon hangul_keyboard_addon_3_2012 = {
@@ -534,7 +533,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2012_yet = {
     sebeol_3_moeum_key, // moeum_key
     sebeol_3_moeum_value, // moeum_value
     NULL, // (*galmadeuliFunc)(ucschar, bool)
-    &hangul_combination_full_yet // combination_addon
+    NULL // combination_addon
 };
 
 static const HangulKeyboardAddon hangul_keyboard_addon_3_2014 = {
@@ -568,13 +567,13 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2014_yet = {
     sebeol_3_moeum_key, // moeum_key
     sebeol_3_moeum_value, // moeum_value
     NULL, // (*galmadeuliFunc)(ucschar, bool)
-    &hangul_combination_3_2014_yet // combination_addon
+    NULL // combination_addon
 };
 
 static const HangulKeyboardAddon hangul_keyboard_addon_3_2015 = {
     "3-2015", // id
-    0x119e, // replace_it // 아래아
-    0x0a, // flag
+    0x0000, // replace_it // 아래아
+    0x3a, // flag
     NULL, // ext_key
     NULL, // ext_value
     NULL, // (*symbolFunc)(int, int, int)
@@ -586,6 +585,23 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2015 = {
     sebeol_3_moeum_value, // moeum_value
     &hangul_galmadeuli_3_2015, // (*galmadeuliFunc)(ucschar, bool)
     &hangul_combination_3_2015 // combination_addon
+};
+ 
+static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_yet = {
+    "3-2015-yet", // id
+    0x0000, // replace_it // FALSE
+    0x00, // flag
+    NULL, // ext_key
+    NULL, // ext_value
+    NULL, // (*symbolFunc)(int, int, int)
+    NULL, // han_key
+    NULL, // han_value
+    NULL, // (*yethanguelFunc)(int, int, int)
+    NULL, // ext_step
+    sebeol_3_moeum_key, // moeum_key
+    sebeol_3_moeum_value, // moeum_value
+    NULL, // (*galmadeuliFunc)(ucschar, bool)
+    &hangul_combination_3_2015_yet // combination_addon
 };
 
 static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_patal = {
@@ -619,7 +635,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_patal_yet = {
     sebeol_3_moeum_key, // moeum_key
     sebeol_3_moeum_value, // moeum_value
     NULL, // (*galmadeuliFunc)(ucschar, bool)
-    &hangul_combination_3_2015_patal_yet // combination_addon
+    NULL // combination_addon
 };
 
 static const HangulKeyboardAddon hangul_keyboard_addon_3_14_proposal = {
@@ -738,6 +754,7 @@ static const HangulKeyboardAddon* hangul_keyboard_addons[] = {
     &hangul_keyboard_addon_3_2014,
     &hangul_keyboard_addon_3_2014_yet,
     &hangul_keyboard_addon_3_2015,
+    &hangul_keyboard_addon_3_2015_yet,
     &hangul_keyboard_addon_3_2015_patal,
     &hangul_keyboard_addon_3_2015_patal_yet,
     &hangul_keyboard_addon_3_14_proposal,
