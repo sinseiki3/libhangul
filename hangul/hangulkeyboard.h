@@ -3203,7 +3203,7 @@ static const ucschar hangul_keyboard_table_3moachigi_2014[] = {// 신세기 모�
     0x116d,     /* 0x34 4:              jungseong yo                 */
     0x1163,     /* 0x35 5:              jungseong ya                 */
     0x119e,     /* 0x36 6:              jungseong araea              */
-    0x11a1,     /* 0x37 7:              jungseong araeae             */
+    0x11a2,     /* 0x37 7:              jungseong ssangaraea         */
     0x1140,     /* 0x38 8:              choseong pansios             */
     0x1147,     /* 0x39 9:              choseong ssangieung          */
     0x0034,     /* 0x3A colon:          4                            */
