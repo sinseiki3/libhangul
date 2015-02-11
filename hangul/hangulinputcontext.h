@@ -54,10 +54,10 @@ struct _HangulKeyboard {
 struct _HangulKeyboardAddon {
     const char *id;
     // 3beol
-    const ucschar replace_it; // 바꿔 놓기 : 두벌식의 치환, 세벌식의 ] -> 아래아
+    const ucschar replace_it; // 바꿔 놓기 : 세벌식의 ] -> 아래아
     // bit:00000000:0, 0, 0, 갈마들이연타겹받침허용〈안〉함, 
     //                        왼/오른ㅗㅜ구분, 입력순서〈안〉따짐, 갈마들이, 확장배열
-    const unsigned char flag; // 
+    const unsigned char flag; //
     const char *ext_key; // 확장 기호 배열로 바꾸는 글쇠
     const ucschar *ext_value; // ext_key 에 놓인 한글 낱소리의 유니코드 값
     ucschar (*symbolFunc)(int, int, int); // 기호 확장 함수
@@ -67,8 +67,8 @@ struct _HangulKeyboardAddon {
     const ucschar *ext_step; // 확장 단계를 보여주는 한글 낱소리의 유니코드 값
     const char *moeum_key; // 겹홀소리에 쓰이는 ㅗ, ㅜ 가 놓여진 Qwerty 의 글쇠
     const ucschar *moeum_value; // 겹홀소리에 쓰이는 ㅗ, ㅜ 의 유니코드 값
-    ucschar (*galmadeuliFunc)(ucschar, bool); // 갈마들이 함수
-    const HangulCombination* combination_addon; // 기본 조합 외에 글판마다 더해진 조합
+    const HangulCombination *combination_addon; // 기본 조합 외에 글판마다 더해진 조합
+    const HangulGalmadeuli *galmadeuli_addon;// 갈마들이 변환 테이블
 };
 
 struct _HangulCombinationItem {
@@ -79,6 +79,17 @@ struct _HangulCombinationItem {
 struct _HangulCombination {
     int size;
     HangulCombinationItem *table;
+};
+
+
+struct _HangulGalmadeuliItem {
+    ucschar key;
+    ucschar code;
+};
+
+struct _HangulGalmadeuli {
+    int size;
+    HangulGalmadeuliItem *table;
 };
 
 struct _HangulBuffer {

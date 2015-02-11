@@ -73,6 +73,8 @@ int     hangul_jamos_to_syllables(ucschar* dest, int destlen,
 typedef struct _HangulKeyboard        HangulKeyboard;
 /*** 3beol ***/ // 확장
 typedef struct _HangulKeyboardAddon        HangulKeyboardAddon;
+typedef struct _HangulGalmadeuli     HangulGalmadeuli;
+typedef struct _HangulGalmadeuliItem HangulGalmadeuliItem;
 /************/
 typedef struct _HangulCombination     HangulCombination;
 typedef struct _HangulBuffer          HangulBuffer;
