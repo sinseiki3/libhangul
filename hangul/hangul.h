@@ -165,6 +165,9 @@ const ucschar* hangul_ic_get_commit_string(HangulInputContext *hic);
 const ucschar* hangul_ic_flush(HangulInputContext *hic);
 
 /* hangulinputcontext-addon.h */
+#ifndef libhangul_3beol
+    #define libhangul_3beol
+#endif
 int          hangul_ic_get_extended_layout_index (HangulInputContext *hic);
 void        hangul_ic_set_extended_layout_mode (HangulInputContext *hic, bool enable);
 void        hangul_ic_set_galmadeuli_method_mode (HangulInputContext *hic, bool enable);

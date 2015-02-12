@@ -135,6 +135,15 @@ hangul_galmadeuli_convert (const HangulGalmadeuli *galmadeuli, const ucschar ch)
 }
 
 
+// 확장단계를 한글자소가 아닌 기호로 나타내기위해....
+static void
+hangul_buffer_push_ext_step(HangulBuffer *buffer, ucschar ch)
+{
+    buffer->choseong = ch;
+    buffer->stack[++buffer->index] = ch;
+}
+
+
 
 static bool
 hangul_ic_process_jamo_dubeol (HangulInputContext *hic, ucschar ch)
@@ -341,13 +350,13 @@ hangul_ic_process_jaso_shin_sebeol (HangulInputContext *hic, int ascii, ucschar 
                             // 신세벌식은 단계별 글쇠가 따로 있기 때문에 [1, 2, 3] 대신 [11, 12, 13] 을 쓴다.
                             // bool hangul_ic_backspace(HangulInputContext *hic)
                             if (ascii == *(hic->keyboard_addon->ext_key+1)) {
-                                hic->buffer.choseong = *(hic->keyboard_addon->ext_step+0);
+                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+0));
                                 hic->extended_layout_index =  11;
                             } else if (ascii == *(hic->keyboard_addon->ext_key+2)) {
-                                hic->buffer.choseong = *(hic->keyboard_addon->ext_step+1);
+                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+1));
                                 hic->extended_layout_index =  12;
                             } else if (ascii == *(hic->keyboard_addon->ext_key+3)) {
-                                hic->buffer.choseong = *(hic->keyboard_addon->ext_step+2);
+                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+2));
                                 hic->extended_layout_index =  13;
                             } else {
                                 hangul_buffer_clear(&hic->buffer);
@@ -706,19 +715,19 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
 
                                 switch (hic->extended_layout_index) {
                                     case 1 : 
-                                                hic->buffer.choseong = *(hic->keyboard_addon->ext_step+0);
+                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+0));
                                                 break;
                                     case 2 : 
-                                                hic->buffer.choseong = *(hic->keyboard_addon->ext_step+1);
+                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+1));
                                                 break;
                                     case 3 : 
-                                                hic->buffer.choseong = *(hic->keyboard_addon->ext_step+2);
+                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+2));
                                                 break;
                                     case 4 : 
-                                                hic->buffer.choseong = *(hic->keyboard_addon->ext_step+3);
+                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+3));
                                                 break;
                                     case 5 : 
-                                                hic->buffer.choseong = *(hic->keyboard_addon->ext_step+4);
+                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+4));
                                                 break;
                                     default :
                                                 hangul_buffer_clear(&hic->buffer);
@@ -784,13 +793,13 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
 
                                     switch (hic->extended_layout_index) {
                                         case 1 : 
-                                                    hic->buffer.choseong = *(hic->keyboard_addon->ext_step+0);
+                                                    hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+0));
                                                     break;
                                         case 2 : 
-                                                    hic->buffer.choseong = *(hic->keyboard_addon->ext_step+1);
+                                                    hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+1));
                                                     break;
                                         case 3 : 
-                                                    hic->buffer.choseong = *(hic->keyboard_addon->ext_step+2);
+                                                    hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+2));
                                                     break;
                                         default :
                                                     hangul_buffer_clear(&hic->buffer);
