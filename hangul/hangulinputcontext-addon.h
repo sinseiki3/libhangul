@@ -40,8 +40,10 @@ hangul_ic_set_extended_layout_mode (HangulInputContext *hic, bool enable)
 
     if (hic->keyboard_addon != NULL) {
         if (hic->keyboard_addon->flag & HANGUL_KEYBOARD_FLAG_EXTENDED) {
-            hic->extended_layout_enable = enable;
-            return;
+            if (hic->keyboard_addon->symbol_key != NULL) {
+                hic->extended_layout_enable = enable;
+                return;
+            }
         }
     }
     hic->extended_layout_enable = FALSE;
@@ -113,7 +115,7 @@ hangul_galmadeuli_cmp(const void* p1, const void* p2)
     }
 }
 
-ucschar
+static ucschar
 hangul_galmadeuli_convert (const HangulGalmadeuli *galmadeuli, const ucschar ch)
 {
     HangulGalmadeuliItem *res;
@@ -137,12 +139,102 @@ hangul_galmadeuli_convert (const HangulGalmadeuli *galmadeuli, const ucschar ch)
 
 // 확장단계를 한글자소가 아닌 기호로 나타내기위해....
 static void
-hangul_buffer_push_ext_step(HangulBuffer *buffer, ucschar ch)
+hangul_buffer_push_extension_step(HangulBuffer *buffer, ucschar ch)
 {
     buffer->choseong = ch;
     buffer->stack[++buffer->index] = ch;
 }
 
+static int
+hangul_is_extension_symbol_key (const HangulKeyboardAddon *keyboard_addon, int ascii)
+{
+    if (keyboard_addon == NULL) {
+        return 0;
+    }
+
+    int i;
+    for (i = 1; *(keyboard_addon->symbol_key+i) != 0x00; i++) {
+        if (ascii == *(keyboard_addon->symbol_key+i)) {
+            if (*(keyboard_addon->symbol_key+0) == '1') {
+                i+=10;
+            }
+            return i;
+        }
+    }
+
+    return 0;
+}
+
+static int
+hangul_is_extension_yetguel_key (const HangulKeyboardAddon *keyboard_addon, int ascii)
+{
+    if (keyboard_addon == NULL) {
+        return 0;
+    }
+    if (keyboard_addon->yetguel_key == NULL) {
+        return 0;
+    }
+
+    int i;
+    for (i = 0; *(keyboard_addon->yetguel_key+i) != 0x00; i++) {
+        if (ascii == *(keyboard_addon->yetguel_key+i)) {
+            return i + 1;
+        }
+    }
+    return 0;
+}
+
+
+static bool
+hangul_is_extension_condition_sebeol_shin (HangulInputContext *hic)
+{
+    if (hic == NULL) {
+        return false;
+    }
+
+    if (hic->buffer.choseong == *(hic->keyboard_addon->symbol_value+0) && // 첫소리 0x110b (ㅇ) 이 있다
+            hic->buffer.jungseong == 0 &&   // 가윗소리가 없다
+            hic->extended_layout_index == 0) {// 확장모드가 아니다
+        return true;
+    }
+    return false;
+}
+
+static bool
+hangul_is_extension_condition_sebeol (HangulInputContext *hic, int ascii)
+{
+    if (hic == NULL) {
+        return false;
+    }
+
+    if (hangul_buffer_is_empty(&(hic->buffer)) ||          // ( 아무것도 없거나
+            hangul_buffer_has_jungseong(&(hic->buffer)) || // 가윗소리가 있거나
+            (hic->extended_layout_index != 0 && hic->extended_layout_prevkey == ascii)    ) {// 확장모드 일 때
+        return true;
+    }
+    return false;
+}
+
+static void
+hangul_is_extension_ready_sebeol (HangulInputContext *hic)
+{
+    if (hic == NULL) {
+        return;
+    }
+
+    if (hic->extended_layout_index == 0) {// 있던 것을 뿌린다.
+        if (hic->keyboard_addon->symbol_value != NULL) {
+            if (hic->buffer.right_oua) {// 가윗소리에 확장글쇠의 겹홀소리가 있으면 지워준다
+                if (hic->buffer.jongseong == 0 && 
+                        (hic->buffer.jungseong ==  *(hic->keyboard_addon->symbol_value+0) ||
+                            hic->buffer.jungseong ==  *(hic->keyboard_addon->symbol_value+1) ) ) {
+                    hic->buffer.jungseong = 0;
+                }
+            }
+        }
+        hangul_ic_save_commit_string(hic);
+    }
+}
 
 
 static bool
@@ -336,59 +428,56 @@ static bool
 hangul_ic_process_jaso_shin_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
 {
     if (hic->extended_layout_enable) {
-        if (hic->keyboard_addon != NULL) {
-            if (hic->keyboard_addon->ext_key != NULL && hic->keyboard_addon->ext_value != NULL) {
-                if (hic->keyboard_addon->ext_step != NULL) {
-                    if (ascii == *(hic->keyboard_addon->ext_key+1) || ascii == *(hic->keyboard_addon->ext_key+2) || ascii == *(hic->keyboard_addon->ext_key+3)) {// 확장글쇠가 들어왔다
-                        if (hic->buffer.choseong == *(hic->keyboard_addon->ext_value+0) && // 첫소리 0x110b (ㅇ) 이 있다
-                                hic->buffer.jungseong == 0 &&   // 가윗소리가 없다
-                                hic->extended_layout_index == 0) {// 확장모드가 아니다
-                            if (hic->extended_layout_index == 0) {// 첫소리 0x110b (ㅇ) 이 있던 것을 지우고 뿌린다.
-                                hic->buffer.choseong = 0;
-                                hangul_ic_save_commit_string(hic);
-                            }
-                            // 신세벌식은 단계별 글쇠가 따로 있기 때문에 [1, 2, 3] 대신 [11, 12, 13] 을 쓴다.
-                            // bool hangul_ic_backspace(HangulInputContext *hic)
-                            if (ascii == *(hic->keyboard_addon->ext_key+1)) {
-                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+0));
-                                hic->extended_layout_index =  11;
-                            } else if (ascii == *(hic->keyboard_addon->ext_key+2)) {
-                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+1));
-                                hic->extended_layout_index =  12;
-                            } else if (ascii == *(hic->keyboard_addon->ext_key+3)) {
-                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+2));
-                                hic->extended_layout_index =  13;
-                            } else {
-                                hangul_buffer_clear(&hic->buffer);
-                                hangul_ic_save_commit_string(hic);
-                            }
-                            hangul_ic_save_preedit_string(hic);
-                            return true;
-                        }
-                    } 
-                }
-
-                if (hic->extended_layout_index >= 11 && hic->extended_layout_index <= 13) {
-                    //index = [ #1, #2, #3 / 11, 12, 13 ]   // 확장 기호를 다룬다.
-                    if (ch > 0) {
-                        ucschar extended = 0;
-                        if (hic->keyboard_addon->symbolFunc != NULL) {
-                            extended = hic->keyboard_addon->symbolFunc(ascii, hic->extended_layout_index - 10, 0);
-                        }
-
-                        hangul_buffer_clear(&hic->buffer);//확장단계 표시 첫소리를 없앤다
-                        hangul_ic_save_commit_string(hic);
-
-                        if (extended) {// 확장기호가 있는 글쇠
-                            hangul_ic_append_commit_string(hic, extended);
-                        }
-                        hangul_ic_save_preedit_string(hic);
-                        return true;
-                    }
-
+        int symbol_key = hangul_is_extension_symbol_key (hic->keyboard_addon, ascii);
+        if (symbol_key) {// 확장글쇠가 들어왔다
+            if (hangul_is_extension_condition_sebeol_shin(hic)) {// 조건을 만족한다
+                if (hic->extended_layout_index == 0) {// 첫소리 0x110b (ㅇ) 이 있던 것을 지우고 뿌린다.
+                    hic->buffer.choseong = 0;
                     hangul_ic_save_commit_string(hic);
-                    return false;
                 }
+                // 신세벌식은 단계별 글쇠가 따로 있기 때문에 [1, 2, 3] 대신 [11, 12, 13] 을 쓴다.
+                // bool hangul_ic_backspace(HangulInputContext *hic)
+                switch (symbol_key) {
+                    case 1 : 
+                    case 2 : 
+                    case 3 : 
+                        hic->extended_layout_index =  symbol_key + 10;
+                        if (hic->keyboard_addon->ext_step != NULL) {
+                            hangul_buffer_push_extension_step(&hic->buffer, 
+                                                        *(hic->keyboard_addon->ext_step+(symbol_key - 1)));
+                        }
+                        break;
+                    default :
+                        hangul_buffer_clear(&hic->buffer);
+                        hangul_ic_save_commit_string(hic);
+                        break;
+                }
+                hangul_ic_save_preedit_string(hic);
+                return true;
+            }
+        }
+
+        if (hic->extended_layout_index >= 11 && hic->extended_layout_index <= 13) {
+            //index = [ #1, #2, #3 / 11, 12, 13 ]   // 확장 기호를 다룬다.
+            if (ch > 0) {
+                ucschar extended = 0;
+                if (hic->keyboard_addon->symbolFunc != NULL) {
+                    extended = hic->keyboard_addon->symbolFunc(ascii, 
+                                                                    hic->extended_layout_index - 10, 
+                                                                    0);
+                }
+
+                hangul_buffer_clear(&hic->buffer);//확장단계 표시 첫소리를 없앤다
+                hangul_ic_save_commit_string(hic);
+
+                if (extended) {// 확장기호가 있는 글쇠
+                    hangul_ic_append_commit_string(hic, extended);
+                }
+                hangul_ic_save_preedit_string(hic);
+                return true;
+            } else {
+                hangul_ic_save_commit_string(hic);
+                return false;
             }
         }
     }
@@ -689,183 +778,142 @@ static bool
 hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
 {
     if (hic->extended_layout_enable) {
-        if (hic->keyboard_addon != NULL) {
-            if (hic->keyboard_addon->ext_key != NULL) {// 확장 기호 글쇠가 있다
-                if (hic->keyboard_addon->ext_step != NULL) {// 확장 기호 단계가 있다
-                    if (*(hic->keyboard_addon->ext_key+0) == '1') {// 기호 글쇠가 각각 다른 배열을 쓴다
-                        if ((ascii == *(hic->keyboard_addon->ext_key+1) && hic->extended_layout_index < 3) || 
-                                ascii == *(hic->keyboard_addon->ext_key+2)) {// 확장 기호 글쇠 누름
-                            if (    hangul_buffer_is_empty(&(hic->buffer)) ||          // ( 아무것도 없거나
-                                    hangul_buffer_has_jungseong(&(hic->buffer)) || // 가윗소리가 있거나
-                                    (hic->extended_layout_index != 0 && hic->extended_layout_prevkey == ascii)    ) {// 확장모드 일 때 )
-                                if (hic->extended_layout_index == 0) {// 있던 것을 뿌린다.
-                                    if (hic->keyboard_addon->ext_value != NULL) {
-                                        if (hic->buffer.right_oua) {// 가윗소리에 확장글쇠의 겹홀소리가 있으면 지워준다
-                                            if (hic->buffer.jungseong ==  *(hic->keyboard_addon->ext_value+0) ||
-                                                    hic->buffer.jungseong ==  *(hic->keyboard_addon->ext_value+1) ) {
-                                                hic->buffer.jungseong = 0;
-                                            }
-                                        }
+        int symbol_key = 0;
+        int yetguel_key = 0;
+
+        symbol_key = hangul_is_extension_symbol_key (hic->keyboard_addon, ascii);
+        if (symbol_key) {
+            if (symbol_key > 10) {// 기호 글쇠가 각각 다른 배열을 쓴다
+                if ( (symbol_key == 12) || ((symbol_key == 11) && (hic->extended_layout_index < 3)) ) {// 확장 기호 글쇠 누름
+                    if (hangul_is_extension_condition_sebeol(hic, ascii)) {// 조건을 만족한다
+                        // 있던 것을 뿌린다
+                        hangul_is_extension_ready_sebeol(hic);
+
+                        // 확장 단계를 올린다
+                        hic->extended_layout_index += 1;
+                        hic->extended_layout_prevkey = ascii;
+
+                        switch (hic->extended_layout_index) {
+                            case 1 : 
+                            case 2 : 
+                            case 3 : 
+                            case 4 : 
+                            case 5 : 
+                                    if (hic->keyboard_addon->ext_step != NULL) {// 확장 기호 단계가 있다
+                                        hangul_buffer_push_extension_step(&hic->buffer, 
+                                                    *(hic->keyboard_addon->ext_step+(hic->extended_layout_index - 1)));
                                     }
+                                    break;
+                            default :
+                                    hangul_buffer_clear(&hic->buffer);
                                     hangul_ic_save_commit_string(hic);
-                                }
-                                // 확장 단계를 올린다
-                                hic->extended_layout_index += 1;
-                                hic->extended_layout_prevkey = ascii;
-
-                                switch (hic->extended_layout_index) {
-                                    case 1 : 
-                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+0));
-                                                break;
-                                    case 2 : 
-                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+1));
-                                                break;
-                                    case 3 : 
-                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+2));
-                                                break;
-                                    case 4 : 
-                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+3));
-                                                break;
-                                    case 5 : 
-                                                hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+4));
-                                                break;
-                                    default :
-                                                hangul_buffer_clear(&hic->buffer);
-                                                hangul_ic_save_commit_string(hic);
-                                                break;
-                                }
-                                hangul_ic_save_preedit_string(hic);
-                                return true;
-                            }
-                        } else if (hic->keyboard_addon->han_key != NULL) {// 확장 한글 글쇠가 있다
-                            if (ascii == *(hic->keyboard_addon->han_key+0) || ascii == *(hic->keyboard_addon->han_key+1)) {// 확장 한글 글쇠 누름
-                                // 여기는 한글조합에 쓰이기 때문에 있던 것을 뿌리지 않는다
-
-                                if (hic->extended_layout_index == 0) {
-                                    hic->extended_layout_prevkey = ascii;
-                                } else if (hic->extended_layout_prevkey != ascii) {
-                                    // 앞에서와 다른 한글확장 글쇠가 들어와서 조합을 끝낸다
-                                    hangul_ic_save_commit_string(hic);
-                                    return true;
-                                }
-                                    
-                                // 확장 단계를 올린다
-                                if (hic->extended_layout_index < 2) {
-                                    hic->extended_layout_index += 1;
-                                } else {
-                                    hic->extended_layout_index = 0;
-                                }
-
-                                // 여기는 한글조합에 쓰이기 때문에 단계를 나타내지 않는다
-
-                                hangul_ic_save_preedit_string(hic);
-                                return true;
-                            }
+                                    break;
                         }
-                    } else {// 기호 글쇠가 같은 배열을 쓴다
-                        if (ascii == *(hic->keyboard_addon->ext_key+1) || 
-                                ascii == *(hic->keyboard_addon->ext_key+2)) {// 확장 기호 글쇠 누름
-                            if ( hangul_buffer_is_empty(&(hic->buffer)) ||          // ( 아무것도 없거나
-                                    hangul_buffer_has_jungseong(&(hic->buffer)) || // 가윗소리가 있거나
-                                    hic->extended_layout_index != 0 ) {                 // 확장모드 일 때 )
-                                if ( hic->extended_layout_index < 2 ||
-                                        (hic->extended_layout_index == 2 && // 확장단계가 2 일 때는
-                                        hic->extended_layout_prevkey == ascii) ) {//앞에서와 같은 확장글쇠가 들어와야 한다
-                                    if (hic->extended_layout_index == 0) {// 있던 것을 뿌린다.
-                                        if (hic->keyboard_addon->ext_value != NULL) {
-                                            if (hic->buffer.right_oua) {// 가윗소리에 확장글쇠의 겹홀소리가 있으면 지워준다
-                                                if (hic->buffer.jungseong ==  *(hic->keyboard_addon->ext_value+0) ||
-                                                        hic->buffer.jungseong ==  *(hic->keyboard_addon->ext_value+1) ) {
-                                                    hic->buffer.jungseong = 0;
-                                                }
-                                            }
-                                        }
-                                        hangul_ic_save_commit_string(hic);
-                                    }
-
-                                    //앞에서와 다른 확장글쇠면 1단에서 바로 3단으로 뛴다.
-                                    if (hic->extended_layout_index == 1 && hic->extended_layout_prevkey != ascii) {
-                                        hic->extended_layout_index += 2;
-                                    } else {
-                                        hic->extended_layout_index += 1;
-                                    }
-                                    hic->extended_layout_prevkey = ascii;
-
-                                    switch (hic->extended_layout_index) {
-                                        case 1 : 
-                                                    hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+0));
-                                                    break;
-                                        case 2 : 
-                                                    hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+1));
-                                                    break;
-                                        case 3 : 
-                                                    hangul_buffer_push_ext_step(&hic->buffer, *(hic->keyboard_addon->ext_step+2));
-                                                    break;
-                                        default :
-                                                    hangul_buffer_clear(&hic->buffer);
-                                                    hangul_ic_save_commit_string(hic);
-                                                    break;
-                                    }
-
-                                    hangul_ic_save_preedit_string(hic);
-                                    return true;
-                                }
-                            }
-                        }
+                        hangul_ic_save_preedit_string(hic);
+                        return true;
                     }
                 }
+            } else {// 기호 글쇠가 같은 배열을 쓴다
+                if (hangul_is_extension_condition_sebeol(hic, ascii)) {// 조건을 만족한다
+                    // 확장단계가 2 일 때는//앞에서와 같은 확장글쇠가 들어와야 한다
+                    if ( hic->extended_layout_index < 2 ||
+                            (hic->extended_layout_index == 2 && hic->extended_layout_prevkey == ascii) ) {
+                        // 있던 것을 뿌린다
+                        hangul_is_extension_ready_sebeol(hic);
 
-                if (hic->extended_layout_index >= 1 && hic->extended_layout_index <= 5 ) {
-                    //index = [ 1, 2, 3, 4, 5 ]   // 확장 기호를 다룬다.
-                    if (ch > 0) {
-                        ucschar extended = 0;
-                        if (*(hic->keyboard_addon->ext_key+0) == '1') {// 기호 글쇠가 각각 다른 배열을 쓴다
-                            if ( hic->keyboard_addon->han_key != NULL &&
-                                    (hic->extended_layout_prevkey == *(hic->keyboard_addon->han_key+0) || 
-                                    hic->extended_layout_prevkey == *(hic->keyboard_addon->han_key+1)) ) {// 한글 확장
-                                if (hic->keyboard_addon->yethanguelFunc != NULL) {
-                                    if (hic->extended_layout_prevkey == *(hic->keyboard_addon->han_key+0)) {// 앞한글
-                                        extended = hic->keyboard_addon->yethanguelFunc(ascii, hic->extended_layout_index, 0);
-                                    } else {// 뒷한글
-                                        extended = hic->keyboard_addon->yethanguelFunc(ascii, hic->extended_layout_index, 1);
-                                    }
+                        //앞에서와 다른 확장글쇠면 1단에서 바로 3단으로 뛴다.
+                        if (hic->extended_layout_index == 1 && hic->extended_layout_prevkey != ascii) {
+                            hic->extended_layout_index += 2;
+                        } else {
+                            hic->extended_layout_index += 1;
+                        }
+                        hic->extended_layout_prevkey = ascii;
+
+                        switch (hic->extended_layout_index) {
+                            case 1 : 
+                            case 2 : 
+                            case 3 : 
+                                if (hic->keyboard_addon->ext_step != NULL) {// 확장 기호 단계가 있다
+                                    hangul_buffer_push_extension_step(&hic->buffer, 
+                                                    *(hic->keyboard_addon->ext_step+(hic->extended_layout_index - 1)));
                                 }
-                                // 한글확장에서는 버퍼 청소를 하지 않으니 여기서 확장단계를 없애준다
-                                hic->extended_layout_index = 0;
-                                if (extended) {
-                                    ch = extended;
-                                } else {// 참을 돌려줘야 값이 없는 글쇠를 눌렀을 때 [ 알파벳 ]이 들어가지 않는다
-                                    hangul_ic_save_commit_string(hic);
-                                    return true;
-                                }
-                            } else {// 기호 확장
-                                if (hic->keyboard_addon->symbolFunc != NULL) {
-                                    if (hic->extended_layout_prevkey == *(hic->keyboard_addon->ext_key+1)) {// 아랫기호
-                                        extended = hic->keyboard_addon->symbolFunc(ascii, hic->extended_layout_index, 0);
-                                    } else if (hic->extended_layout_prevkey == *(hic->keyboard_addon->ext_key+2)) {// 윗기호
-                                        extended = hic->keyboard_addon->symbolFunc(ascii, hic->extended_layout_index, 1);
-                                    }
-                                }
-                                hangul_buffer_clear(&hic->buffer);//확장단계 표시 첫소리를 없앤다
+                                break;
+                            default :
+                                hangul_buffer_clear(&hic->buffer);
                                 hangul_ic_save_commit_string(hic);
-                                if (extended) {// 확장기호가 있는 글쇠
-                                    hangul_ic_append_commit_string(hic, extended);
-                                }
-                                hangul_ic_save_preedit_string(hic);
-                                return true;
-                            }
-                        } else {// // 기호 글쇠가 같은 배열을 쓴다
-                            if (hic->keyboard_addon->symbolFunc != NULL) {
-                                extended = hic->keyboard_addon->symbolFunc(ascii, hic->extended_layout_index, 0);
-                            }
+                                break;
+                        }
 
-                            hangul_buffer_clear(&hic->buffer);//확장단계 표시 첫소리를 없앤다
+                        hangul_ic_save_preedit_string(hic);
+                        return true;
+                    }
+                }
+            }
+        } else {
+            yetguel_key = hangul_is_extension_yetguel_key (hic->keyboard_addon, ascii);
+            if (yetguel_key) {// 확장 한글 글쇠 누름
+                // 여기는 한글조합에 쓰이기 때문에 있던 것을 뿌리지 않는다
+                if (hic->extended_layout_index == 0) {
+                    hic->extended_layout_prevkey = ascii;
+                } else if (hic->extended_layout_prevkey != ascii) {
+                    // 앞에서와 다른 한글확장 글쇠가 들어와서 조합을 끝낸다
+                    hangul_ic_save_commit_string(hic);
+                    return true;
+                }
+
+                // 확장 단계를 올린다
+                if (hic->extended_layout_index < 2) {
+                    hic->extended_layout_index += 1;
+                } else {
+                    hic->extended_layout_index = 0;
+                }
+
+                // 여기는 한글조합에 쓰이기 때문에 단계를 나타내지 않는다
+
+                hangul_ic_save_preedit_string(hic);
+                return true;
+            }
+        }
+
+        if (hic->extended_layout_index >= 1 && hic->extended_layout_index <= 5 ) {
+            //index = [ 1, 2, 3, 4, 5 ]   // 확장 기호를 다룬다.
+            if (ch > 0) {
+                ucschar extended = 0;
+                symbol_key = hangul_is_extension_symbol_key (hic->keyboard_addon, 
+                                                                                    hic->extended_layout_prevkey);
+                if (symbol_key) {
+                    if (hic->keyboard_addon->symbolFunc != NULL) {
+                        if (symbol_key > 10) {
+                            symbol_key -= 11;
+                        } else {
+                            symbol_key -= 1;
+                        }
+                        extended = hic->keyboard_addon->symbolFunc(ascii, 
+                                                                hic->extended_layout_index, 
+                                                                symbol_key);
+                    }
+                    hangul_buffer_clear(&hic->buffer);//확장단계 표시 첫소리를 없앤다
+                    hangul_ic_save_commit_string(hic);
+                    if (extended) {// 확장기호가 있는 글쇠
+                        hangul_ic_append_commit_string(hic, extended);
+                    }
+                    hangul_ic_save_preedit_string(hic);
+                    return true;
+                } else {
+                    yetguel_key = hangul_is_extension_yetguel_key (hic->keyboard_addon, 
+                                                                                    hic->extended_layout_prevkey);
+                    if (yetguel_key) {
+                        if (hic->keyboard_addon->yetguelFunc != NULL) {
+                            extended = hic->keyboard_addon->yetguelFunc(ascii, 
+                                                                                    hic->extended_layout_index, 
+                                                                                    yetguel_key - 1);
+                        }
+                        // 한글확장에서는 버퍼 청소를 하지 않으니 여기서 확장단계를 없애준다
+                        hic->extended_layout_index = 0;
+                        if (extended) {
+                            ch = extended;
+                        } else {// 참을 돌려줘야 값이 없는 글쇠를 눌렀을 때 [ 알파벳 ]이 들어가지 않는다
                             hangul_ic_save_commit_string(hic);
-
-                            if (extended) {// 확장기호가 있는 글쇠
-                                hangul_ic_append_commit_string(hic, extended);
-                            }
-                            hangul_ic_save_preedit_string(hic);
                             return true;
                         }
                     } else {
@@ -873,6 +921,9 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
                         return false;
                     }
                 }
+            } else {
+                hangul_ic_save_commit_string(hic);
+                return false;
             }
         }
     }
