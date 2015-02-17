@@ -552,26 +552,6 @@ static const HangulCombinationItem hangul_combination_table_ahn[] = {
 
 
 // 3 에 조합을 더 넣은 것이다
-static const HangulCombinationItem hangul_combination_table_3_3_2014[] = {
-    // 갈마들이 글판에서 가윗소리 글쇠의 윗글에 끝소리가 있고
-    // 그 끝소리에 더해서 겹받침이 있다면 
-    // 끝소리 + 끝소리 = 겹받침
-    // 조합규칙을 넣어준다
-    {0x11AB11AB,0x11ad}, /* jongseong nieun + nieun (ㄴ) = nieun-hieuh (ㄶ) */ // 2014
-    {0x11ae11ae,0x11b2}, /* jongseong tikeut + tikeut (ㄷ) = rieul-pieup (ㄼ) */ // 2014
-    {0x11AF11AF,0x11b0}, /* jongseong rieul + rieul (ㄹ) = rieul-kiyeok (ㄺ) */ // 2014
-    {0x11B711B7,0x11b1}, /* jongseong mieum + mieum (ㅁ) = rieul-mieum (ㄻ) */ // 2014
-    {0x11BA11BA,0x11b6}, /* jongseong sios + sios (ㅅ) = rieul-hieuh (ㅀ) */ // 2014
-    {0x11BC11BC,0x11b9}, /* jongseong ieung + ieung (ㅇ) = pieup-sios (ㅄ) */ // 2014
-    {0x11bd11bd,0x11ac}, /* jongseong cieuc + cieuc (ㅈ) = nieun-cieuc (ㄵ) */ // 2014
-    {0x11be11be,0x11b3}, /* jongseong chieuch + chieuch (ㅊ) = rieul-sios (ㄽ) */ // 2014 ++
-    {0x11bf11bf,0x11aa}, /* jongseong khiyeok + khiyeok (ㅋ) = kiyeok-sois (ㄳ) */ // 2014
-    {0x11c011c0,0x11b4}, /* jongseong thieuth + thieuth (ㅌ) = rieul-thieuth (ㄾ) */ // 2014 ++
-    {0x11c111c1,0x11b5}, /* jongseong phieuph + phieuph (ㅍ) = rieul-phieuph (ㄿ) */ // 2014 ++
-    
-};
-
-// 3 에 조합을 더 넣은 것이다
 static const HangulCombinationItem hangul_combination_table_3_3_2015[] = {
     /* choseong */
     { 0x1100110b, 0x1101 }, /* choseong  kiyeok + ieung (ㄱ + ㅇ)  = ssangkiyeok   */
@@ -616,28 +596,6 @@ static const HangulCombinationItem hangul_combination_table_full_3_2015_yet[] = 
     { 0x11bc11eb, 0x11f2 }, /* jongseong ieung    + pansios      = yesieung-pansios */
     { 0x11bc11f0, 0x11ee }, /* jongseong ieung    + yesieung     = ssangyesieung */
     { 0x11f011bc, 0x11ee }, /* jongseong yesieung + ieung        = ssangyesieung */
-};
-
-// 3 에 조합을 더 넣은 것이다
-static const HangulCombinationItem hangul_combination_table_3_3_2015_patal[] = {
-    /* choseong */
-    /* jungseong */
-    /* jongseong */
-    // 갈마들이 글판에서 가윗소리 글쇠의 윗글에 끝소리가 있고
-    // 그 끝소리에 더해서 겹받침이 있다면 
-    // 끝소리 + 끝소리 = 겹받침
-    // 조합규칙을 넣어준다
-    {0x11AB11AB,0x11ad}, /* jongseong nieun + nieun (ㄴ) = nieun-hieuh (ㄶ) */
-    {0x11AF11AF,0x11b0}, /* jongseong rieul + rieul (ㄹ) = rieul-kiyeok (ㄺ) */
-    {0x11B711B7,0x11b1}, /* jongseong mieum + mieum (ㅁ) = rieul-mieum (ㄻ) */
-    {0x11BA11BA,0x11b6}, /* jongseong sios + sios (ㅅ) = rieul-hieuh (ㅀ) */
-    {0x11BC11BC,0x11b9}, /* jongseong ieung + ieung (ㅇ) = pieup-sios (ㅄ) */
-    {0x11bd11bd,0x11ac}, /* jongseong cieuc + cieuc (ㅈ) = nieun-cieuc (ㄵ) */
-    {0x11be11be,0x11b3}, /* jongseong chieuch + chieuch (ㅊ) = rieul-sios (ㄽ) */
-    {0x11bf11bf,0x11aa}, /* jongseong khiyeok + khiyeok (ㅋ) = kiyeok-sois (ㄳ) */
-    {0x11c011c0,0x11b4}, /* jongseong thieuth + thieuth (ㅌ) = rieul-thieuth (ㄾ) */
-    {0x11c111c1,0x11b5}, /* jongseong phieuph + phieuph (ㅍ) = rieul-phieuph (ㄿ) */
-    {0x11c211c2,0x11b2}, /* jongseong hieuh + hieuh (ㅎ) = rieul-pieup (ㄼ) */
 };
 
 // 3 에 조합을 더 넣은 것이다
@@ -1202,6 +1160,44 @@ static const HangulGalmadeuliItem hangul_replace_table_2_noshift[] = {
     {0x110c, 0x110d},  /* choseong (ㅈ -> ㅉ) */
 };
 
+
+static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_1995[] = {
+    /* choseong -> jungseong */
+    {0x1106, 0x116e},  /* choseong mieum <ㅁ> */     /* jungseong u <ㅜ> */
+    {0x110b, 0x119e},  /* choseong ieung <ㅇ> */      /* jungseong araea<ㆍ> */
+    {0x110e, 0x116e},  /* choseong chieuch <ㅊ> */      /* jungseong u <ㅜ> */
+    {0x110f, 0x1169},  /* choseong khieukh <ㅋ> */     /* jungseong o <ㅗ> */
+    {0x1111, 0x1169},  /* choseong phieuph <ㅍ> */     /* jungseong o <ㅗ> */
+    /* jungseong -> jongseong */
+    {0x1161, 0x11ac},     /*ㅏ*/     /* <ㄵ> */
+    {0x1162, 0x11b4},     /*ㅐ*/     /* <ㄾ> */
+    {0x1163, 0x11b0},     /*ㅑ*/     /* <ㄺ> */
+    {0x1164, 0x11b9},     /*ㅒ*/     /* <ㅄ> */
+    {0x1166, 0x11b5},     /*ㅔ*/     /* <ㄿ>*/
+    {0x1167, 0x11b2},     /*ㅕ*/     /* <ㄼ> */
+    {0x1168, 0x11ad},     /*ㅖ*/     /* <ㄶ> */
+    {0x1169, 0x11aa},     /*ㅗ*/     /* <ㄳ> */
+    {0x116d, 0x11a9},     /*ㅛ*/     /* <ㄲ> */
+    {0x1172, 0x11b1},     /*ㅠ*/     /* <ㄻ> */
+    {0x1174, 0x11b3},     /*ㅢ*/    /* <ㄽ>  */
+    {0x1175, 0x11b6},     /*ㅣ*/     /* <ㅀ> */
+    /* jongseong -> jungseong */
+    {0x11a8, 0x116d},  /* jongseong kiyeok (ㄱ)        -> jungseong yo (ㅛ) */
+    {0x11ab, 0x1168},  /* jongseong nieun (ㄴ)         -> jungseong ye (ㅖ)       */
+    {0x11ae, 0x1162},  /* jongseong tikeut (ㄷ)        -> jungseong ae  (ㅐ)      */
+    {0x11af, 0x1163},  /* jongseong rieul (ㄹ)         ->  jungseong ya (ㅑ)       */
+    {0x11b7, 0x1172},  /* jongseong mieum  (ㅁ)        ->  jungseong yu  (ㅠ)   */
+    {0x11b8, 0x1167},  /* jongseong pieup  (ㅂ)        -> jungseong yeo (ㅕ)     */
+    {0x11ba, 0x1174},  /* jongseong sios (ㅅ)          -> jungseong yi <ㅢ>        */
+    {0x11bb, 0x116e}, /* jongseong ssangsios (ㅆ)     -> jungseong u  (ㅜ)   */
+    {0x11bc, 0x1164},  /* jongseong ieung (ㅇ)         -> jungseong yae (ㅒ)      */
+    {0x11bd, 0x1161},  /* jongseong cieuc (ㅈ)         -> jungseong a (ㅏ)      */
+    {0x11be, 0x1166},  /* jongseong chieuch (ㅊ)       -> jungseong e  (ㅔ)    */
+    {0x11bf, 0x1169},  /* jongseong khieukh (ㅋ)        -> jungseong o  (ㅗ)    */
+    {0x11c0, 0x1165},  /* jongseong thieuth (ㅌ)       -> jungseong eo  (ㅓ)    */
+    {0x11c1, 0x1173},  /* jongseong phieuph (ㅍ)       -> jungseong eu  (ㅡ)    */
+    {0x11c2, 0x1175},  /* jongseong hieuh (ㅎ)         -> jungseong i  (ㅣ)     */
+};
 
 static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_2003[] = {
     /* choseong -> jungseong */

@@ -61,9 +61,9 @@ struct _HangulKeyboardAddon {
     const char *symbol_key; // 확장 기호 배열로 바꾸는 글쇠
     const ucschar *symbol_value; // symbol_key 에 놓인 한글 낱소리의 유니코드 값
     ucschar (*symbolFunc)(int, int, int); // 기호 확장 함수
-    const char *yetguel_key; // 확장 한글 배열로 바꾸는 글쇠
-    const ucschar *yetguel_value; // yetguel_key 에 놓인 한글 낱소리의 유니코드 값 // 아직 쓰이는 곳이 없다
-    ucschar (*yetguelFunc)(int, int, int); // 옛한글 확장 함수
+    const char *yetgeul_key; // 확장 한글 배열로 바꾸는 글쇠
+    const ucschar *yetgeul_value; // yetgeul_key 에 놓인 한글 낱소리의 유니코드 값 // 아직 쓰이는 곳이 없다
+    ucschar (*yetgeulFunc)(int, int, int); // 옛한글 확장 함수
     const ucschar *ext_step; // 확장 단계를 보여주는 한글 낱소리의 유니코드 값
     const char *moeum_key; // 겹홀소리에 쓰이는 ㅗ, ㅜ 가 놓여진 Qwerty 의 글쇠
     const ucschar *moeum_value; // 겹홀소리에 쓰이는 ㅗ, ㅜ 의 유니코드 값 // 아직 쓰이는 곳이 없다
