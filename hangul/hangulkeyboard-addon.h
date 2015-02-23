@@ -1309,6 +1309,22 @@ static const HangulGalmadeuliItem hangul_galmadeuli_table_3_2015[] = {
     {0x11c2, 0x11b2}, /* jongseong hieuh (ㅎ):   jongseong rieul-pieup (ㄼ)  */
 };
 
+static const HangulGalmadeuliItem hangul_galmadeuli_table_3_2015_metal[] = {
+    {0x1161, 0x11c1}, /* jungseong a (ㅏ):       jongseong phieuph (ㅍ)        */
+    {0x1162, 0x11be}, /* jungseong ae (ㅐ):       jungseong chieuch (ㅊ)        */
+    {0x1165, 0x1164}, /* jungseong eo (ㅓ):      jongseong yae (ㅒ)      */
+    {0x1166, 0x11c0}, /* jungseong e (ㅔ):       jongseong thikeuth (ㅌ)        */
+    {0x1167, 0x11bd}, /* jungseong yeo (ㅕ):     jongseong cieuc (ㅈ)        */
+    {0x1169, 0x11bf}, /* jungseong o (ㅗ):       jongseong khiyeok (ㅋ)        */
+    {0x1175, 0x11c2}, /* jungseong i (ㅣ):       jongseong hieuh (ㅎ)       */
+    {0x11bd, 0x11ac}, /* jongseong cieuc (ㅈ):   jongseong nieun-cieuc (ㄵ)  */
+    {0x11be, 0x11b6}, /* jongseong chieuch (ㅊ): jongseong rieul-hieuh (ㅀ)  */
+    {0x11bf, 0x11aa}, /* jongseong khiyeok (ㅋ):   jongseong kiyeok-sios (ㄳ)  */
+    {0x11c0, 0x11b5}, /* jongseong thikeuth (ㅌ):   jongseong rieul-phieuph (ㄿ)  */
+    {0x11c1, 0x11b1},  /* jongseong phieuph (ㅍ):   jongseong rieul-mieum (ㄻ)  */
+    {0x11c2, 0x11b2}, /* jongseong hieuh (ㅎ):   jongseong rieul-pieup (ㄼ)  */
+};
+
 static const HangulGalmadeuliItem hangul_galmadeuli_table_3_2015_patal[] = {
     {0x1161, 0x11c1}, /* jungseong a (ㅏ):       jongseong phieuph (ㅍ)        */
     {0x1162, 0x1164}, /* jungseong ae (ㅐ):       jungseong yae (ㅒ)        */

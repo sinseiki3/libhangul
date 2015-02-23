@@ -231,6 +231,14 @@ static const HangulKeyboard hangul_keyboard_3_2015_yet = {
     &hangul_combination_full
 };
 
+static const HangulKeyboard hangul_keyboard_3_2015_metal = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3-2015-metal",
+    N_("Sebeolsik 3-2015M"),
+    (ucschar*)hangul_keyboard_table_3_2015_metal,
+    &hangul_combination_default_3
+};
+ 
 static const HangulKeyboard hangul_keyboard_3_2015_patal = {
     HANGUL_KEYBOARD_TYPE_JASO,
     "3-2015-patal",
@@ -326,6 +334,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_2014_yet,
     &hangul_keyboard_3_2015,
     &hangul_keyboard_3_2015_yet,
+    &hangul_keyboard_3_2015_metal,
     &hangul_keyboard_3_2015_patal,
     &hangul_keyboard_3_2015_patal_yet,
     &hangul_keyboard_3_14_proposal,
@@ -397,6 +406,11 @@ static const HangulGalmadeuli hangul_galmadeuli_3_2014 = {
 static const HangulGalmadeuli hangul_galmadeuli_3_2015 = {
     N_ELEMENTS(hangul_galmadeuli_table_3_2015),
     (HangulGalmadeuliItem*)hangul_galmadeuli_table_3_2015
+};
+
+static const HangulGalmadeuli hangul_galmadeuli_3_2015_metal = {
+    N_ELEMENTS(hangul_galmadeuli_table_3_2015_metal),
+    (HangulGalmadeuliItem*)hangul_galmadeuli_table_3_2015_metal
 };
 
 static const HangulGalmadeuli hangul_galmadeuli_3_2015_patal = {
@@ -646,6 +660,23 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_yet = {
     NULL // galmadeuli_addon
 };
 
+static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_metal = {
+    "3-2015-metal", // id
+    0x0000, // replace_it // 아래아
+    0x1a, // flag
+    NULL, // symbol_key
+    NULL, // symbol_value
+    NULL, // (*symbolFunc)(int, int, int)
+    NULL, // yetgeul_key
+    NULL, // yetgeul_value
+    NULL, // (*yetgeulFunc)(int, int, int)
+    NULL, // ext_step
+    sebeol_3_moeum_key, // moeum_key
+    sebeol_3_moeum_value, // moeum_value
+    &hangul_combination_3_2015, // combination_addon
+    &hangul_galmadeuli_3_2015_metal // galmadeuli_addon
+};
+ 
 static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_patal = {
     "3-2015-patal", // id
     0x119e, // replace_it // 아래아
@@ -814,6 +845,7 @@ static const HangulKeyboardAddon* hangul_keyboard_addons[] = {
     &hangul_keyboard_addon_3_2014_yet,
     &hangul_keyboard_addon_3_2015,
     &hangul_keyboard_addon_3_2015_yet,
+    &hangul_keyboard_addon_3_2015_metal,
     &hangul_keyboard_addon_3_2015_patal,
     &hangul_keyboard_addon_3_2015_patal_yet,
     &hangul_keyboard_addon_3_14_proposal,

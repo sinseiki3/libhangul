@@ -66,7 +66,7 @@ struct _HangulKeyboardAddon {
     ucschar (*yetgeulFunc)(int, int, int); // 옛한글 확장 함수
     const ucschar *ext_step; // 확장 단계를 보여주는 한글 낱소리의 유니코드 값
     const char *moeum_key; // 겹홀소리에 쓰이는 ㅗ, ㅜ 가 놓여진 Qwerty 의 글쇠
-    const ucschar *moeum_value; // 겹홀소리에 쓰이는 ㅗ, ㅜ 의 유니코드 값 // 아직 쓰이는 곳이 없다
+    const ucschar *moeum_value; // 겹홀소리에 쓰이는 ㅗ, ㅜ 의 유니코드 값
     const HangulCombination *combination_addon; // 기본 조합 외에 글판마다 더해진 조합
     const HangulGalmadeuli *galmadeuli_addon;// 갈마들이 변환 테이블
 };
