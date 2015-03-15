@@ -311,6 +311,14 @@ static const HangulKeyboard hangul_keyboard_3shin_2012 = {
     &hangul_combination_default_3
 };
 
+static const HangulKeyboard hangul_keyboard_3shin_2015 = {
+    HANGUL_KEYBOARD_TYPE_JASO_SHIN_SHIFT,
+    "3shin-2015",
+    N_("Sebeolsik Shin 2015"),
+    (ucschar*)hangul_keyboard_table_3shin_2015,
+    &hangul_combination_default_3
+};
+
 
 static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_2,
@@ -345,6 +353,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3shin_1995,
     &hangul_keyboard_3shin_2003,
     &hangul_keyboard_3shin_2012,
+    &hangul_keyboard_3shin_2015,
 };
 
 // 세벌식 확장모드 글쇠
@@ -388,6 +397,11 @@ static const HangulCombination hangul_combination_3sun_2014 = {
 static const HangulCombination hangul_combination_3gimguk_38a_yet = {
     N_ELEMENTS(hangul_combination_table_full_3gimguk_38A_yet),
     (HangulCombinationItem*)hangul_combination_table_full_3gimguk_38A_yet
+};
+
+static const HangulCombination hangul_combination_3shin_2015 = {
+    N_ELEMENTS(hangul_combination_table_3_3shin_2015),
+    (HangulCombinationItem*)hangul_combination_table_3_3shin_2015
 };
 
 
@@ -436,6 +450,11 @@ static const HangulGalmadeuli hangul_galmadeuli_3shin_2003 = {
 static const HangulGalmadeuli hangul_galmadeuli_3shin_2012 = {
     N_ELEMENTS(hangul_galmadeuli_table_3shin_2012),
     (HangulGalmadeuliItem*)hangul_galmadeuli_table_3shin_2012
+};
+
+static const HangulGalmadeuli hangul_galmadeuli_3shin_2015 = {
+    N_ELEMENTS(hangul_galmadeuli_table_3shin_2015),
+    (HangulGalmadeuliItem*)hangul_galmadeuli_table_3shin_2015
 };
 
 
@@ -815,7 +834,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3shin_2003 = {
 
 static const HangulKeyboardAddon hangul_keyboard_addon_3shin_2012 = {
     "3shin-2012", // id
-    0x0000, // replace_it // FALSE
+    0x119e, // replace_it // FALSE
     0x09, // flag // 갈마들이는 필수 기능이라 꺼지면 안된다
     sebeol_3shin_symbol_key, // symbol_key
     sebeol_3shin_symbol_value, // symbol_value
@@ -828,6 +847,23 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3shin_2012 = {
     sebeol_3_moeum_value, // moeum_value
     NULL, // combination_addon
     &hangul_galmadeuli_3shin_2012 // galmadeuli_addon
+};
+
+static const HangulKeyboardAddon hangul_keyboard_addon_3shin_2015 = {
+    "3shin-2015", // id
+    0x0000, // replace_it // FALSE
+    0x09, // flag // 갈마들이는 필수 기능이라 꺼지면 안된다
+    NULL, // symbol_key
+    NULL, // symbol_value
+    NULL, // (*symbolFunc)(int, int, int)
+    NULL, // yetgeul_key
+    NULL, // yetgeul_value
+    NULL, // (*yetgeulFunc)(int, int, int)
+    NULL, // ext_step
+    sebeol_3shin_moeum_key, // moeum_key
+    sebeol_3_moeum_value, // moeum_value
+    &hangul_combination_3shin_2015, // combination_addon
+    &hangul_galmadeuli_3shin_2015 // galmadeuli_addon
 };
 
 
@@ -855,6 +891,7 @@ static const HangulKeyboardAddon* hangul_keyboard_addons[] = {
     &hangul_keyboard_addon_3shin_1995,
     &hangul_keyboard_addon_3shin_2003,
     &hangul_keyboard_addon_3shin_2012,
+    &hangul_keyboard_addon_3shin_2015,
 };
 
 

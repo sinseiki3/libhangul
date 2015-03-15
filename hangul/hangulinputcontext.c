@@ -1328,6 +1328,8 @@ hangul_ic_process(HangulInputContext *hic, int ascii)
             return hangul_ic_process_jaso_sebeol (hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_JASO_SHIN:
             return hangul_ic_process_jaso_shin_sebeol (hic, ascii, c);
+        case HANGUL_KEYBOARD_TYPE_JASO_SHIN_SHIFT:
+            return hangul_ic_process_jaso_shin_sebeol_shift (hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_3FINALSUN:
             return hangul_ic_process_3finalsun(hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_ROMAJA:

@@ -1,3 +1,13 @@
+libhangul (0.1.0-3.5~vivid0315~3beol) vivid; urgency=low
+
+  * https://github.com/choehwanjin/libhangul
+  * 신세벌식 2015
+    - http://cafe.daum.net/3bulsik/JMKX/50
+  * 신세벌식 2012 글쇠자리 바꿈
+    - http://cafe.daum.net/3bulsik/JMKX/66
+ 
+ -- floor <createsc@gmail.com>  Sat, 02 Feb 2013 22:58:35 +0900
+
 libhangul (0.1.0-3.5~vivid0223~3beol) vivid; urgency=low
 
   * https://github.com/choehwanjin/libhangul
