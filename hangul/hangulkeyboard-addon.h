@@ -46,6 +46,7 @@ static const HangulCombinationItem hangul_combination_table_default_3[] = {
   { 0x11751162, 0x1164 }, /* jungseong i      + ae       = yae            */
   { 0x11751169, 0x116c }, /* jungseong i      + o       = oe            */
   { 0x1175116e, 0x1171 }, /* jungseong i      + u       = wi            */
+  { 0x119e1175, 0x11a1 }, /* jungseong araea + i     = araea-i */
   { 0x119e119e, 0x11a2 }, /* jungseong araea + araea           = ssangaraea */
   { 0x11a811a8, 0x11a9 }, /* jongseong kiyeok + kiyeok  = ssangekiyeok  */
   { 0x11a811ba, 0x11aa }, /* jongseong kiyeok + sios    = kiyeok-sois   */
@@ -1166,8 +1167,9 @@ static const HangulCombinationItem hangul_combination_table_3_3shin_2015[] = {
     /* jungseong */
     /* jongseong */
     { 0x11a811af, 0x11b0 }, /* jongseong kiyeok  + rieul (ㄱ + ㄹ) = rieul-kiyeok (ㄺ) */
-    { 0x11a811c2,0x11a9}, /* jongseong kiyeok + hieuh (ㄱ + ㅎ)  = ssangekiyeok (ㄲ) */
+    { 0x11a811b8, 0x11a9}, /* jongseong kiyeok + pieup (ㄱ + ㅂ)  = ssangekiyeok (ㄲ) */
     { 0x11b711af, 0x11b1 }, /* jongseong mieum  + rieul (ㅁ + ㄹ)  = rieul-mieum (ㄻ)  */
+    { 0x11b811a8, 0x11a9}, /* jongseong pieup + kiyeok (ㅂ + ㄱ)  = ssangekiyeok (ㄲ) */
     { 0x11b811af, 0x11b2 }, /* jongseong pieup  + rieul (ㅂ + ㄹ)  = rieul-pieup (ㄼ)  */
     { 0x11ba11a8, 0x11aa }, /* jongseong sios + kiyeok (ㅅ + ㄱ)   = kiyeok-sois (ㄳ)  */
     { 0x11ba11af, 0x11b3 }, /* jongseong sios  + rieul (ㅅ + ㄹ)   = rieul-sios (ㄽ)   */
@@ -1175,7 +1177,6 @@ static const HangulCombinationItem hangul_combination_table_3_3shin_2015[] = {
     { 0x11bd11ab, 0x11ac }, /* jongseong cieuc  + nieun (ㅈ + ㄴ)  = nieun-cieuc (ㄵ)  */
     { 0x11c011af, 0x11b4 }, /* jongseong thieuth  + rieul (ㅌ + ㄹ) = rieul-thieuth (ㄾ) */
     { 0x11c111af, 0x11b5 }, /* jongseong phieuph  + rieul (ㅍ + ㄹ) = rieul-phieuph (ㄿ) */
-    { 0x11c211a8,0x11a9}, /* jongseong hieuh + kiyeok (ㅎ + ㄱ)  = ssangekiyeok (ㄲ) */
     { 0x11c211ab, 0x11ad }, /* jongseong hieuh  + nieun (ㅎ + ㄴ)  = nieun-hieuh (ㄶ)  */
     { 0x11c211af, 0x11b6 }, /* jongseong hieuh  + rieul (ㅎ + ㄹ)  = rieul-hieuh (ㅀ)  */
 };

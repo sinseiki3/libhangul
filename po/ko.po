@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libhangul 0.0.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-23 15:30+0900\n"
-"PO-Revision-Date: 2015-02-23 15:31+0900\n"
+"POT-Creation-Date: 2015-03-15 15:17+0900\n"
+"PO-Revision-Date: 2015-03-15 15:18+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean <ko@li.org>\n"
 "Language: ko\n"
@@ -144,3 +144,7 @@ msgstr "신세벌식 2003"
 #: ../hangul/hangulinputcontext-def.h:309
 msgid "Sebeolsik Shin 2012"
 msgstr "신세벌식 2012"
+
+#: ../hangul/hangulinputcontext-def.h:317
+msgid "Sebeolsik Shin 2015"
+msgstr "신세벌식 2015"

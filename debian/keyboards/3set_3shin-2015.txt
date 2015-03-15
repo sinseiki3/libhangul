@@ -13,6 +13,6 @@
     초성 ㅃ = ㅂ+ㅂ = ㅂ+ㅈ = ㅈ+ㅂ
     초성 ㅆ = ㅅ+ㅅ = ㅅ+ㅎ = ㅎ+ㅅ
     초성 ㅉ = ㅈ+ㅈ = ㅈ+ㄱ = ㄱ+ㅈ
-    종성 ㄲ = ㄱ+ㄱ = ㄱ+ㅎ = ㅎ+ㄱ
+    종성 ㄲ = ㄱ+ㄱ = ㄱ+ㅂ = ㅂ+ㄱ
 
-- http://cafe.daum.net/3bulsik/JMKX/50
+- http://sebeol.org/gnuboard/bbs/board.php?bo_table=lab&wr_id=28
