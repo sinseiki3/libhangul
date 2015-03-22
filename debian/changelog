@@ -1,3 +1,15 @@
+libhangul (0.1.0-3.5~vivid0322~3beol) vivid; urgency=low
+
+  * https://github.com/choehwanjin/libhangul
+  * 세벌식 모아치기 2015
+    - http://cafe.daum.net/3bulsik/JMKX/79
+  * 신세벌식 M
+    - http://cafe.daum.net/3bulsik/JMKX/77
+  * 신세벌식
+    - http://cafe.daum.net/3bulsik/623N/232
+ 
+ -- floor <createsc@gmail.com>  Sat, 02 Feb 2013 22:58:35 +0900
+
 libhangul (0.1.0-3.5~vivid0316~3beol) vivid; urgency=low
 
   * https://github.com/choehwanjin/libhangul

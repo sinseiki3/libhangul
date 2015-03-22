@@ -1490,7 +1490,17 @@ hangul_ic_backspace(HangulInputContext *hic)
     hic->preedit_string[0] = 0;
     hic->commit_string[0] = 0;
 
-    ret = hangul_buffer_backspace(&hic->buffer);
+    // 조합 종료 타이머가 없을 때의 모아치기
+    //if ( (strlen(hic->keyboard->id) >= 9) && (strncmp(hic->keyboard->id, "3moachigi"  , 9) == 0)) {
+        //if (hangul_buffer_is_empty(&hic->buffer)) {
+            //ret = false;
+        //} else {
+            //hangul_buffer_clear(&hic->buffer);
+            //ret = true;
+        //}
+    //} else {
+        ret = hangul_buffer_backspace(&hic->buffer);
+    //}
     if (ret) {
         if (hic->extended_layout_index >= 1 && hic->extended_layout_index <= 5) {
             hic->extended_layout_index -= 1;
