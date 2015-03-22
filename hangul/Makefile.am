@@ -6,11 +6,17 @@ lib_LTLIBRARIES = libhangul.la
 noinst_HEADERS = \
 	hangul-gettext.h \
 	hangulkeyboard.h \
+	hangulkeyboard-addon.h \
 	hangulinternals.h \
+	hangulctype-addon.h \
+	hangulinputcontext.h \
+	hangulinputcontext-def.h \
+	hangulinputcontext-addon.h \
 	hanjacompatible.h
 
 libhangul_la_SOURCES = \
 	hangulctype.c \
+	hangulctype-addon.c \
 	hangulinputcontext.c \
 	hanja.c
 

@@ -1,0 +1,3 @@
+# False positive - libhangul just implements key input composition so it
+# never calls either of fortified or unfortified functions.
+libhangul1: hardening-no-fortify-functions usr/lib/*/libhangul.so.1.0.0
