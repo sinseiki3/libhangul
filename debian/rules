@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+#export DH_VERBOSE=1
+
+%:
+	dh $@ --with autoreconf
+
+.PHONY: override_dh_strip
+
+override_dh_strip:
+	dh_strip --dbg-package=libhangul1-dbg
+
+override_dh_autoreconf:
+	touch ChangeLog	# for building on the git
+	dh_autoreconf
+
+#override_dh_clean:
+#	rm -rf $(CURDIR)/.pc
+#	dh_clean

@@ -1,0 +1,4 @@
+extend-diff-ignore = "(^|/)(ABOUT-NLS|INSTALL|Makefile|Makefile\.in|Makefile\.in\.in|autogen\.sh|compile|config\.h\.in|config\.rpath|config\.py|config\.sub|config\.guess|configure|depcomp|install-sh|ltmain\.sh|missing|py-compile|.*\.m4)$"
+# Use bzip2 compression by default, we save 2.5Mb
+#compression = "bzip2"
+compression = "xz"
