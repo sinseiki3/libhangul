@@ -393,9 +393,9 @@ static const ucschar sebeol_3_ext_step[] = {0x2460, 0x2461, 0x2462, 0x2463, 0x24
 // 세벌식 겹홀소리 글쇠
 static const char sebeol_3_moeum_key[] = {'/', '9', 0x00};  // ㅗ, ㅜ  // 공병우 계열
 static const char sebeol_3shin_moeum_key[] = {'I', 'O', 'P', 0x00};  // ㅗ, ㅜ  // 신광조 계열
-static const char sebeol_3moachigi_2014_moeum_key[] = {'\'', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열
-static const char sebeol_3moachigi_2015_moeum_key[] = {';', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열
-static const ucschar sebeol_3_moeum_value[] = {0x1169, 0x116e, 0x0000};  // ㅗ, ㅜ 
+static const char sebeol_3moachigi_moeum_key[] = {'\'', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열
+//static const char sebeol_3moachigi_2015_moeum_key[] = {';', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열
+static const ucschar sebeol_3_moeum_value[] = {0x1169, 0x116e, 0x0000};  // ㅗ, ㅜ
 
 
 static const HangulCombination hangul_combination_3_2015 = {
@@ -787,7 +787,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3moachigi_2014 = {
     NULL, // yetgeul_value
     NULL, // (*yetgeulFunc)(int, int, int)
     NULL, // ext_step
-    sebeol_3moachigi_2014_moeum_key, // moeum_key
+    sebeol_3moachigi_moeum_key, // moeum_key
     sebeol_3_moeum_value, // moeum_value
     NULL, // combination_addon
     NULL // galmadeuli_addon
@@ -804,7 +804,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3moachigi_2015 = {
     NULL, // yetgeul_value
     NULL, // (*yetgeulFunc)(int, int, int)
     NULL, // ext_step
-    sebeol_3moachigi_2015_moeum_key, // moeum_key
+    sebeol_3moachigi_moeum_key, // moeum_key
     sebeol_3_moeum_value, // moeum_value
     NULL, // combination_addon
     NULL // galmadeuli_addon
