@@ -1358,8 +1358,8 @@ static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_2003[] = {
     {0x1168, 0x11ad},     /*ㅖ*/     /* <ㄶ> */
     {0x1169, 0x11b6},     /*ㅗ*/     /* <ㅀ> */
     {0x116d, 0x11a9},     /*ㅛ*/     /* <ㄲ> */
-    {0x1172, 0x11b9},     /*ㅠ*/     /* <ㅄ> */
-    {0x1175, 0x11ac},     /*ㅣ*/     /* <ㄵ> */
+    {0x1172, 0x11ac},     /*ㅠ*/     /* <ㄵ> */
+    {0x1175, 0x11b9},     /*ㅣ*/     /* <ㅄ> */
     /* jongseong -> jungseong */
     {0x11a8, 0x116d},  /* jongseong kiyeok (ㄱ)        -> jungseong yo (ㅛ) */
     {0x11ab, 0x1168},  /* jongseong nieun (ㄴ)         -> jungseong ye (ㅖ)       */
@@ -1398,8 +1398,8 @@ static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_2012[] = {
     {0x1169, 0x11b5},     /*ㅗ*/     /* <ㄿ> */
     {0x116d, 0x11a9},     /*ㅛ*/     /* <ㄲ> */
     //{0x116e, 0x11aa},     /*ㅜ*/     /* <ㄳ> */
-    {0x1172, 0x11b9},     /*ㅠ*/     /* <ㅄ> */
-    {0x1175, 0x11ac},     /*ㅣ*/     /* <ㄵ> */
+    {0x1172, 0x11ac},     /*ㅠ*/     /* <ㄵ> */
+    {0x1175, 0x11b9},     /*ㅣ*/     /* <ㅄ> */
     {0x119e, 0x11b1},     /*   ᆞaraea*/    /* <ㄻ>  */
     /* jongseong -> jungseong */
     {0x11a8, 0x116d},  /* jongseong kiyeok (ㄱ)        -> jungseong yo (ㅛ) */
