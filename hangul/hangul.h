@@ -72,6 +72,7 @@ int     hangul_jamos_to_syllables(ucschar* dest, int destlen,
 /* hangulinputcontext.c */
 typedef struct _HangulKeyboard        HangulKeyboard;
 typedef struct _HangulCombination     HangulCombination;
+typedef struct _HangulConversion      HangulConversion;
 typedef struct _HangulBuffer          HangulBuffer;
 typedef struct _HangulInputContext    HangulInputContext;
 
@@ -85,6 +86,7 @@ enum {
     HANGUL_KEYBOARD_TYPE_JASO,
     HANGUL_KEYBOARD_TYPE_ROMAJA,
     HANGUL_KEYBOARD_TYPE_3FINALSUN=-1, // non-official
+    HANGUL_KEYBOARD_TYPE_JASO_SHIN=-2, // non-official
 };
 
 /* keyboard */

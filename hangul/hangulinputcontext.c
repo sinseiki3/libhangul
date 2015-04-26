@@ -89,60 +89,60 @@
     // 편의상 키 입력만 처리하는 코드로 작성하였다.
 
     TWinKeyEvent event = TWinGetKeyEvent(); // 키이벤트를 받는 이런 함수가
-					    // 있다고 치자
+                        // 있다고 치자
     while (ascii != 0) {
-	bool res;
-	if (event.isBackspace()) {
-	    // backspace를 ascii로 변환하기가 좀 꺼림직해서
-	    // libhangul에서는 backspace 처리를 위한 
-	    // 함수를 따로 만들었다.
-	    res = hangul_ic_backspace(hic);
-	} else {
-	    // 키 입력을 해당하는 ascii 코드로 변환한다.
-	    // libhangul에서는 이 ascii 코드가 키 이벤트
-	    // 코드와 마찬가지다.
-	    int ascii = event.getAscii();
+    bool res;
+    if (event.isBackspace()) {
+        // backspace를 ascii로 변환하기가 좀 꺼림직해서
+        // libhangul에서는 backspace 처리를 위한 
+        // 함수를 따로 만들었다.
+        res = hangul_ic_backspace(hic);
+    } else {
+        // 키 입력을 해당하는 ascii 코드로 변환한다.
+        // libhangul에서는 이 ascii 코드가 키 이벤트
+        // 코드와 마찬가지다.
+        int ascii = event.getAscii();
 
-	    // 키 입력을 받았으면 이것을 hic에 먼저 보낸다.
-	    // 그래야 hic가 이 키를 사용할 것인지 아닌지를 판단할 수 있다.
-	    // 함수가 true를 리턴하면 이 키를 사용했다는 의미이므로 
-	    // GUI 코드가 이 키 입력을 프로세싱하지 않도록 해야 한다.
-	    // 그렇지 않으면 한 키입력이 두번 프로세싱된다.
-	    res = hangul_ic_process(hic, ascii);
-	}
-	
-	// hic는 한번 키입력을 받고 나면 내부 상태 변화가 일어나고
-	// 완성된 글자를 어플리케이션에 보내야 하는 상황이 있을 수 있다.
-	// 이것을 HangulInputContext에서는 commit 스트링이 있는지로
-	// 판단한다. commit 스트링을 받아봐서 스트링이 있다면 
-	// 그 스트링으로 입력이 완료된 걸로 본다.
-	const ucschar commit;
-	commit = hangul_ic_get_commit_string(hic);
-	if (commit[0] != 0) {	// 스트링의 길이를 재서 commit 스트링이 있는지
-				// 판단한다.
-	    TWinInputUnicodeChars(commit);
-	}
+        // 키 입력을 받았으면 이것을 hic에 먼저 보낸다.
+        // 그래야 hic가 이 키를 사용할 것인지 아닌지를 판단할 수 있다.
+        // 함수가 true를 리턴하면 이 키를 사용했다는 의미이므로 
+        // GUI 코드가 이 키 입력을 프로세싱하지 않도록 해야 한다.
+        // 그렇지 않으면 한 키입력이 두번 프로세싱된다.
+        res = hangul_ic_process(hic, ascii);
+    }
+    
+    // hic는 한번 키입력을 받고 나면 내부 상태 변화가 일어나고
+    // 완성된 글자를 어플리케이션에 보내야 하는 상황이 있을 수 있다.
+    // 이것을 HangulInputContext에서는 commit 스트링이 있는지로
+    // 판단한다. commit 스트링을 받아봐서 스트링이 있다면 
+    // 그 스트링으로 입력이 완료된 걸로 본다.
+    const ucschar commit;
+    commit = hangul_ic_get_commit_string(hic);
+    if (commit[0] != 0) {   // 스트링의 길이를 재서 commit 스트링이 있는지
+                // 판단한다.
+        TWinInputUnicodeChars(commit);
+    }
 
-	// 키입력 후에는 preedit string도 역시 변화하게 되는데
-	// 입력기 프레임웍에서는 이 스트링을 화면에 보여주어야
-	// 조합중인 글자가 화면에 표시가 되는 것이다.
-	const ucschar preedit;
-	preedit = hangul_ic_get_preedit_string(hic);
-	// 이 경우에는 스트링의 길이에 관계없이 항상 업데이트를 
-	// 해야 한다. 왜냐하면 이전에 조합중이던 글자가 있다가
-	// 조합이 완료되면서 조합중인 상태의 글자가 없어질 수도 있기 때문에
-	// 스트링의 길이에 관계없이 현재 상태의 스트링을 preedit 
-	// 스트링으로 보여주면 되는 것이다.
-	TWinUpdatePreeditString(preedit);
+    // 키입력 후에는 preedit string도 역시 변화하게 되는데
+    // 입력기 프레임웍에서는 이 스트링을 화면에 보여주어야
+    // 조합중인 글자가 화면에 표시가 되는 것이다.
+    const ucschar preedit;
+    preedit = hangul_ic_get_preedit_string(hic);
+    // 이 경우에는 스트링의 길이에 관계없이 항상 업데이트를 
+    // 해야 한다. 왜냐하면 이전에 조합중이던 글자가 있다가
+    // 조합이 완료되면서 조합중인 상태의 글자가 없어질 수도 있기 때문에
+    // 스트링의 길이에 관계없이 현재 상태의 스트링을 preedit 
+    // 스트링으로 보여주면 되는 것이다.
+    TWinUpdatePreeditString(preedit);
 
-	// 위 두작업이 끝난후에는 키 이벤트를 계속 프로세싱해야 하는지 
-	// 아닌지를 처리해야 한다.
-	// hic가 키 이벤트를 사용하지 않았다면 기본 GUI 코드에 계속해서
-	// 키 이벤트 프로세싱을 진행하도록 해야 한다.
-	if (!res)
-	    TWinForwardKeyEventToUI(ascii);
+    // 위 두작업이 끝난후에는 키 이벤트를 계속 프로세싱해야 하는지 
+    // 아닌지를 처리해야 한다.
+    // hic가 키 이벤트를 사용하지 않았다면 기본 GUI 코드에 계속해서
+    // 키 이벤트 프로세싱을 진행하도록 해야 한다.
+    if (!res)
+        TWinForwardKeyEventToUI(ascii);
 
-	ascii = GetKeyEvent();
+    ascii = GetKeyEvent();
     }
 
     hangul_ic_delete(hic);
@@ -178,15 +178,16 @@
 #define HANGUL_KEYBOARD_TABLE_SIZE 0x80
 
 typedef void   (*HangulOnTranslate)  (HangulInputContext*,
-				      int,
-				      ucschar*,
-				      void*);
+                      int,
+                      ucschar*,
+                      void*);
 typedef bool   (*HangulOnTransition) (HangulInputContext*,
-				      ucschar,
-				      const ucschar*,
-				      void*);
+                      ucschar,
+                      const ucschar*,
+                      void*);
 
 typedef struct _HangulCombinationItem HangulCombinationItem;
+typedef struct _HangulConversionItem HangulConversionItem;
 
 struct _HangulKeyboard {
     int type;
@@ -194,6 +195,8 @@ struct _HangulKeyboard {
     const char* name;
     const ucschar* table;
     const HangulCombination* combination;
+    const char *moeum_key;
+    const HangulConversion* conversion;
 };
 
 struct _HangulCombinationItem {
@@ -206,12 +209,24 @@ struct _HangulCombination {
     HangulCombinationItem *table;
 };
 
+struct _HangulConversionItem {
+    ucschar key;
+    ucschar code;
+};
+
+struct _HangulConversion {
+    int size;
+    HangulConversionItem *table;
+};
+
 struct _HangulBuffer {
     ucschar choseong;
     ucschar jungseong;
     ucschar jongseong;
     ucschar shift;
-    
+
+    bool right_ou; // checks if /o/ or /u/ comes from the right hand
+
     ucschar stack[12];
     int     index;
 };
@@ -288,13 +303,27 @@ static const HangulCombination hangul_combination_3_2014 = {
     N_ELEMENTS(hangul_combination_table_3_2014),
     (HangulCombinationItem*)hangul_combination_table_3_2014
 };
+ 
+static const HangulCombination hangul_combination_3_2015 = {
+    N_ELEMENTS(hangul_combination_table_3_2015),
+    (HangulCombinationItem*)hangul_combination_table_3_2015
+};
 
+static const HangulConversion hangul_conversion_3_2015 = {
+    N_ELEMENTS(hangul_conversion_table_3_2015),
+    (HangulConversionItem*)hangul_conversion_table_3_2015
+};
+
+static const char sebeol_3_moeum_key[] = {'/', '9', 0x00};  // ㅗ, ㅜ // 공병우 계열
+ 
 static const HangulKeyboard hangul_keyboard_2 = {
     HANGUL_KEYBOARD_TYPE_JAMO,
     "2", 
     N_("Dubeolsik"), 
     (ucschar*)hangul_keyboard_table_2,
-    &hangul_combination_2
+    &hangul_combination_2,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_2y = {
@@ -302,7 +331,9 @@ static const HangulKeyboard hangul_keyboard_2y = {
     "2y", 
     N_("Dubeolsik Yetgeul"), 
     (ucschar*)hangul_keyboard_table_2y,
-    &hangul_combination_full
+    &hangul_combination_full,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_32 = {
@@ -310,7 +341,9 @@ static const HangulKeyboard hangul_keyboard_32 = {
     "32",
     N_("Sebeolsik Dubeol Layout"),
     (ucschar*)hangul_keyboard_table_32,
-    &hangul_combination_2
+    &hangul_combination_2,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_390 = {
@@ -318,7 +351,9 @@ static const HangulKeyboard hangul_keyboard_390 = {
     "39",
     N_("Sebeolsik 390"),
     (ucschar*)hangul_keyboard_table_390,
-    &hangul_combination_390
+    &hangul_combination_390,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_390_loose = {
@@ -326,7 +361,9 @@ static const HangulKeyboard hangul_keyboard_390_loose = {
     "39l",
     N_("Sebeolsik 390 Loose"),
     (ucschar*)hangul_keyboard_table_390,
-    &hangul_combination_3_loose
+    &hangul_combination_3_loose,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3final = {
@@ -334,7 +371,9 @@ static const HangulKeyboard hangul_keyboard_3final = {
     "3f",
     N_("Sebeolsik Final"),
     (ucschar*)hangul_keyboard_table_3final,
-    &hangul_combination_3
+    &hangul_combination_3,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3final_loose = {
@@ -342,7 +381,9 @@ static const HangulKeyboard hangul_keyboard_3final_loose = {
     "3fl",
     N_("Sebeolsik Final Loose"),
     (ucschar*)hangul_keyboard_table_3final,
-    &hangul_combination_3_loose
+    &hangul_combination_3_loose,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3sun = {
@@ -351,6 +392,8 @@ static const HangulKeyboard hangul_keyboard_3sun = {
     N_("Sebeolsik Noshift"),
     (ucschar*)hangul_keyboard_table_3sun,
     &hangul_combination_3sun,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3yet = {
@@ -358,7 +401,9 @@ static const HangulKeyboard hangul_keyboard_3yet = {
     "3y",
     N_("Sebeolsik Yetgeul"),
     (ucschar*)hangul_keyboard_table_3yet,
-    &hangul_combination_full
+    &hangul_combination_full,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_romaja = {
@@ -366,7 +411,9 @@ static const HangulKeyboard hangul_keyboard_romaja = {
     "ro",
     N_("Romaja"),
     (ucschar*)hangul_keyboard_table_romaja,
-    &hangul_combination_romaja
+    &hangul_combination_romaja,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_ahn = {
@@ -374,7 +421,9 @@ static const HangulKeyboard hangul_keyboard_ahn = {
     "ahn",
     N_("Ahnmatae"),
     (ucschar*)hangul_keyboard_table_ahn,
-    &hangul_combination_ahn
+    &hangul_combination_ahn,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3finalsun = {
@@ -382,7 +431,9 @@ static const HangulKeyboard hangul_keyboard_3finalsun = {
     "3fs",
     N_("Sebeolsik Final Noshift"),
     (ucschar*)hangul_keyboard_table_3finalsun,
-    &hangul_combination_3finalsun
+    &hangul_combination_3finalsun,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3_2011 = {
@@ -390,7 +441,9 @@ static const HangulKeyboard hangul_keyboard_3_2011 = {
     "3-2011",
     N_("Sebeolsik 3-2011"),
     (ucschar*)hangul_keyboard_table_3_2011,
-    &hangul_combination_390
+    &hangul_combination_390,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3_2011_loose = {
@@ -398,7 +451,9 @@ static const HangulKeyboard hangul_keyboard_3_2011_loose = {
     "3-2011l",
     N_("Sebeolsik 3-2011"),
     (ucschar*)hangul_keyboard_table_3_2011,
-    &hangul_combination_3_loose
+    &hangul_combination_3_loose,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3_2012 = {
@@ -406,7 +461,9 @@ static const HangulKeyboard hangul_keyboard_3_2012 = {
     "3-2012",
     N_("Sebeolsik 3-2012"),
     (ucschar*)hangul_keyboard_table_3_2012,
-    &hangul_combination_390
+    &hangul_combination_390,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3_2012_loose = {
@@ -414,7 +471,9 @@ static const HangulKeyboard hangul_keyboard_3_2012_loose = {
     "3-2012l",
     N_("Sebeolsik 3-2012"),
     (ucschar*)hangul_keyboard_table_3_2012,
-    &hangul_combination_3_loose
+    &hangul_combination_3_loose,
+    NULL,
+    NULL
 };
 
 static const HangulKeyboard hangul_keyboard_3_2014 = {
@@ -422,7 +481,19 @@ static const HangulKeyboard hangul_keyboard_3_2014 = {
     "3-2014",
     N_("Sebeolsik Moachigi 2014"),
     (ucschar*)hangul_keyboard_table_3_2014,
-    &hangul_combination_3_2014
+    &hangul_combination_3_2014,
+    NULL,
+    NULL
+};
+
+static const HangulKeyboard hangul_keyboard_3_2015 = {
+    HANGUL_KEYBOARD_TYPE_JASO_SHIN,
+    "3-2015",
+    N_("Sebeolsik 3-2015"),
+    (ucschar*)hangul_keyboard_table_3_2015,
+    &hangul_combination_3_2015,
+    (char *)sebeol_3_moeum_key,
+    &hangul_conversion_3_2015
 };
 
 static const HangulKeyboard* hangul_keyboards[] = {
@@ -443,6 +514,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_2012,
     &hangul_keyboard_3_2012_loose,
     &hangul_keyboard_3_2014,
+    &hangul_keyboard_3_2015,
 };
 
 
@@ -456,21 +528,40 @@ static int     hangul_buffer_get_jamo_string(HangulBuffer *buffer, ucschar *buf,
 
 static void    hangul_ic_flush_internal(HangulInputContext *hic);
 
+
+bool
+moeum_wo_conversion(const HangulKeyboard* keyboard, 
+                int ascii)
+{
+    if (keyboard == NULL)
+        return false;
+
+    int i;
+
+    for (i = 0; *(keyboard->moeum_key+i) != 0x00; i++) {
+        if (ascii == *(keyboard->moeum_key+i)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+ 
 HangulKeyboard*
 hangul_keyboard_new()
 {
     HangulKeyboard *keyboard = malloc(sizeof(HangulKeyboard));
     if (keyboard != NULL) {
-	ucschar* table = malloc(sizeof(ucschar) * HANGUL_KEYBOARD_TABLE_SIZE);
-	if (table != NULL) {
-	    int i;
-	    for (i = 0; i < HANGUL_KEYBOARD_TABLE_SIZE; i++)
-		table[i] = 0;
+    ucschar* table = malloc(sizeof(ucschar) * HANGUL_KEYBOARD_TABLE_SIZE);
+    if (table != NULL) {
+        int i;
+        for (i = 0; i < HANGUL_KEYBOARD_TABLE_SIZE; i++)
+        table[i] = 0;
 
-	    keyboard->table = table;
-	    return keyboard;
-	}
-	free(keyboard);
+        keyboard->table = table;
+        return keyboard;
+    }
+    free(keyboard);
     }
 
     return NULL;
@@ -480,8 +571,8 @@ static ucschar
 hangul_keyboard_get_value(const HangulKeyboard *keyboard, int key)
 {
     if (keyboard != NULL) {
-	if (key >= 0 && key < HANGUL_KEYBOARD_TABLE_SIZE)
-	    return keyboard->table[key];
+    if (key >= 0 && key < HANGUL_KEYBOARD_TABLE_SIZE)
+        return keyboard->table[key];
     }
 
     return 0;
@@ -491,10 +582,10 @@ void
 hangul_keyboard_set_value(HangulKeyboard *keyboard, int key, ucschar value)
 {
     if (keyboard != NULL) {
-	if (key >= 0 && key < N_ELEMENTS(keyboard->table)) {
-	    ucschar* table = (ucschar*)keyboard->table;
-	    table[key] = value;
-	}
+    if (key >= 0 && key < N_ELEMENTS(keyboard->table)) {
+        ucschar* table = (ucschar*)keyboard->table;
+        table[key] = value;
+    }
     }
 }
 
@@ -503,7 +594,7 @@ hangul_keyboard_get_type(const HangulKeyboard *keyboard)
 {
     int type = 0;
     if (keyboard != NULL) {
-	type = keyboard->type;
+    type = keyboard->type;
     }
     return type;
 }
@@ -512,7 +603,7 @@ void
 hangul_keyboard_set_type(HangulKeyboard *keyboard, int type)
 {
     if (keyboard != NULL) {
-	keyboard->type = type;
+    keyboard->type = type;
     }
 }
 
@@ -520,7 +611,7 @@ void
 hangul_keyboard_delete(HangulKeyboard *keyboard)
 {
     if (keyboard != NULL)
-	free(keyboard);
+    free(keyboard);
 }
 
 HangulCombination*
@@ -528,9 +619,9 @@ hangul_combination_new()
 {
     HangulCombination *combination = malloc(sizeof(HangulCombination));
     if (combination != NULL) {
-	combination->size = 0;
-	combination->table = NULL;
-	return combination;
+    combination->size = 0;
+    combination->table = NULL;
+    return combination;
     }
 
     return NULL;
@@ -540,9 +631,9 @@ void
 hangul_combination_delete(HangulCombination *combination)
 {
     if (combination != NULL) {
-	if (combination->table != NULL)
-	    free(combination->table);
-	free(combination);
+    if (combination->table != NULL)
+        free(combination->table);
+    free(combination);
     }
 }
 
@@ -554,25 +645,25 @@ hangul_combination_make_key(ucschar first, ucschar second)
 
 bool
 hangul_combination_set_data(HangulCombination* combination, 
-			    ucschar* first, ucschar* second, ucschar* result,
-			    unsigned int n)
+                ucschar* first, ucschar* second, ucschar* result,
+                unsigned int n)
 {
     if (combination == NULL)
-	return false;
+    return false;
 
     if (n == 0 || n > ULONG_MAX / sizeof(HangulCombinationItem))
-	return false;
+    return false;
 
     combination->table = malloc(sizeof(HangulCombinationItem) * n);
     if (combination->table != NULL) {
-	int i;
+    int i;
 
-	combination->size = n;
-	for (i = 0; i < n; i++) {
-	    combination->table[i].key = hangul_combination_make_key(first[i], second[i]);
-	    combination->table[i].code = result[i];
-	}
-	return true;
+    combination->size = n;
+    for (i = 0; i < n; i++) {
+        combination->table[i].key = hangul_combination_make_key(first[i], second[i]);
+        combination->table[i].code = result[i];
+    }
+    return true;
     }
 
     return false;
@@ -587,28 +678,65 @@ hangul_combination_cmp(const void* p1, const void* p2)
     /* key는 unsigned int이므로 단순히 빼서 리턴하면 안된다.
      * 두 수의 차가 큰 경우 int로 변환하면서 음수가 될 수 있다. */
     if (item1->key < item2->key)
-	return -1;
+    return -1;
     else if (item1->key > item2->key)
-	return 1;
+    return 1;
     else
-	return 0;
+    return 0;
 }
 
 ucschar
 hangul_combination_combine(const HangulCombination* combination,
-			   ucschar first, ucschar second)
+               ucschar first, ucschar second)
 {
     HangulCombinationItem *res;
     HangulCombinationItem key;
 
     if (combination == NULL)
-	return 0;
+    return 0;
 
     key.key = hangul_combination_make_key(first, second);
     res = bsearch(&key, combination->table, combination->size,
-	          sizeof(combination->table[0]), hangul_combination_cmp);
+              sizeof(combination->table[0]), hangul_combination_cmp);
     if (res != NULL)
-	return res->code;
+    return res->code;
+
+    return 0;
+}
+
+static int 
+hangul_conversion_table_cmp(const void* p1, const void* p2)
+{
+    const HangulConversionItem *item1 = p1;
+    const HangulConversionItem *item2 = p2;
+
+    // Following the convention for the combination case...
+    // At the current stage, there's no need for this, in fact.
+    if (item1->key < item2->key)
+    return -1;
+    else if (item1->key > item2->key)
+    return 1;
+    else
+    return 0;
+}
+
+ucschar
+hangul_conversion_convert(const HangulConversion* conversion,
+               ucschar ch)
+{
+    HangulConversionItem *res;
+    HangulConversionItem key;
+
+    if (conversion == NULL)
+        return 0;
+
+    key.key = ch;
+    res = bsearch(&key, conversion->table, 
+                conversion->size,
+                sizeof(conversion->table[0]), 
+                hangul_conversion_table_cmp);
+    if (res != NULL)
+        return res->code;
 
     return 0;
 }
@@ -617,7 +745,7 @@ static bool
 hangul_buffer_is_empty(HangulBuffer *buffer)
 {
     return buffer->choseong == 0 && buffer->jungseong == 0 &&
-	   buffer->jongseong == 0;
+       buffer->jongseong == 0;
 }
 
 static bool
@@ -642,11 +770,11 @@ static void
 hangul_buffer_push(HangulBuffer *buffer, ucschar ch)
 {
     if (hangul_is_choseong(ch)) {
-	buffer->choseong = ch;
+    buffer->choseong = ch;
     } else if (hangul_is_jungseong(ch)) {
-	buffer->jungseong = ch;
+    buffer->jungseong = ch;
     } else if (hangul_is_jongseong(ch)) {
-	buffer->jongseong = ch;
+    buffer->jongseong = ch;
     } else {
     }
 
@@ -663,7 +791,7 @@ static ucschar
 hangul_buffer_peek(HangulBuffer *buffer)
 {
     if (buffer->index < 0)
-	return 0;
+    return 0;
 
     return buffer->stack[buffer->index];
 }
@@ -675,7 +803,9 @@ hangul_buffer_clear(HangulBuffer *buffer)
     buffer->jungseong = 0;
     buffer->jongseong = 0;
     buffer->shift = 0;
-
+    
+    buffer->right_ou = 0;
+ 
     buffer->index = -1;
     buffer->stack[0]  = 0;
     buffer->stack[1]  = 0;
@@ -697,19 +827,19 @@ hangul_buffer_get_jamo_string(HangulBuffer *buffer, ucschar *buf, int buflen)
     int n = 0;
 
     if (buffer->choseong || buffer->jungseong || buffer->jongseong) {
-	if (buffer->choseong) {
-	    buf[n++] = buffer->choseong;
-	} else {
-	    buf[n++] = HANGUL_CHOSEONG_FILLER;
-	}
-	if (buffer->jungseong) {
-	    buf[n++] = buffer->jungseong;
-	} else {
-	    buf[n++] = HANGUL_JUNGSEONG_FILLER;
-	}
-	if (buffer->jongseong) {
-	    buf[n++] = buffer->jongseong;
-	}
+    if (buffer->choseong) {
+        buf[n++] = buffer->choseong;
+    } else {
+        buf[n++] = HANGUL_CHOSEONG_FILLER;
+    }
+    if (buffer->jungseong) {
+        buf[n++] = buffer->jungseong;
+    } else {
+        buf[n++] = HANGUL_JUNGSEONG_FILLER;
+    }
+    if (buffer->jongseong) {
+        buf[n++] = buffer->jongseong;
+    }
     }
 
     buf[n] = 0;
@@ -719,74 +849,74 @@ hangul_buffer_get_jamo_string(HangulBuffer *buffer, ucschar *buf, int buflen)
 
 static int
 hangul_jaso_to_string(ucschar cho, ucschar jung, ucschar jong,
-		      ucschar *buf, int len)
+              ucschar *buf, int len)
 {
     ucschar ch = 0;
     int n = 0;
 
     if (cho) {
-	if (jung) {
-	    /* have cho, jung, jong or no jong */
-	    ch = hangul_jamo_to_syllable(cho, jung, jong);
-	    if (ch != 0) {
-		buf[n++] = ch;
-	    } else {
-		/* 한글 음절로 표현 불가능한 경우 */
-		buf[n++] = cho;
-		buf[n++] = jung;
-		if (jong != 0)
-		    buf[n++] = jong;
-	    }
-	} else {
-	    if (jong) {
-		/* have cho, jong */
-		buf[n++] = cho;
-		buf[n++] = HANGUL_JUNGSEONG_FILLER;
-		buf[n++] = jong;
-	    } else {
-		/* have cho */
-		ch = hangul_jamo_to_cjamo(cho);
-		if (hangul_is_cjamo(ch)) {
-		    buf[n++] = ch;
-		} else {
-		    buf[n++] = cho;
-		    buf[n++] = HANGUL_JUNGSEONG_FILLER;
-		}
-	    }
-	}
+    if (jung) {
+        /* have cho, jung, jong or no jong */
+        ch = hangul_jamo_to_syllable(cho, jung, jong);
+        if (ch != 0) {
+        buf[n++] = ch;
+        } else {
+        /* 한글 음절로 표현 불가능한 경우 */
+        buf[n++] = cho;
+        buf[n++] = jung;
+        if (jong != 0)
+            buf[n++] = jong;
+        }
     } else {
-	if (jung) {
-	    if (jong) {
-		/* have jung, jong */
-		buf[n++] = HANGUL_CHOSEONG_FILLER;
-		buf[n++] = jung;
-		buf[n++] = jong;
-	    } else {
-		/* have jung */
-		ch = hangul_jamo_to_cjamo(jung);
-		if (hangul_is_cjamo(ch)) {
-		    buf[n++] = ch;
-		} else {
-		    buf[n++] = HANGUL_CHOSEONG_FILLER;
-		    buf[n++] = jung;
-		}
-	    }
-	} else {
-	    if (jong) { 
-		/* have jong */
-		ch = hangul_jamo_to_cjamo(jong);
-		if (hangul_is_cjamo(ch)) {
-		    buf[n++] = ch;
-		} else {
-		    buf[n++] = HANGUL_CHOSEONG_FILLER;
-		    buf[n++] = HANGUL_JUNGSEONG_FILLER;
-		    buf[n++] = jong;
-		}
-	    } else {
-		/* have nothing */
-		buf[n] = 0;
-	    }
-	}
+        if (jong) {
+        /* have cho, jong */
+        buf[n++] = cho;
+        buf[n++] = HANGUL_JUNGSEONG_FILLER;
+        buf[n++] = jong;
+        } else {
+        /* have cho */
+        ch = hangul_jamo_to_cjamo(cho);
+        if (hangul_is_cjamo(ch)) {
+            buf[n++] = ch;
+        } else {
+            buf[n++] = cho;
+            buf[n++] = HANGUL_JUNGSEONG_FILLER;
+        }
+        }
+    }
+    } else {
+    if (jung) {
+        if (jong) {
+        /* have jung, jong */
+        buf[n++] = HANGUL_CHOSEONG_FILLER;
+        buf[n++] = jung;
+        buf[n++] = jong;
+        } else {
+        /* have jung */
+        ch = hangul_jamo_to_cjamo(jung);
+        if (hangul_is_cjamo(ch)) {
+            buf[n++] = ch;
+        } else {
+            buf[n++] = HANGUL_CHOSEONG_FILLER;
+            buf[n++] = jung;
+        }
+        }
+    } else {
+        if (jong) { 
+        /* have jong */
+        ch = hangul_jamo_to_cjamo(jong);
+        if (hangul_is_cjamo(ch)) {
+            buf[n++] = ch;
+        } else {
+            buf[n++] = HANGUL_CHOSEONG_FILLER;
+            buf[n++] = HANGUL_JUNGSEONG_FILLER;
+            buf[n++] = jong;
+        }
+        } else {
+        /* have nothing */
+        buf[n] = 0;
+        }
+    }
     }
     buf[n] = 0;
 
@@ -797,39 +927,43 @@ static int
 hangul_buffer_get_string(HangulBuffer *buffer, ucschar *buf, int buflen)
 {
     return hangul_jaso_to_string(buffer->choseong,
-				 buffer->jungseong,
-				 buffer->jongseong,
-				 buf, buflen);
+                 buffer->jungseong,
+                 buffer->jongseong,
+                 buf, buflen);
 }
 
 static bool
 hangul_buffer_backspace(HangulBuffer *buffer)
 {
     if (buffer->index >= 0) {
-	ucschar ch = hangul_buffer_pop(buffer);
-	if (ch == 0)
-	    return false;
+    ucschar ch = hangul_buffer_pop(buffer);
+    if (ch == 0)
+        return false;
 
-	if (buffer->index >= 0) {
-	    if (hangul_is_choseong(ch)) {
-		ch = hangul_buffer_peek(buffer);
-		buffer->choseong = hangul_is_choseong(ch) ? ch : 0;
-		return true;
-	    } else if (hangul_is_jungseong(ch)) {
-		ch = hangul_buffer_peek(buffer);
-		buffer->jungseong = hangul_is_jungseong(ch) ? ch : 0;
-		return true;
-	    } else if (hangul_is_jongseong(ch)) {
-		ch = hangul_buffer_peek(buffer);
-		buffer->jongseong = hangul_is_jongseong(ch) ? ch : 0;
-		return true;
-	    }
-	} else {
-	    buffer->choseong = 0;
-	    buffer->jungseong = 0;
-	    buffer->jongseong = 0;
-	    return true;
-	}
+    if (buffer->index >= 0) {
+        if (hangul_is_choseong(ch)) {
+        ch = hangul_buffer_peek(buffer);
+        buffer->choseong = hangul_is_choseong(ch) ? ch : 0;
+        return true;
+        } else if (hangul_is_jungseong(ch)) {
+        ch = hangul_buffer_peek(buffer);
+        buffer->jungseong = hangul_is_jungseong(ch) ? ch : 0;
+        if (buffer->jungseong == 0) {
+            buffer->right_ou = 0;
+        }
+        return true;
+        } else if (hangul_is_jongseong(ch)) {
+        ch = hangul_buffer_peek(buffer);
+        buffer->jongseong = hangul_is_jongseong(ch) ? ch : 0;
+        return true;
+        }
+    } else {
+        buffer->choseong = 0;
+        buffer->jungseong = 0;
+        buffer->jongseong = 0;
+        buffer->right_ou = 0;
+        return true;
+    }
     }
     return false;
 }
@@ -839,34 +973,34 @@ hangul_ic_push(HangulInputContext *hic, ucschar c)
 {
     ucschar buf[64] = { 0, };
     if (hic->on_transition != NULL) {
-	ucschar cho, jung, jong;
-	if (hangul_is_choseong(c)) {
-	    cho  = c;
-	    jung = hic->buffer.jungseong;
-	    jong = hic->buffer.jongseong;
-	} else if (hangul_is_jungseong(c)) {
-	    cho  = hic->buffer.choseong;
-	    jung = c;
-	    jong = hic->buffer.jongseong;
-	} else if (hangul_is_jongseong(c)) {
-	    cho  = hic->buffer.choseong;
-	    jung = hic->buffer.jungseong;
-	    jong = c;
-	} else {
-	    hangul_ic_flush_internal(hic);
-	    return false;
-	}
-
-	hangul_jaso_to_string(cho, jung, jong, buf, N_ELEMENTS(buf));
-	if (!hic->on_transition(hic, c, buf, hic->on_transition_data)) {
-	    hangul_ic_flush_internal(hic);
-	    return false;
-	}
+    ucschar cho, jung, jong;
+    if (hangul_is_choseong(c)) {
+        cho  = c;
+        jung = hic->buffer.jungseong;
+        jong = hic->buffer.jongseong;
+    } else if (hangul_is_jungseong(c)) {
+        cho  = hic->buffer.choseong;
+        jung = c;
+        jong = hic->buffer.jongseong;
+    } else if (hangul_is_jongseong(c)) {
+        cho  = hic->buffer.choseong;
+        jung = hic->buffer.jungseong;
+        jong = c;
     } else {
-	if (!hangul_is_jamo(c)) {
-	    hangul_ic_flush_internal(hic);
-	    return false;
-	}
+        hangul_ic_flush_internal(hic);
+        return false;
+    }
+
+    hangul_jaso_to_string(cho, jung, jong, buf, N_ELEMENTS(buf));
+    if (!hic->on_transition(hic, c, buf, hic->on_transition_data)) {
+        hangul_ic_flush_internal(hic);
+        return false;
+    }
+    } else {
+    if (!hangul_is_jamo(c)) {
+        hangul_ic_flush_internal(hic);
+        return false;
+    }
     }
 
     hangul_buffer_push(&hic->buffer, c);
@@ -889,13 +1023,13 @@ static inline void
 hangul_ic_save_preedit_string(HangulInputContext *hic)
 {
     if (hic->output_mode == HANGUL_OUTPUT_JAMO) {
-	hangul_buffer_get_jamo_string(&hic->buffer,
-				      hic->preedit_string,
-				      N_ELEMENTS(hic->preedit_string));
+    hangul_buffer_get_jamo_string(&hic->buffer,
+                      hic->preedit_string,
+                      N_ELEMENTS(hic->preedit_string));
     } else {
-	hangul_buffer_get_string(&hic->buffer,
-				 hic->preedit_string,
-				 N_ELEMENTS(hic->preedit_string));
+    hangul_buffer_get_string(&hic->buffer,
+                 hic->preedit_string,
+                 N_ELEMENTS(hic->preedit_string));
     }
 }
 
@@ -905,13 +1039,13 @@ hangul_ic_append_commit_string(HangulInputContext *hic, ucschar ch)
     int i;
 
     for (i = 0; i < N_ELEMENTS(hic->commit_string); i++) {
-	if (hic->commit_string[i] == 0)
-	    break;
+    if (hic->commit_string[i] == 0)
+        break;
     }
 
     if (i + 1 < N_ELEMENTS(hic->commit_string)) {
-	hic->commit_string[i++] = ch;
-	hic->commit_string[i] = 0;
+    hic->commit_string[i++] = ch;
+    hic->commit_string[i] = 0;
     }
 }
 
@@ -922,16 +1056,16 @@ hangul_ic_save_commit_string(HangulInputContext *hic)
     int len = N_ELEMENTS(hic->commit_string);
 
     while (len > 0) {
-	if (*string == 0)
-	    break;
-	len--;
-	string++;
+    if (*string == 0)
+        break;
+    len--;
+    string++;
     }
 
     if (hic->output_mode == HANGUL_OUTPUT_JAMO) {
-	hangul_buffer_get_jamo_string(&hic->buffer, string, len);
+    hangul_buffer_get_jamo_string(&hic->buffer, string, len);
     } else {
-	hangul_buffer_get_string(&hic->buffer, string, len);
+    hangul_buffer_get_string(&hic->buffer, string, len);
     }
 
     hangul_buffer_clear(&hic->buffer);
@@ -942,13 +1076,13 @@ hangul_ic_choseong_to_jongseong(HangulInputContext* hic, ucschar cho)
 {
     ucschar jong = hangul_choseong_to_jongseong(cho);
     if (hangul_is_jongseong_conjoinable(jong)) {
-	return jong;
+    return jong;
     } else {
-	/* 옛글 조합 규칙을 사용하는 자판의 경우에는 종성이 conjoinable
-	 * 하지 않아도 상관없다 */
-	if (hic->keyboard->combination == &hangul_combination_full) {
-	    return jong;
-	}
+    /* 옛글 조합 규칙을 사용하는 자판의 경우에는 종성이 conjoinable
+     * 하지 않아도 상관없다 */
+    if (hic->keyboard->combination == &hangul_combination_full) {
+        return jong;
+    }
     }
 
     return 0;
@@ -961,119 +1095,119 @@ hangul_ic_process_jamo(HangulInputContext *hic, ucschar ch)
     ucschar combined;
 
     if (!hangul_is_jamo(ch) && ch > 0) {
-	hangul_ic_save_commit_string(hic);
-	hangul_ic_append_commit_string(hic, ch);
-	return true;
+    hangul_ic_save_commit_string(hic);
+    hangul_ic_append_commit_string(hic, ch);
+    return true;
     }
 
     if (hic->buffer.jongseong) {
-	if (hangul_is_choseong(ch)) {
-	    jong = hangul_ic_choseong_to_jongseong(hic, ch);
-	    combined = hangul_combination_combine(hic->keyboard->combination,
-					      hic->buffer.jongseong, jong);
-	    if (hangul_is_jongseong(combined)) {
-		if (!hangul_ic_push(hic, combined)) {
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    } else {
-		hangul_ic_save_commit_string(hic);
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else if (hangul_is_jungseong(ch)) {
-	    ucschar pop, peek;
-	    pop = hangul_ic_pop(hic);
-	    peek = hangul_ic_peek(hic);
+    if (hangul_is_choseong(ch)) {
+        jong = hangul_ic_choseong_to_jongseong(hic, ch);
+        combined = hangul_combination_combine(hic->keyboard->combination,
+                          hic->buffer.jongseong, jong);
+        if (hangul_is_jongseong(combined)) {
+        if (!hangul_ic_push(hic, combined)) {
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        } else {
+        hangul_ic_save_commit_string(hic);
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    } else if (hangul_is_jungseong(ch)) {
+        ucschar pop, peek;
+        pop = hangul_ic_pop(hic);
+        peek = hangul_ic_peek(hic);
 
-	    if (hangul_is_jongseong(peek)) {
-		ucschar choseong = hangul_jongseong_get_diff(peek,
-						 hic->buffer.jongseong);
-		if (choseong == 0) {
-		    hangul_ic_save_commit_string(hic);
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		} else {
-		    hic->buffer.jongseong = peek;
-		    hangul_ic_save_commit_string(hic);
-		    hangul_ic_push(hic, choseong);
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    } else {
-		hic->buffer.jongseong = 0;
-		hangul_ic_save_commit_string(hic);
-		hangul_ic_push(hic, hangul_jongseong_to_choseong(pop));
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else {
-	    goto flush;
-	}
-    } else if (hic->buffer.jungseong) {
-	if (hangul_is_choseong(ch)) {
-	    if (hic->buffer.choseong) {
-		jong = hangul_ic_choseong_to_jongseong(hic, ch);
-		if (hangul_is_jongseong(jong)) {
-		    if (!hangul_ic_push(hic, jong)) {
-			if (!hangul_ic_push(hic, ch)) {
-			    return false;
-			}
-		    }
-		} else {
-		    hangul_ic_save_commit_string(hic);
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    } else {
-		if (!hangul_ic_push(hic, ch)) {
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    }
-	} else if (hangul_is_jungseong(ch)) {
-	    combined = hangul_combination_combine(hic->keyboard->combination,
-						  hic->buffer.jungseong, ch);
-	    if (hangul_is_jungseong(combined)) {
-		if (!hangul_ic_push(hic, combined)) {
-		    return false;
-		}
-	    } else {
-		hangul_ic_save_commit_string(hic);
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else {
-	    goto flush;
-	}
-    } else if (hic->buffer.choseong) {
-	if (hangul_is_choseong(ch)) {
-	    combined = hangul_combination_combine(hic->keyboard->combination,
-						  hic->buffer.choseong, ch);
-	    if (!hangul_ic_push(hic, combined)) {
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else {
-	    if (!hangul_ic_push(hic, ch)) {
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	}
+        if (hangul_is_jongseong(peek)) {
+        ucschar choseong = hangul_jongseong_get_diff(peek,
+                         hic->buffer.jongseong);
+        if (choseong == 0) {
+            hangul_ic_save_commit_string(hic);
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        } else {
+            hic->buffer.jongseong = peek;
+            hangul_ic_save_commit_string(hic);
+            hangul_ic_push(hic, choseong);
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        } else {
+        hic->buffer.jongseong = 0;
+        hangul_ic_save_commit_string(hic);
+        hangul_ic_push(hic, hangul_jongseong_to_choseong(pop));
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
     } else {
-	if (!hangul_ic_push(hic, ch)) {
-	    return false;
-	}
+        goto flush;
+    }
+    } else if (hic->buffer.jungseong) {
+    if (hangul_is_choseong(ch)) {
+        if (hic->buffer.choseong) {
+        jong = hangul_ic_choseong_to_jongseong(hic, ch);
+        if (hangul_is_jongseong(jong)) {
+            if (!hangul_ic_push(hic, jong)) {
+            if (!hangul_ic_push(hic, ch)) {
+                return false;
+            }
+            }
+        } else {
+            hangul_ic_save_commit_string(hic);
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        } else {
+        if (!hangul_ic_push(hic, ch)) {
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        }
+    } else if (hangul_is_jungseong(ch)) {
+        combined = hangul_combination_combine(hic->keyboard->combination,
+                          hic->buffer.jungseong, ch);
+        if (hangul_is_jungseong(combined)) {
+        if (!hangul_ic_push(hic, combined)) {
+            return false;
+        }
+        } else {
+        hangul_ic_save_commit_string(hic);
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    } else {
+        goto flush;
+    }
+    } else if (hic->buffer.choseong) {
+    if (hangul_is_choseong(ch)) {
+        combined = hangul_combination_combine(hic->keyboard->combination,
+                          hic->buffer.choseong, ch);
+        if (!hangul_ic_push(hic, combined)) {
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    } else {
+        if (!hangul_ic_push(hic, ch)) {
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    }
+    } else {
+    if (!hangul_ic_push(hic, ch)) {
+        return false;
+    }
     }
 
     hangul_ic_save_preedit_string(hic);
@@ -1088,93 +1222,93 @@ static bool
 hangul_ic_process_jaso(HangulInputContext *hic, ucschar ch)
 {
     if (hangul_is_choseong(ch)) {
-	if (hic->buffer.choseong == 0) {
-	    if (!hangul_ic_push(hic, ch)) {
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else {
-	    ucschar choseong = 0;
-	    if (hangul_is_choseong(hangul_ic_peek(hic))) {
-		choseong = hangul_combination_combine(hic->keyboard->combination,
-						  hic->buffer.choseong, ch);
-	    }
-	    if (choseong) {
-		if (!hangul_ic_push(hic, choseong)) {
-		    if (!hangul_ic_push(hic, choseong)) {
-			return false;
-		    }
-		}
-	    } else {
-		hangul_ic_save_commit_string(hic);
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	}
-    } else if (hangul_is_jungseong(ch)) {
-	if (hic->buffer.jungseong == 0) {
-	    if (!hangul_ic_push(hic, ch)) {
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else {
-	    ucschar jungseong = 0;
-	    if (hangul_is_jungseong(hangul_ic_peek(hic))) {
-		jungseong = hangul_combination_combine(hic->keyboard->combination,
-						 hic->buffer.jungseong, ch);
-	    }
-	    if (jungseong) {
-		if (!hangul_ic_push(hic, jungseong)) {
-		    if (!hangul_ic_push(hic, jungseong)) {
-			return false;
-		    }
-		}
-	    } else {
-		hangul_ic_save_commit_string(hic);
-		if (!hangul_ic_push(hic, ch)) {
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    }
-	}
-    } else if (hangul_is_jongseong(ch)) {
-	if (hic->buffer.jongseong == 0) {
-	    if (!hangul_ic_push(hic, ch)) {
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else {
-	    ucschar jongseong = 0;
-	    if (hangul_is_jongseong(hangul_ic_peek(hic))) {
-		jongseong = hangul_combination_combine(hic->keyboard->combination,
-						   hic->buffer.jongseong, ch);
-	    }
-	    if (jongseong) {
-		if (!hangul_ic_push(hic, jongseong)) {
-		    if (!hangul_ic_push(hic, jongseong)) {
-			return false;
-		    }
-		}
-	    } else {
-		hangul_ic_save_commit_string(hic);
-		if (!hangul_ic_push(hic, ch)) {
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    }
-	}
-    } else if (ch > 0) {
-	hangul_ic_save_commit_string(hic);
-	hangul_ic_append_commit_string(hic, ch);
+    if (hic->buffer.choseong == 0) {
+        if (!hangul_ic_push(hic, ch)) {
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
     } else {
-	hangul_ic_save_commit_string(hic);
-	return false;
+        ucschar choseong = 0;
+        if (hangul_is_choseong(hangul_ic_peek(hic))) {
+        choseong = hangul_combination_combine(hic->keyboard->combination,
+                          hic->buffer.choseong, ch);
+        }
+        if (choseong) {
+        if (!hangul_ic_push(hic, choseong)) {
+            if (!hangul_ic_push(hic, choseong)) {
+            return false;
+            }
+        }
+        } else {
+        hangul_ic_save_commit_string(hic);
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    }
+    } else if (hangul_is_jungseong(ch)) {
+    if (hic->buffer.jungseong == 0) {
+        if (!hangul_ic_push(hic, ch)) {
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    } else {
+        ucschar jungseong = 0;
+        if (hangul_is_jungseong(hangul_ic_peek(hic))) {
+        jungseong = hangul_combination_combine(hic->keyboard->combination,
+                         hic->buffer.jungseong, ch);
+        }
+        if (jungseong) {
+        if (!hangul_ic_push(hic, jungseong)) {
+            if (!hangul_ic_push(hic, jungseong)) {
+            return false;
+            }
+        }
+        } else {
+        hangul_ic_save_commit_string(hic);
+        if (!hangul_ic_push(hic, ch)) {
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        }
+    }
+    } else if (hangul_is_jongseong(ch)) {
+    if (hic->buffer.jongseong == 0) {
+        if (!hangul_ic_push(hic, ch)) {
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    } else {
+        ucschar jongseong = 0;
+        if (hangul_is_jongseong(hangul_ic_peek(hic))) {
+        jongseong = hangul_combination_combine(hic->keyboard->combination,
+                           hic->buffer.jongseong, ch);
+        }
+        if (jongseong) {
+        if (!hangul_ic_push(hic, jongseong)) {
+            if (!hangul_ic_push(hic, jongseong)) {
+            return false;
+            }
+        }
+        } else {
+        hangul_ic_save_commit_string(hic);
+        if (!hangul_ic_push(hic, ch)) {
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        }
+    }
+    } else if (ch > 0) {
+    hangul_ic_save_commit_string(hic);
+    hangul_ic_append_commit_string(hic, ch);
+    } else {
+    hangul_ic_save_commit_string(hic);
+    return false;
     }
 
     hangul_ic_save_preedit_string(hic);
@@ -1384,167 +1518,167 @@ hangul_ic_process_romaja(HangulInputContext *hic, int ascii, ucschar ch)
     ucschar combined;
 
     if (!hangul_is_jamo(ch) && ch > 0) {
-	hangul_ic_save_commit_string(hic);
-	hangul_ic_append_commit_string(hic, ch);
-	return true;
+    hangul_ic_save_commit_string(hic);
+    hangul_ic_append_commit_string(hic, ch);
+    return true;
     }
 
     if (isupper(ascii)) {
-	hangul_ic_save_commit_string(hic);
+    hangul_ic_save_commit_string(hic);
     }
 
     if (hic->buffer.jongseong) {
-	if (ascii == 'x' || ascii == 'X') {
-	    ch = 0x110c;
-	    hangul_ic_save_commit_string(hic);
-	    if (!hangul_ic_push(hic, ch)) {
-		return false;
-	    }
-	} else if (hangul_is_choseong(ch) || hangul_is_jongseong(ch)) {
-	    if (hangul_is_jongseong(ch))
-		jong = ch;
-	    else
-		jong = hangul_ic_choseong_to_jongseong(hic, ch);
-	    combined = hangul_combination_combine(hic->keyboard->combination,
-					      hic->buffer.jongseong, jong);
-	    if (hangul_is_jongseong(combined)) {
-		if (!hangul_ic_push(hic, combined)) {
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    } else {
-		hangul_ic_save_commit_string(hic);
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else if (hangul_is_jungseong(ch)) {
-	    if (hic->buffer.jongseong == 0x11bc) {
-		hangul_ic_save_commit_string(hic);
-		hic->buffer.choseong = 0x110b;
-		hangul_ic_push(hic, ch);
-	    } else {
-		ucschar pop, peek;
-		pop = hangul_ic_pop(hic);
-		peek = hangul_ic_peek(hic);
+    if (ascii == 'x' || ascii == 'X') {
+        ch = 0x110c;
+        hangul_ic_save_commit_string(hic);
+        if (!hangul_ic_push(hic, ch)) {
+        return false;
+        }
+    } else if (hangul_is_choseong(ch) || hangul_is_jongseong(ch)) {
+        if (hangul_is_jongseong(ch))
+        jong = ch;
+        else
+        jong = hangul_ic_choseong_to_jongseong(hic, ch);
+        combined = hangul_combination_combine(hic->keyboard->combination,
+                          hic->buffer.jongseong, jong);
+        if (hangul_is_jongseong(combined)) {
+        if (!hangul_ic_push(hic, combined)) {
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        } else {
+        hangul_ic_save_commit_string(hic);
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    } else if (hangul_is_jungseong(ch)) {
+        if (hic->buffer.jongseong == 0x11bc) {
+        hangul_ic_save_commit_string(hic);
+        hic->buffer.choseong = 0x110b;
+        hangul_ic_push(hic, ch);
+        } else {
+        ucschar pop, peek;
+        pop = hangul_ic_pop(hic);
+        peek = hangul_ic_peek(hic);
 
-		if (hangul_is_jungseong(peek)) {
-		    if (pop == 0x11aa) {
-			hic->buffer.jongseong = 0x11a8;
-			pop = 0x11ba;
-		    } else {
-			hic->buffer.jongseong = 0;
-		    }
-		    hangul_ic_save_commit_string(hic);
-		    hangul_ic_push(hic, hangul_jongseong_to_choseong(pop));
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		} else {
-		    ucschar choseong = 0, jongseong = 0; 
-		    hangul_jongseong_decompose(hic->buffer.jongseong,
-					       &jongseong, &choseong);
-		    hic->buffer.jongseong = jongseong;
-		    hangul_ic_save_commit_string(hic);
-		    hangul_ic_push(hic, choseong);
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    }
-	} else {
-	    goto flush;
-	}
-    } else if (hic->buffer.jungseong) {
-	if (hangul_is_choseong(ch)) {
-	    if (hic->buffer.choseong) {
-		jong = hangul_ic_choseong_to_jongseong(hic, ch);
-		if (hangul_is_jongseong(jong)) {
-		    if (!hangul_ic_push(hic, jong)) {
-			if (!hangul_ic_push(hic, ch)) {
-			    return false;
-			}
-		    }
-		} else {
-		    hangul_ic_save_commit_string(hic);
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    } else {
-		if (!hangul_ic_push(hic, ch)) {
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    }
-	} else if (hangul_is_jungseong(ch)) {
-	    combined = hangul_combination_combine(hic->keyboard->combination,
-						  hic->buffer.jungseong, ch);
-	    if (hangul_is_jungseong(combined)) {
-		if (!hangul_ic_push(hic, combined)) {
-		    return false;
-		}
-	    } else {
-		hangul_ic_save_commit_string(hic);
-		hic->buffer.choseong = 0x110b;
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else if (hangul_is_jongseong(ch)) {
-	    if (!hangul_ic_push(hic, ch)) {
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	} else {
-	    goto flush;
-	}
-    } else if (hic->buffer.choseong) {
-	if (hangul_is_choseong(ch)) {
-	    combined = hangul_combination_combine(hic->keyboard->combination,
-						  hic->buffer.choseong, ch);
-	    if (combined == 0) {
-		hic->buffer.jungseong = 0x1173;
-		hangul_ic_flush_internal(hic);
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    } else {
-		if (!hangul_ic_push(hic, combined)) {
-		    if (!hangul_ic_push(hic, ch)) {
-			return false;
-		    }
-		}
-	    }
-	} else if (hangul_is_jongseong(ch)) {
-	    hic->buffer.jungseong = 0x1173;
-	    hangul_ic_save_commit_string(hic);
-	    if (ascii == 'x' || ascii == 'X')
-		ch = 0x110c;
-	    if (!hangul_ic_push(hic, ch)) {
-		return false;
-	    }
-	} else {
-	    if (!hangul_ic_push(hic, ch)) {
-		if (!hangul_ic_push(hic, ch)) {
-		    return false;
-		}
-	    }
-	}
+        if (hangul_is_jungseong(peek)) {
+            if (pop == 0x11aa) {
+            hic->buffer.jongseong = 0x11a8;
+            pop = 0x11ba;
+            } else {
+            hic->buffer.jongseong = 0;
+            }
+            hangul_ic_save_commit_string(hic);
+            hangul_ic_push(hic, hangul_jongseong_to_choseong(pop));
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        } else {
+            ucschar choseong = 0, jongseong = 0; 
+            hangul_jongseong_decompose(hic->buffer.jongseong,
+                           &jongseong, &choseong);
+            hic->buffer.jongseong = jongseong;
+            hangul_ic_save_commit_string(hic);
+            hangul_ic_push(hic, choseong);
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        }
     } else {
-	if (ascii == 'x' || ascii == 'X') {
-	    ch = 0x110c;
-	}
+        goto flush;
+    }
+    } else if (hic->buffer.jungseong) {
+    if (hangul_is_choseong(ch)) {
+        if (hic->buffer.choseong) {
+        jong = hangul_ic_choseong_to_jongseong(hic, ch);
+        if (hangul_is_jongseong(jong)) {
+            if (!hangul_ic_push(hic, jong)) {
+            if (!hangul_ic_push(hic, ch)) {
+                return false;
+            }
+            }
+        } else {
+            hangul_ic_save_commit_string(hic);
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        } else {
+        if (!hangul_ic_push(hic, ch)) {
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        }
+    } else if (hangul_is_jungseong(ch)) {
+        combined = hangul_combination_combine(hic->keyboard->combination,
+                          hic->buffer.jungseong, ch);
+        if (hangul_is_jungseong(combined)) {
+        if (!hangul_ic_push(hic, combined)) {
+            return false;
+        }
+        } else {
+        hangul_ic_save_commit_string(hic);
+        hic->buffer.choseong = 0x110b;
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    } else if (hangul_is_jongseong(ch)) {
+        if (!hangul_ic_push(hic, ch)) {
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    } else {
+        goto flush;
+    }
+    } else if (hic->buffer.choseong) {
+    if (hangul_is_choseong(ch)) {
+        combined = hangul_combination_combine(hic->keyboard->combination,
+                          hic->buffer.choseong, ch);
+        if (combined == 0) {
+        hic->buffer.jungseong = 0x1173;
+        hangul_ic_flush_internal(hic);
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        } else {
+        if (!hangul_ic_push(hic, combined)) {
+            if (!hangul_ic_push(hic, ch)) {
+            return false;
+            }
+        }
+        }
+    } else if (hangul_is_jongseong(ch)) {
+        hic->buffer.jungseong = 0x1173;
+        hangul_ic_save_commit_string(hic);
+        if (ascii == 'x' || ascii == 'X')
+        ch = 0x110c;
+        if (!hangul_ic_push(hic, ch)) {
+        return false;
+        }
+    } else {
+        if (!hangul_ic_push(hic, ch)) {
+        if (!hangul_ic_push(hic, ch)) {
+            return false;
+        }
+        }
+    }
+    } else {
+    if (ascii == 'x' || ascii == 'X') {
+        ch = 0x110c;
+    }
 
-	if (!hangul_ic_push(hic, ch)) {
-	    return false;
-	} else {
-	    if (hic->buffer.choseong == 0 && hic->buffer.jungseong != 0)
-		hic->buffer.choseong = 0x110b;
-	}
+    if (!hangul_ic_push(hic, ch)) {
+        return false;
+    } else {
+        if (hic->buffer.choseong == 0 && hic->buffer.jungseong != 0)
+        hic->buffer.choseong = 0x110b;
+    }
     }
 
     hangul_ic_save_preedit_string(hic);
@@ -1555,13 +1689,204 @@ flush:
     return false;
 }
 
+
+static bool
+hangul_ic_process_jaso_sebeol_shin(HangulInputContext *hic, int ascii, ucschar ch)
+{
+    if (hangul_is_choseong(ch)) {
+        if (hic->buffer.choseong == 0) {
+            if (!hangul_ic_push(hic, ch)) {
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+        } 
+        else {
+            ucschar choseong = 0;
+            if (hangul_is_choseong(hangul_ic_peek(hic))) {
+                choseong = hangul_combination_combine(hic->keyboard->combination,
+                        hic->buffer.choseong, ch);
+            }
+            if (choseong) {
+                if (!hangul_ic_push(hic, choseong)) {
+                    if (!hangul_ic_push(hic, choseong)) {
+                        return false;
+                    }
+                }
+            } 
+            else {
+                hangul_ic_save_commit_string(hic);
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+        }
+    } 
+    else if (hangul_is_jungseong(ch)) {
+        if (hic->buffer.jungseong == 0) {
+            if (moeum_wo_conversion(hic->keyboard, ascii)) {
+                hic->buffer.right_ou = true;
+            }
+            if (!hangul_ic_push(hic, ch)) {
+                if (!hangul_ic_push(hic, ch)) {
+                    return false;
+                }
+            }
+        } else {
+            ucschar jungseong = 0;
+            bool combine = false;
+            // 왼/오른 ㅗ, ㅜ 를 반드시 구분해야 하는 글판 (갈마들이 글판)
+            if (hic->buffer.right_ou || (hic->buffer.choseong == 0) || moeum_wo_conversion(hic->keyboard, ascii)) {
+                combine = hangul_is_jungseong(hangul_ic_peek(hic));
+            } else {
+                combine = false;
+            }
+
+            if (combine) {// 가윗소리 조합이 된다면, 가윗소리 둘을 하나로 만들어 본다
+                jungseong = hangul_combination_combine(hic->keyboard->combination,
+                                                        hic->buffer.jungseong, ch);
+            }
+            if (hangul_is_jungseong(jungseong)) {// 둘이 하나가 되었다
+                if (!hangul_ic_push(hic, jungseong)) {
+                    if (!hangul_ic_push(hic, jungseong)) {
+                        return false;
+                    }
+                }
+            } else {// 둘이 하나가 되지 못했다. 갈마들이로 해보자
+                ucschar jung_jongseong = 0;
+                if (hic->buffer.choseong) {// 첫소리, 가윗소리가 있다
+                    jung_jongseong = hangul_conversion_convert(hic->keyboard->conversion, ch);
+                }
+                if (jung_jongseong) {// 갈마들이에 소리가 있다
+                    if (hangul_is_jungseong(jung_jongseong)) {// 갈마들이 가윗소리가 있다
+                        // 갈마들이를 쓰는 글판은 기본 조합규칙으로 오른ㅗㅜ 와의 조합 이외의 것은 
+                        // 절대로 허용해서는 안 된다, 
+                        // ㅣ+ㅐ, ㅐ+ㅐ
+                        if (hangul_is_jungseong(hangul_ic_peek(hic)) &&
+                            // 바로 앞의 가윗소리가  <ㅣ> 이거나 갈마들이 가윗소리가 있는 글쇠의 아랫소리다
+                                ( (hic->buffer.jungseong == 0x1175) ||  (hic->buffer.jungseong == ch) ) ) {
+                            if (!hangul_ic_push(hic, jung_jongseong)) {
+                                if (!hangul_ic_push(hic, jung_jongseong)) {
+                                    return false;
+                                }
+                            }
+                        } else {// 가윗소리 조합이 안 되고 갈마들이 가윗소리로 바꾸지도 못 했다
+                            hangul_ic_save_commit_string(hic);
+                            if (!hangul_ic_push(hic, ch)) {
+                                if (!hangul_ic_push(hic, ch)) {
+                                    return false;
+                                }
+                            }
+                        }
+                    } else {// 갈마들이 끝소리가 있다
+                        if (hic->buffer.jongseong == 0) {
+                            if (!hangul_ic_push(hic, jung_jongseong)) {
+                                if (!hangul_ic_push(hic, jung_jongseong)) {
+                                    return false;
+                                }
+                            }
+                        } else {// 
+                            ucschar jongseong = 0;
+                            if (hangul_is_jongseong(hangul_ic_peek(hic))) {
+                                jongseong = hangul_combination_combine(hic->keyboard->combination,
+                                                                        hic->buffer.jongseong, jung_jongseong);
+                            }
+                            if (hangul_is_jongseong(jongseong)) {// 하나가 되었다
+                                if (!hangul_ic_push(hic, jongseong)) {
+                                    return false;
+                                }
+                            } else {//끝겹닿소리가 안 되니 본래의 값인 가윗소리로 한다
+                                hangul_ic_save_commit_string(hic);
+                                if (!hangul_ic_push(hic, ch)) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                } else {// 가윗소리 조합도 안 되고 갈마들이 소리도 없으니 가윗소리로 한다
+                    hangul_ic_save_commit_string(hic);
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                }
+            }
+            
+        }
+    }
+    else if (hangul_is_jongseong(ch)) {
+        if (hic->buffer.jongseong == 0) {// 끝소리가 없다
+            if (hic->buffer.jungseong == 0) {// 가윗소리가 없다
+                if (!hangul_ic_push(hic, ch)) {
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                }
+            } else {
+                ucschar jongseong = 0;
+                if (hic->buffer.choseong) {// 첫소리, 가윗소리가 있다
+                    // 갈마들이 겹받침으로.
+                    jongseong = hangul_conversion_convert(
+                                                    hic->keyboard->conversion,
+                                                    ch);
+                }
+                if (hangul_is_jongseong(jongseong)) {
+                    if (!hangul_ic_push(hic, jongseong)) {
+                        if (!hangul_ic_push(hic, jongseong)) {
+                            return false;
+                        }
+                    }
+                } else {
+                    if (!hangul_ic_push(hic, ch)) {
+                        if (!hangul_ic_push(hic, ch)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        } else {
+            ucschar jongseong = 0;
+            // 바로 앞의 소리가 끝소리면, 끝소리 둘을 하나로 만들어 본다
+            if (hangul_is_jongseong(hangul_ic_peek(hic))) {
+                jongseong = hangul_combination_combine(hic->keyboard->combination,
+                                                       hic->buffer.jongseong, ch);
+            }
+            if (hangul_is_jongseong(jongseong)) {// 겹받침이 되었다
+                if (!hangul_ic_push(hic, jongseong)) {
+                    if (!hangul_ic_push(hic, jongseong)) {
+                        return false;
+                    }
+                }
+            } else {// 안 되었다
+                hangul_ic_save_commit_string(hic);
+                if (!hangul_ic_push(hic, ch)) {
+                    if (!hangul_ic_push(hic, ch)) {
+                        return false;
+                    }
+                }
+            }
+        }
+    } 
+    else if (ch > 0) {
+        hangul_ic_save_commit_string(hic);
+        hangul_ic_append_commit_string(hic, ch);
+    } 
+    else {
+        hangul_ic_save_commit_string(hic);
+        return false;
+    }
+
+    hangul_ic_save_preedit_string(hic);
+    return true;
+}
+
+
 /**
  * @ingroup hangulic
  * @brief 키 입력을 처리하여 실제로 한글 조합을 하는 함수
  * @param hic @ref HangulInputContext 오브젝트
  * @param ascii 키 이벤트
  * @return @ref HangulInputContext 가 이 키를 사용했으면 true,
- *	     사용하지 않았으면 false
+ *       사용하지 않았으면 false
  *
  * ascii 값으로 주어진 키 이벤트를 받아서 내부의 한글 조합 상태를
  * 변화시키고, preedit, commit 스트링을 저장한다.
@@ -1587,14 +1912,14 @@ hangul_ic_process(HangulInputContext *hic, int ascii)
     ucschar c;
 
     if (hic == NULL)
-	return false;
+    return false;
 
     hic->preedit_string[0] = 0;
     hic->commit_string[0] = 0;
 
     c = hangul_keyboard_get_value(hic->keyboard, ascii);
     if (hic->on_translate != NULL)
-	hic->on_translate(hic, ascii, &c, hic->on_translate_data);
+    hic->on_translate(hic, ascii, &c, hic->on_translate_data);
 
     int type = hangul_keyboard_get_type(hic->keyboard);
     switch (type) {
@@ -1606,6 +1931,8 @@ hangul_ic_process(HangulInputContext *hic, int ascii)
             return hangul_ic_process_romaja(hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_3FINALSUN:
             return hangul_ic_process_3finalsun(hic, c);
+        case HANGUL_KEYBOARD_TYPE_JASO_SHIN:
+            return hangul_ic_process_jaso_sebeol_shin(hic, ascii, c);
         default:
             return hangul_ic_process_jamo(hic, c);
     }
@@ -1627,7 +1954,7 @@ const ucschar*
 hangul_ic_get_preedit_string(HangulInputContext *hic)
 {
     if (hic == NULL)
-	return NULL;
+    return NULL;
 
     return hic->preedit_string;
 }
@@ -1648,7 +1975,7 @@ const ucschar*
 hangul_ic_get_commit_string(HangulInputContext *hic)
 {
     if (hic == NULL)
-	return NULL;
+    return NULL;
 
     return hic->commit_string;
 }
@@ -1671,7 +1998,7 @@ void
 hangul_ic_reset(HangulInputContext *hic)
 {
     if (hic == NULL)
-	return;
+    return;
 
     hic->preedit_string[0] = 0;
     hic->commit_string[0] = 0;
@@ -1696,7 +2023,7 @@ hangul_ic_flush_internal(HangulInputContext *hic)
  * @brief @ref HangulInputContext 의 입력 상태를 완료하는 함수
  * @param hic @ref HangulInputContext 를 가리키는 포인터
  * @return 조합 완료된 스트링, 스트링의 길이가 0이면 조합 완료된 스트링이 
- *	  없는 것
+ *    없는 것
  *
  * 이 함수는 @a hic가 가리키는 @ref HangulInputContext 의 입력 상태를 완료한다.
  * 조합중이던 스트링을 완성하여 리턴한다. 그리고 입력 상태가 초기 상태로 
@@ -1712,7 +2039,7 @@ const ucschar*
 hangul_ic_flush(HangulInputContext *hic)
 {
     if (hic == NULL)
-	return NULL;
+    return NULL;
 
     // get the remaining string and clear the buffer
     hic->preedit_string[0] = 0;
@@ -1720,11 +2047,11 @@ hangul_ic_flush(HangulInputContext *hic)
     hic->flushed_string[0] = 0;
 
     if (hic->output_mode == HANGUL_OUTPUT_JAMO) {
-	hangul_buffer_get_jamo_string(&hic->buffer, hic->flushed_string,
-				 N_ELEMENTS(hic->flushed_string));
+    hangul_buffer_get_jamo_string(&hic->buffer, hic->flushed_string,
+                 N_ELEMENTS(hic->flushed_string));
     } else {
-	hangul_buffer_get_string(&hic->buffer, hic->flushed_string,
-				 N_ELEMENTS(hic->flushed_string));
+    hangul_buffer_get_string(&hic->buffer, hic->flushed_string,
+                 N_ELEMENTS(hic->flushed_string));
     }
 
     hangul_buffer_clear(&hic->buffer);
@@ -1751,14 +2078,14 @@ hangul_ic_backspace(HangulInputContext *hic)
     int ret;
 
     if (hic == NULL)
-	return false;
+    return false;
 
     hic->preedit_string[0] = 0;
     hic->commit_string[0] = 0;
 
     ret = hangul_buffer_backspace(&hic->buffer);
     if (ret)
-	hangul_ic_save_preedit_string(hic);
+    hangul_ic_save_preedit_string(hic);
     return ret;
 }
 
@@ -1826,10 +2153,10 @@ void
 hangul_ic_set_output_mode(HangulInputContext *hic, int mode)
 {
     if (hic == NULL)
-	return;
+    return;
 
     if (!hic->use_jamo_mode_only)
-	hic->output_mode = mode;
+    hic->output_mode = mode;
 }
 
 void
@@ -1838,8 +2165,8 @@ hangul_ic_connect_translate (HangulInputContext* hic,
                              void* user_data)
 {
     if (hic != NULL) {
-	hic->on_translate      = callback;
-	hic->on_translate_data = user_data;
+    hic->on_translate      = callback;
+    hic->on_translate_data = user_data;
     }
 }
 
@@ -1849,23 +2176,23 @@ hangul_ic_connect_transition(HangulInputContext* hic,
                              void* user_data)
 {
     if (hic != NULL) {
-	hic->on_transition      = callback;
-	hic->on_transition_data = user_data;
+    hic->on_transition      = callback;
+    hic->on_transition_data = user_data;
     }
 }
 
 void hangul_ic_connect_callback(HangulInputContext* hic, const char* event,
-				void* callback, void* user_data)
+                void* callback, void* user_data)
 {
     if (hic == NULL || event == NULL)
-	return;
+    return;
 
     if (strcasecmp(event, "translate") == 0) {
-	hic->on_translate      = (HangulOnTranslate)callback;
-	hic->on_translate_data = user_data;
+    hic->on_translate      = (HangulOnTranslate)callback;
+    hic->on_translate_data = user_data;
     } else if (strcasecmp(event, "transition") == 0) {
-	hic->on_transition      = (HangulOnTransition)callback;
-	hic->on_transition_data = user_data;
+    hic->on_transition      = (HangulOnTransition)callback;
+    hic->on_transition_data = user_data;
     }
 }
 
@@ -1873,7 +2200,7 @@ void
 hangul_ic_set_keyboard(HangulInputContext *hic, const HangulKeyboard* keyboard)
 {
     if (hic == NULL || keyboard == NULL)
-	return;
+    return;
 
     hic->keyboard = keyboard;
 }
@@ -1888,10 +2215,10 @@ hangul_ic_get_keyboard_by_id(const char* id)
      * binary search를 할수 없고 linear search를 한다. */
     n = hangul_ic_get_n_keyboards();
     for (i = 0; i < n; ++i) {
-	const HangulKeyboard* keyboard = hangul_keyboards[i];
-	if (strcmp(id, keyboard->id) == 0) {
-	    return keyboard;
-	}
+    const HangulKeyboard* keyboard = hangul_keyboards[i];
+    if (strcmp(id, keyboard->id) == 0) {
+        return keyboard;
+    }
     }
 
     return NULL;
@@ -1926,22 +2253,22 @@ hangul_ic_select_keyboard(HangulInputContext *hic, const char* id)
     const HangulKeyboard* keyboard;
 
     if (hic == NULL)
-	return;
+    return;
 
     if (id == NULL)
-	id = "2";
+    id = "2";
 
     keyboard = hangul_ic_get_keyboard_by_id(id);
     if (keyboard != NULL) {
-	hic->keyboard = keyboard;
+    hic->keyboard = keyboard;
     } else {
-	hic->keyboard = &hangul_keyboard_2;
+    hic->keyboard = &hangul_keyboard_2;
     }
 }
 
 void
 hangul_ic_set_combination(HangulInputContext *hic,
-			  const HangulCombination* combination)
+              const HangulCombination* combination)
 {
 }
 
@@ -1949,7 +2276,7 @@ hangul_ic_set_combination(HangulInputContext *hic,
  * @ingroup hangulic
  * @brief @ref HangulInputContext 오브젝트를 생성한다.
  * @param keyboard 사용하고자 하는 키보드, 사용 가능한 값에 대해서는
- *	hangul_ic_select_keyboard() 함수 설명을 참조한다.
+ *  hangul_ic_select_keyboard() 함수 설명을 참조한다.
  * @return 새로 생성된 @ref HangulInputContext 에 대한 포인터
  * 
  * 이 함수는 한글 조합 기능을 제공하는 @ref HangulInputContext 오브젝트를 
@@ -1964,7 +2291,7 @@ hangul_ic_new(const char* keyboard)
 
     hic = malloc(sizeof(HangulInputContext));
     if (hic == NULL)
-	return NULL;
+    return NULL;
 
     hic->preedit_string[0] = 0;
     hic->commit_string[0] = 0;
@@ -2001,7 +2328,7 @@ void
 hangul_ic_delete(HangulInputContext *hic)
 {
     if (hic == NULL)
-	return;
+    return;
 
     free(hic);
 }
@@ -2016,7 +2343,7 @@ const char*
 hangul_ic_get_keyboard_id(unsigned index_)
 {
     if (index_ < N_ELEMENTS(hangul_keyboards)) {
-	return hangul_keyboards[index_]->id;
+    return hangul_keyboards[index_]->id;
     }
 
     return NULL;
@@ -2028,14 +2355,14 @@ hangul_ic_get_keyboard_name(unsigned index_)
 #ifdef ENABLE_NLS
     static bool isGettextInitialized = false;
     if (!isGettextInitialized) {
-	isGettextInitialized = true;
-	bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    isGettextInitialized = true;
+    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
     }
 #endif
 
     if (index_ < N_ELEMENTS(hangul_keyboards)) {
-	return _(hangul_keyboards[index_]->name);
+    return _(hangul_keyboards[index_]->name);
     }
 
     return NULL;
@@ -2059,11 +2386,11 @@ hangul_ic_is_transliteration(HangulInputContext *hic)
     int type;
 
     if (hic == NULL)
-	return false;
+    return false;
 
     type = hangul_keyboard_get_type(hic->keyboard);
     if (type == HANGUL_KEYBOARD_TYPE_ROMAJA)
-	return true;
+    return true;
 
     return false;
 }

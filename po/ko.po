@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libhangul 0.0.12\n"
-"Report-Msgid-Bugs-To: http://kldp.net/projects/hangul\n"
-"POT-Creation-Date: 2011-08-29 23:30+0900\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/libhangul/\n"
+"POT-Creation-Date: 2015-02-11 00:09+0900\n"
 "PO-Revision-Date: 2010-11-14 21:34+0900\n"
 "Last-Translator: Choe Hwanjin <choe.hwanjin@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -16,50 +16,69 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: hangul/hangulinputcontext.c:263
+#: hangul/hangulinputcontext.c:322
 msgid "Dubeolsik"
 msgstr "두벌식"
 
-#: hangul/hangulinputcontext.c:271
+#: hangul/hangulinputcontext.c:332
 msgid "Dubeolsik Yetgeul"
 msgstr "두벌식 옛글"
 
-#: hangul/hangulinputcontext.c:279
+#: hangul/hangulinputcontext.c:342
 msgid "Sebeolsik Dubeol Layout"
 msgstr "세벌식 두벌자판"
 
-#: hangul/hangulinputcontext.c:287
+#: hangul/hangulinputcontext.c:352
 msgid "Sebeolsik 390"
 msgstr "세벌식 390"
 
-#: hangul/hangulinputcontext.c:295
+#: hangul/hangulinputcontext.c:362
+#, fuzzy
+msgid "Sebeolsik 390 Loose"
+msgstr "세벌식 390"
+
+#: hangul/hangulinputcontext.c:372
 msgid "Sebeolsik Final"
 msgstr "세벌식 최종"
 
-#: hangul/hangulinputcontext.c:303
+#: hangul/hangulinputcontext.c:382
+#, fuzzy
+msgid "Sebeolsik Final Loose"
+msgstr "세벌식 최종"
+
+#: hangul/hangulinputcontext.c:392
 msgid "Sebeolsik Noshift"
 msgstr "세벌식 순아래"
 
-#: hangul/hangulinputcontext.c:311
+#: hangul/hangulinputcontext.c:402
 msgid "Sebeolsik Yetgeul"
 msgstr "세벌식 옛글"
 
-#: hangul/hangulinputcontext.c:319
+#: hangul/hangulinputcontext.c:412
 msgid "Romaja"
 msgstr "로마자"
 
-#: hangul/hangulinputcontext.c:327
+#: hangul/hangulinputcontext.c:422
 msgid "Ahnmatae"
 msgstr "안마태"
 
-#: hangul/hangulinputcontext.c:350
+#: hangul/hangulinputcontext.c:432
+#, fuzzy
+msgid "Sebeolsik Final Noshift"
+msgstr "세벌식 순아래"
+
+#: hangul/hangulinputcontext.c:442 hangul/hangulinputcontext.c:452
 msgid "Sebeolsik 3-2011"
 msgstr "세벌식 3-2011"
 
-#: hangul/hangulinputcontext.c:358
+#: hangul/hangulinputcontext.c:462 hangul/hangulinputcontext.c:472
 msgid "Sebeolsik 3-2012"
 msgstr "세벌식 3-2012"
 
-#: hangul/hangulinputcontext.c:418
-msgid "Sebeolsik Moachigi 2014"
-msgstr "세벌식 모아치기 2014"
+#: hangul/hangulinputcontext.c:482
+msgid "Sebeolsik Moachigi 2015"
+msgstr "세벌식 모아치기 2015"
+
+#: hangul/hangulinputcontext.c:492
+msgid "Sebeolsik 3-2015"
+msgstr "세벌식 3-2015"
