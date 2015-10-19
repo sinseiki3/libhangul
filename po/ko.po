@@ -7,15 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libhangul 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-22 17:28+0900\n"
-"PO-Revision-Date: 2015-03-22 17:30+0900\n"
+"POT-Creation-Date: 2015-10-19 09:12+0900\n"
+"PO-Revision-Date: 2015-10-19 09:13+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean <ko@li.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../hangul/hangulinputcontext-def.h:66
 msgid "Dubeolsik KSX 5002"
@@ -94,7 +96,7 @@ msgid "Sebeolsik 3-2014"
 msgstr "세벌식 3-2014"
 
 #: ../hangul/hangulinputcontext-def.h:218
-msgid "Sebeolsik 3-2014 Yetguel"
+msgid "Sebeolsik 3-2014 Yetgeul"
 msgstr "세벌식 3-2014 옛한글"
 
 #: ../hangul/hangulinputcontext-def.h:226
@@ -114,7 +116,7 @@ msgid "Sebeolsik 3-2015P"
 msgstr "세벌식 3-2015P"
 
 #: ../hangul/hangulinputcontext-def.h:258
-msgid "Sebeolsik 3-2015P Yetguel"
+msgid "Sebeolsik 3-2015P Yetgeul"
 msgstr "세벌식 3-2015P 옛한글"
 
 #: ../hangul/hangulinputcontext-def.h:266
@@ -156,3 +158,11 @@ msgstr "신세벌식 2015"
 #: ../hangul/hangulinputcontext-def.h:338
 msgid "Sebeolsik Shin M"
 msgstr "신세벌식 M"
+
+#: ../hangul/hangulinputcontext-def.h:346
+msgid "Sebeolsik Shin P"
+msgstr "신세벌식 P"
+
+#: ../hangul/hangulinputcontext-def.h:354
+msgid "Sebeolsik Shin P Yetgeul"
+msgstr "신세벌식 P 옛한글"

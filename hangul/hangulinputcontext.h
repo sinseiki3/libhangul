@@ -55,7 +55,7 @@ struct _HangulKeyboardAddon {
     const char *id;
     // 3beol
     const ucschar replace_it; // 바꿔 놓기 : 세벌식의 ] -> 아래아
-    // bit:00000000:0, 0, 0, 갈마들이연타겹받침허용〈안〉함, 
+    // bit:00000000:0, 0, 0, 확장겹받침허용〈안〉함, 
     //                        왼/오른ㅗㅜ구분함, 입력순서〈안〉따짐, 갈마들이켜끄기됨, 확장배열씀
     const unsigned char flag; //
     const char *symbol_key; // 확장 기호 배열로 바꾸는 글쇠

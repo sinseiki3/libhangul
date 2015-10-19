@@ -1310,6 +1310,12 @@ flush:
 bool
 hangul_ic_process(HangulInputContext *hic, int ascii)
 {
+    return hangul_ic_process_with_capslock (hic, ascii, FALSE);
+}
+
+bool
+hangul_ic_process_with_capslock(HangulInputContext *hic, int ascii, bool capslock)
+{
     ucschar c;
 
     if (hic == NULL)
@@ -1328,6 +1334,8 @@ hangul_ic_process(HangulInputContext *hic, int ascii)
             return hangul_ic_process_jaso_sebeol (hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_JASO_SHIN:
             return hangul_ic_process_jaso_shin_sebeol (hic, ascii, c);
+        case HANGUL_KEYBOARD_TYPE_JASO_SHIN_YET:
+            return hangul_ic_process_jaso_shin_sebeol_yet (hic, ascii, c, capslock);
         case HANGUL_KEYBOARD_TYPE_JASO_SHIN_SHIFT:
             return hangul_ic_process_jaso_shin_sebeol_shift (hic, ascii, c);
         case HANGUL_KEYBOARD_TYPE_3FINALSUN:

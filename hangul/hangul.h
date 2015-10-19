@@ -102,6 +102,7 @@ enum {
     HANGUL_KEYBOARD_TYPE_JAMO,
     HANGUL_KEYBOARD_TYPE_JASO,
     HANGUL_KEYBOARD_TYPE_JASO_SHIN,
+    HANGUL_KEYBOARD_TYPE_JASO_SHIN_YET,
     HANGUL_KEYBOARD_TYPE_JASO_SHIN_SHIFT,
     HANGUL_KEYBOARD_TYPE_3FINALSUN,
     HANGUL_KEYBOARD_TYPE_ROMAJA
@@ -111,7 +112,7 @@ enum {
 #define HANGUL_KEYBOARD_FLAG_GALMADEULI 0x02
 #define HANGUL_KEYBOARD_FLAG_LOOSE_ORDER 0x04
 #define HANGUL_KEYBOARD_FLAG_RIGHT_OU 0x08
-#define HANGUL_KEYBOARD_FLAG_NO_REPEAT_GALMADEULI 0x10
+#define HANGUL_KEYBOARD_FLAG_NO_ADDED_GGEUT 0x10
 
 
 /* keyboard */
@@ -131,6 +132,7 @@ bool hangul_combination_set_data(HangulCombination* combination,
 HangulInputContext* hangul_ic_new(const char* keyboard);
 void hangul_ic_delete(HangulInputContext *hic);
 bool hangul_ic_process(HangulInputContext *hic, int ascii);
+bool hangul_ic_process_with_capslock(HangulInputContext *hic, int ascii, bool capslock);
 void hangul_ic_reset(HangulInputContext *hic);
 bool hangul_ic_backspace(HangulInputContext *hic);
 
