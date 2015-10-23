@@ -1080,15 +1080,19 @@ static bool hangul_ic_process_3finalsun(HangulInputContext *hic, int ascii, ucsc
 
 static const HangulKeyboard* hangul_ic_get_keyboard_by_id(const char* id);
 /*** 3beol ***/
-static bool hangul_is_right_oua (const HangulKeyboardAddon *keyboard_addon, int ascii, ucschar ch);
-static int hangul_galmadeuli_cmp(const void* p1, const void* p2);
-static ucschar hangul_galmadeuli_convert (const HangulGalmadeuli *galmadeuli, const ucschar ch);
-static void hangul_buffer_push_extension_step(HangulBuffer *buffer, ucschar ch);
-static int hangul_is_extension_symbol_key (const HangulKeyboardAddon *keyboard_addon, int ascii);
-static int hangul_is_extension_yetgeul_key (const HangulKeyboardAddon *keyboard_addon, int ascii);
-static bool hangul_is_extension_condition_sebeol_shin (HangulInputContext *hic);
-static bool hangul_is_extension_condition_sebeol (HangulInputContext *hic, int ascii);
-static void hangul_is_extension_ready_sebeol (HangulInputContext *hic);
+static inline bool hangul_is_right_oua (const HangulKeyboardAddon *keyboard_addon, int ascii, ucschar ch);
+static inline int hangul_galmadeuli_cmp(const void* p1, const void* p2);
+static inline ucschar hangul_galmadeuli_convert (const HangulGalmadeuli *galmadeuli, const ucschar ch);
+static inline void hangul_buffer_push_extension_step(HangulBuffer *buffer, ucschar ch);
+static inline int hangul_is_extension_symbol_key (const HangulKeyboardAddon *keyboard_addon, int ascii);
+static inline int hangul_is_extension_yetgeul_key (const HangulKeyboardAddon *keyboard_addon, int ascii);
+static inline bool hangul_is_extension_condition_sebeol_shin (HangulInputContext *hic);
+static inline bool hangul_is_extension_condition_sebeol (HangulInputContext *hic, int ascii);
+static inline void hangul_is_extension_ready_sebeol (HangulInputContext *hic);
+static inline bool hangul_is_flag_loose_order (const HangulKeyboardAddon *keyboard_addon);
+static inline bool hangul_is_flag_right_ou (const HangulKeyboardAddon *keyboard_addon);
+static inline bool hangul_is_flag_no_added_ggeut (const HangulKeyboardAddon *keyboard_addon);
+static inline ucschar hangul_combination_search_table (const HangulInputContext *const hic, const ucschar ch);
 
 static const HangulKeyboardAddon* hangul_ic_get_keyboard_addon_by_id(const char* id);
 static unsigned int hangul_ic_get_n_keyboard_addons(void);
