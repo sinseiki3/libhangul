@@ -4064,7 +4064,7 @@ static const ucschar hangul_keyboard_table_3moachigi_2014[] = {// 신세기 모�
     0x0000      /* 0x7F delete                                       */
 };
 
-static const ucschar hangul_keyboard_table_3moachigi_2015[] = {// 신세기 모아치기 2015
+static const ucschar hangul_keyboard_table_3moachigi_2015[] = {// 신세기 모아치기 2015 (세모이 : Semo-e)
     0x0000,     /* 0x00 null                                         */
     0x0000,     /* 0x01 start of heading                             */
     0x0000,     /* 0x02 start of text                                */

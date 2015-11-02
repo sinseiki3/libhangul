@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libhangul 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-21 14:12+0900\n"
-"PO-Revision-Date: 2015-10-21 14:13+0900\n"
+"PO-Revision-Date: 2015-11-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean <ko@li.org>\n"
 "Language: ko\n"
@@ -129,7 +129,7 @@ msgstr "세벌식 모아치기 2014"
 
 #: ../hangul/hangulinputcontext-def.h:282
 msgid "Sebeolsik Moachigi 2015"
-msgstr "세벌식 모아치기 2015"
+msgstr "세모이"
 
 #: ../hangul/hangulinputcontext-def.h:290
 msgid "Sebeolsik Noshift 2014"
