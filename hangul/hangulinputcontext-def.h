@@ -340,22 +340,6 @@ static const HangulKeyboard hangul_keyboard_3shin_m = {
     &hangul_combination_default_3
 };
 
-static const HangulKeyboard hangul_keyboard_3shin_p_20150926 = {
-    HANGUL_KEYBOARD_TYPE_JASO_SHIN,
-    "3shin-p-20150926",
-    N_("Sebeolsik Shin P 20150926"),
-    (ucschar*)hangul_keyboard_table_3shin_p_20150926,
-    &hangul_combination_default_3
-};
-
-static const HangulKeyboard hangul_keyboard_3shin_p_yet_20150926 = {
-    HANGUL_KEYBOARD_TYPE_JASO_SHIN_YET,
-    "3shin-p-yet-20150926",
-    N_("Sebeolsik Shin P Yetgeul 20150926"),
-    (ucschar*)hangul_keyboard_table_3shin_p_20150926,
-    &hangul_combination_full
-};
-
 static const HangulKeyboard hangul_keyboard_3shin_p = {
     HANGUL_KEYBOARD_TYPE_JASO_SHIN,
     "3shin-p",
@@ -409,8 +393,6 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3shin_2012,
     &hangul_keyboard_3shin_2015,
     &hangul_keyboard_3shin_m,
-    &hangul_keyboard_3shin_p_20150926,
-    &hangul_keyboard_3shin_p_yet_20150926,
     &hangul_keyboard_3shin_p,
     &hangul_keyboard_3shin_p_yet,
 };
@@ -462,11 +444,6 @@ static const HangulCombination hangul_combination_3gimguk_38a_yet = {
 static const HangulCombination hangul_combination_3shin_2015 = {
     N_ELEMENTS(hangul_combination_table_3_3shin_2015),
     (HangulCombinationItem*)hangul_combination_table_3_3shin_2015
-};
-
-static const HangulCombination hangul_combination_3shin_p_yet_20150926 = {
-    N_ELEMENTS(hangul_combination_table_full_3shin_p_20150926),
-    (HangulCombinationItem*)hangul_combination_table_full_3shin_p_20150926
 };
 
 static const HangulCombination hangul_combination_3shin_p_yet = {
@@ -529,11 +506,6 @@ static const HangulGalmadeuli hangul_galmadeuli_3shin_2015 = {
 static const HangulGalmadeuli hangul_galmadeuli_3shin_m = {
     N_ELEMENTS(hangul_galmadeuli_table_3shin_m),
     (HangulGalmadeuliItem*)hangul_galmadeuli_table_3shin_m
-};
-
-static const HangulGalmadeuli hangul_galmadeuli_3shin_p_20150926 = {
-    N_ELEMENTS(hangul_galmadeuli_table_3shin_p_20150926),
-    (HangulGalmadeuliItem*)hangul_galmadeuli_table_3shin_p_20150926
 };
 
 static const HangulGalmadeuli hangul_galmadeuli_3shin_p = {
@@ -984,40 +956,6 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3shin_m = {
     &hangul_galmadeuli_3shin_m // galmadeuli_addon
 };
 
-static const HangulKeyboardAddon hangul_keyboard_addon_3shin_p_20150926 = {
-    "3shin-p-20150926", // id
-    0x0000, // replace_it // FALSE
-    0x19, // flag // 갈마들이는 필수 기능이라 꺼지면 안된다
-    sebeol_3shin_symbol_key, // symbol_key
-    sebeol_3shin_symbol_value, // symbol_value
-    &hangul_ascii_to_symbol_shin, // (*symbolFunc)(int, int, int)
-    NULL, // yetgeul_key
-    NULL, // yetgeul_value
-    NULL, // (*yetgeulFunc)(int, int, int)
-    sebeol_3_ext_step, // ext_step
-    sebeol_3shin_moeum_key, // moeum_key
-    sebeol_3_moeum_value, // moeum_value
-    NULL, // combination_addon
-    &hangul_galmadeuli_3shin_p_20150926 // galmadeuli_addon
-};
-
-static const HangulKeyboardAddon hangul_keyboard_addon_3shin_p_yet_20150926 = {
-    "3shin-p-yet-20150926", // id
-    0x0000, // replace_it // FALSE
-    0x19, // flag // 갈마들이는 필수 기능이라 꺼지면 안된다
-    sebeol_3shin_symbol_key, // symbol_key
-    sebeol_3shin_symbol_value, // symbol_value
-    &hangul_ascii_to_symbol_shin, // (*symbolFunc)(int, int, int)
-    NULL, // yetgeul_key
-    NULL, // yetgeul_value
-    NULL, // (*yetgeulFunc)(int, int, int)
-    sebeol_3_ext_step, // ext_step
-    sebeol_3shin_moeum_key, // moeum_key
-    sebeol_3_moeum_value, // moeum_value
-    &hangul_combination_3shin_p_yet_20150926, // combination_addon
-    &hangul_galmadeuli_3shin_p_20150926 // galmadeuli_addon
-};
-
 static const HangulKeyboardAddon hangul_keyboard_addon_3shin_p = {
     "3shin-p", // id
     0x0000, // replace_it // FALSE
@@ -1080,8 +1018,6 @@ static const HangulKeyboardAddon* hangul_keyboard_addons[] = {
     &hangul_keyboard_addon_3shin_2012,
     &hangul_keyboard_addon_3shin_2015,
     &hangul_keyboard_addon_3shin_m,
-    &hangul_keyboard_addon_3shin_p_20150926,
-    &hangul_keyboard_addon_3shin_p_yet_20150926,
     &hangul_keyboard_addon_3shin_p,
     &hangul_keyboard_addon_3shin_p_yet,
 };

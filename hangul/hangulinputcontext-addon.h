@@ -667,14 +667,7 @@ hangul_ic_process_jaso_shin_sebeol (HangulInputContext *hic, int ascii, ucschar 
                         return false;
                     }
                 } else {
-                    ucschar jongseong = 0;
-                    if (hic->keyboard_addon != NULL) {
-                        // 가윗소리를 갈마들이 끝소리로 바꾼다
-                        jongseong = hangul_galmadeuli_convert(
-                                                hic->keyboard_addon->galmadeuli_addon, 
-                                                ch);
-                    }
-                    if (hic->buffer.right_oua || hangul_is_flag_no_added_ggeut(hic->keyboard_addon) == TRUE) 
+                    if (hic->buffer.right_oua || hangul_is_flag_no_added_ggeut(hic->keyboard_addon)) 
                     {// 가윗소리 조합
                         ucschar jungseong = 0;
                         if (hangul_is_jungseong(hangul_ic_peek(hic))) {
@@ -691,6 +684,13 @@ hangul_ic_process_jaso_shin_sebeol (HangulInputContext *hic, int ascii, ucschar 
                             }
                         }
                     } else {// 조합이 되지 않는 가윗소리가 있으니, 갈마들이 받침으로 해보자
+                        ucschar jongseong = 0;
+                        if (hic->keyboard_addon != NULL) {
+                            // 가윗소리를 갈마들이 끝소리로 바꾼다
+                            jongseong = hangul_galmadeuli_convert(
+                                                    hic->keyboard_addon->galmadeuli_addon, 
+                                                    ch);
+                        }
                         if (jongseong && 
                             hangul_is_flag_no_added_ggeut(hic->keyboard_addon) == FALSE) 
                         {// shift+끝소리에 겹받침이 있으면 겹받침으로 다룬다.
