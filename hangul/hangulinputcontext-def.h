@@ -62,32 +62,32 @@ static const HangulCombination hangul_combination_3_91_noshift = {
 
 static const HangulKeyboard hangul_keyboard_2 = {
     HANGUL_KEYBOARD_TYPE_JAMO,
-    "2", 
-    N_("Dubeolsik KSX 5002"), 
+    "2",
+    N_("Dubeolsik KSX 5002"),
     (ucschar*)hangul_keyboard_table_2,
     &hangul_combination_default_2
 };
 
 static const HangulKeyboard hangul_keyboard_2noshift = {
     HANGUL_KEYBOARD_TYPE_JAMO,
-    "2noshift", 
-    N_("Dubeolsik Noshift"), 
+    "2noshift",
+    N_("Dubeolsik Noshift"),
     (ucschar*)hangul_keyboard_table_2,
     &hangul_combination_default_2
 };
 
 static const HangulKeyboard hangul_keyboard_2y = {
     HANGUL_KEYBOARD_TYPE_JAMO,
-    "2y", 
-    N_("Dubeolsik Yetgeul"), 
+    "2y",
+    N_("Dubeolsik Yetgeul"),
     (ucschar*)hangul_keyboard_table_2y,
     &hangul_combination_full
 };
 
 static const HangulKeyboard hangul_keyboard_2north9256 = {
     HANGUL_KEYBOARD_TYPE_JAMO,
-    "2n9256", 
-    N_("Dubeolsik North 9256"), 
+    "2n9256",
+    N_("Dubeolsik North 9256"),
     (ucschar*)hangul_keyboard_table_2north9256,
     &hangul_combination_default_2
 };
@@ -227,7 +227,7 @@ static const HangulKeyboard hangul_keyboard_3_2015 = {
     (ucschar*)hangul_keyboard_table_3_2015,
     &hangul_combination_default_3
 };
- 
+
 static const HangulKeyboard hangul_keyboard_3_2015_yet = {
     HANGUL_KEYBOARD_TYPE_JASO,
     "3-2015-yet",
@@ -243,7 +243,7 @@ static const HangulKeyboard hangul_keyboard_3_2015_metal = {
     (ucschar*)hangul_keyboard_table_3_2015_metal,
     &hangul_combination_default_3
 };
- 
+
 static const HangulKeyboard hangul_keyboard_3_2015_patal = {
     HANGUL_KEYBOARD_TYPE_JASO,
     "3-2015-patal",
@@ -400,7 +400,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
 // 세벌식 확장모드 글쇠
 static const char sebeol_3_symbol_key[] = {'0', 'v', '8', 0x00};    //0:같은 기호 배열을 쓴다 // ㅗ, ㅜ
 static const char sebeol_3yet_symbol_key[] = {'1', '/', '9', 0x00};  //1:다른 기호 배열을 쓴다// ㅗ, ㅜ
-static const ucschar sebeol_3_symbol_value[] = {0x1169, 0x116e, 0x0000};  // ㅗ, ㅜ 
+static const ucschar sebeol_3_symbol_value[] = {0x1169, 0x116e, 0x0000};  // ㅗ, ㅜ
 static const char sebeol_3shin_symbol_key[] = {'j', 'k', 'l', ';', 0x00};   // j + [ k, l, ;]
 static const ucschar sebeol_3shin_symbol_value[] = {0x110b, 0x0000};   // 첫소리 ㅇ [j]
 // 세벌식 옛한글
@@ -717,7 +717,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2015 = {
     &hangul_combination_3_2015, // combination_addon
     &hangul_galmadeuli_3_2015 // galmadeuli_addon
 };
- 
+
 static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_yet = {
     "3-2015-yet", // id
     0x0000, // replace_it // FALSE
@@ -751,7 +751,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_metal = {
     &hangul_combination_3_2015, // combination_addon
     &hangul_galmadeuli_3_2015_metal // galmadeuli_addon
 };
- 
+
 static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_patal = {
     "3-2015-patal", // id
     0x119e, // replace_it // 아래아
@@ -1069,10 +1069,10 @@ static bool hangul_ic_process_romaja(HangulInputContext *hic, int ascii, ucschar
 /*** 3beol ***/
 static bool hangul_ic_process_jamo_dubeol (HangulInputContext *hic, ucschar ch);
 static bool hangul_ic_process_jaso_shin_sebeol (HangulInputContext *hic, int ascii, ucschar ch);
-static bool hangul_ic_process_jaso_shin_sebeol_yet 
-                                                    (HangulInputContext *hic, 
-                                                    int ascii, 
-                                                    ucschar ch, 
+static bool hangul_ic_process_jaso_shin_sebeol_yet
+                                                    (HangulInputContext *hic,
+                                                    int ascii,
+                                                    ucschar ch,
                                                     bool capslock);
 static bool hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch);
 static bool hangul_ic_process_3finalsun(HangulInputContext *hic, int ascii, ucschar ch);

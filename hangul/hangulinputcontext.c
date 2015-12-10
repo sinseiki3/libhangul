@@ -33,14 +33,14 @@
 
 /**
  * @defgroup hangulic 한글 입력 기능 구현
- * 
+ *
  * @section hangulicusage Hangul Input Context의 사용법
  * 이 섹션에서는 한글 입력 기능을 구현하는 핵심 기능에 대해 설명한다.
  *
  * 먼저 preedit string과 commit string 이 두 용어에 대해서 설명하겠다.
  * 이 두가지 용어는 Unix 계열의 입력기 framework에서 널리 쓰이는 표현이다.
  *
- * preedit string은 아직 조합중으로 어플리케이션에 완전히 입력되지 않은 
+ * preedit string은 아직 조합중으로 어플리케이션에 완전히 입력되지 않은
  * 스트링을 가리킨다. 일반적으로 한글 입력기에서는 역상으로 보이고
  * 일본 중국어 입력기에서는 underline이 붙어 나타난다. 아직 완성이 되지
  * 않은 스트링이므로 어플리케이션에 전달이 되지 않고 사라질 수도 있다.
@@ -53,25 +53,25 @@
  * 입력된 영문 키를 그에 해당하는 한글 자모로 변환한후 한글 자모를 모아
  * 하나의 음절을 만든다. 여기까지 이루어지는 과정을 preedit string 형태로
  * 사용자에게 계속 보이게 하는 것이 필요하다.
- * 그리고는 한글 음절이 완성되고나면 그 글자를 어플리케이션에 commit 
- * string 형태로 보내여 입력을 완료하는 것이다. 다음 키를 받게 되면 
+ * 그리고는 한글 음절이 완성되고나면 그 글자를 어플리케이션에 commit
+ * string 형태로 보내여 입력을 완료하는 것이다. 다음 키를 받게 되면
  * 이 과정을 반복해서 수행한다.
- * 
+ *
  * libhangul에서 한글 조합 기능은 @ref HangulInputContext 를 이용해서 구현하게
  * 되는데 기본 적인 방법은 @ref HangulInputContext 에 사용자로부터의 입력을
  * 순서대로 전달하면서 그 상태가 바뀜에 따라서 preedit 나 commit 스트링을
  * 상황에 맞게 변화시키는 것이다.
- * 
+ *
  * 입력 코드들은 GUI 코드와 밀접하게 붙어 있어서 키 이벤트를 받아서
  * 처리하도록 구현하는 것이 보통이다. 그런데 유닉스에는 많은 입력 프레임웍들이
  * 난립하고 있는 상황이어서 매 입력 프레임웍마다 한글 조합 루틴을 작성해서
- * 넣는 것은 비효율적이다. 간단한 API를 구현하여 여러 프레임웍에서 바로 
+ * 넣는 것은 비효율적이다. 간단한 API를 구현하여 여러 프레임웍에서 바로
  * 사용할 수 있도록 구현하는 편이 사용성이 높아지게 된다.
  *
- * 그래서 libhangul에서는 키 이벤트를 따로 재정의하지 않고 ASCII 코드를 
+ * 그래서 libhangul에서는 키 이벤트를 따로 재정의하지 않고 ASCII 코드를
  * 직접 사용하는 방향으로 재정의된 데이터가 많지 않도록 하였다.
  * 실제 사용 방법은 말로 설명하는 것보다 샘플 코드를 사용하는 편이
- * 이해가 빠를 것이다. 그래서 대략적인 진행 과정을 샘플 코드로 
+ * 이해가 빠를 것이다. 그래서 대략적인 진행 과정을 샘플 코드로
  * 작성하였다.
  *
  * 아래 예제는 실제로는 존재하지 않는 GUI 라이브러리 코드를 사용하였다.
@@ -79,7 +79,7 @@
  * 길어지면 핵심을 놓치기 쉽기 때문에 가공의 함수를 사용하였다.
  * 또한 텍스트의 encoding conversion 관련된 부분도 생략하였다.
  * 여기서 사용한 가공의 GUI 코드는 TWin으로 시작하게 하였다.
- *    
+ *
  * @code
 
     HangulInputContext* hic = hangul_ic_new("2");
@@ -95,7 +95,7 @@
 	bool res;
 	if (event.isBackspace()) {
 	    // backspace를 ascii로 변환하기가 좀 꺼림직해서
-	    // libhangul에서는 backspace 처리를 위한 
+	    // libhangul에서는 backspace 처리를 위한
 	    // 함수를 따로 만들었다.
 	    res = hangul_ic_backspace(hic);
 	} else {
@@ -106,16 +106,16 @@
 
 	    // 키 입력을 받았으면 이것을 hic에 먼저 보낸다.
 	    // 그래야 hic가 이 키를 사용할 것인지 아닌지를 판단할 수 있다.
-	    // 함수가 true를 리턴하면 이 키를 사용했다는 의미이므로 
+	    // 함수가 true를 리턴하면 이 키를 사용했다는 의미이므로
 	    // GUI 코드가 이 키 입력을 프로세싱하지 않도록 해야 한다.
 	    // 그렇지 않으면 한 키입력이 두번 프로세싱된다.
 	    res = hangul_ic_process(hic, ascii);
 	}
-	
+
 	// hic는 한번 키입력을 받고 나면 내부 상태 변화가 일어나고
 	// 완성된 글자를 어플리케이션에 보내야 하는 상황이 있을 수 있다.
 	// 이것을 HangulInputContext에서는 commit 스트링이 있는지로
-	// 판단한다. commit 스트링을 받아봐서 스트링이 있다면 
+	// 판단한다. commit 스트링을 받아봐서 스트링이 있다면
 	// 그 스트링으로 입력이 완료된 걸로 본다.
 	const ucschar commit;
 	commit = hangul_ic_get_commit_string(hic);
@@ -129,14 +129,14 @@
 	// 조합중인 글자가 화면에 표시가 되는 것이다.
 	const ucschar preedit;
 	preedit = hangul_ic_get_preedit_string(hic);
-	// 이 경우에는 스트링의 길이에 관계없이 항상 업데이트를 
+	// 이 경우에는 스트링의 길이에 관계없이 항상 업데이트를
 	// 해야 한다. 왜냐하면 이전에 조합중이던 글자가 있다가
 	// 조합이 완료되면서 조합중인 상태의 글자가 없어질 수도 있기 때문에
-	// 스트링의 길이에 관계없이 현재 상태의 스트링을 preedit 
+	// 스트링의 길이에 관계없이 현재 상태의 스트링을 preedit
 	// 스트링으로 보여주면 되는 것이다.
 	TWinUpdatePreeditString(preedit);
 
-	// 위 두작업이 끝난후에는 키 이벤트를 계속 프로세싱해야 하는지 
+	// 위 두작업이 끝난후에는 키 이벤트를 계속 프로세싱해야 하는지
 	// 아닌지를 처리해야 한다.
 	// hic가 키 이벤트를 사용하지 않았다면 기본 GUI 코드에 계속해서
 	// 키 이벤트 프로세싱을 진행하도록 해야 한다.
@@ -147,7 +147,7 @@
     }
 
     hangul_ic_delete(hic);
-     
+
  * @endcode
  */
 
@@ -169,8 +169,8 @@
  */
 
 #include "hangulinputcontext.h"
-/** hangulinputcontext.h 로... 
- * 
+/** hangulinputcontext.h 로...
+ *
 #ifndef TRUE
 #define TRUE 1
 #endif
@@ -239,7 +239,7 @@ struct _HangulInputContext {
 
     unsigned int use_jamo_mode_only : 1;
 };
-* hangulinputcontext.h 로... 
+* hangulinputcontext.h 로...
 *****/
 
 #include "hangulkeyboard.h"
@@ -247,7 +247,7 @@ struct _HangulInputContext {
 
 #include "hangulinputcontext-def.h"
 #include "hangulinputcontext-addon.h"
-/** hangulinputcontext-def.h 로... 
+/** hangulinputcontext-def.h 로...
 static const HangulCombination hangul_combination_default = {
     N_ELEMENTS(hangul_combination_table_default),
     (HangulCombinationItem*)hangul_combination_table_default
@@ -270,16 +270,16 @@ static const HangulCombination hangul_combination_ahn = {
 
 static const HangulKeyboard hangul_keyboard_2 = {
     HANGUL_KEYBOARD_TYPE_JAMO,
-    "2", 
-    N_("Dubeolsik"), 
+    "2",
+    N_("Dubeolsik"),
     (ucschar*)hangul_keyboard_table_2,
     &hangul_combination_default
 };
 
 static const HangulKeyboard hangul_keyboard_2y = {
     HANGUL_KEYBOARD_TYPE_JAMO,
-    "2y", 
-    N_("Dubeolsik Yetgeul"), 
+    "2y",
+    N_("Dubeolsik Yetgeul"),
     (ucschar*)hangul_keyboard_table_2y,
     &hangul_combination_full
 };
@@ -362,7 +362,7 @@ static int     hangul_buffer_get_string(HangulBuffer *buffer, ucschar*buf, int b
 static int     hangul_buffer_get_jamo_string(HangulBuffer *buffer, ucschar *buf, int buflen);
 
 static void    hangul_ic_flush_internal(HangulInputContext *hic);
-* 
+*
 *** hangulinputcontext-def.h 로... ****/
 
 
@@ -463,7 +463,7 @@ hangul_combination_make_key(ucschar first, ucschar second)
 }
 
 bool
-hangul_combination_set_data(HangulCombination* combination, 
+hangul_combination_set_data(HangulCombination* combination,
 			    ucschar* first, ucschar* second, ucschar* result,
 			    unsigned int n)
 {
@@ -488,7 +488,7 @@ hangul_combination_set_data(HangulCombination* combination,
     return false;
 }
 
-static int 
+static int
 hangul_combination_cmp(const void* p1, const void* p2)
 {
     const HangulCombinationItem *item1 = p1;
@@ -684,7 +684,7 @@ hangul_jaso_to_string(ucschar cho, ucschar jung, ucschar jong,
 		}
 	    }
 	} else {
-	    if (jong) { 
+	    if (jong) {
 		/* have jong */
 		ch = hangul_jamo_to_cjamo(jong);
 		if (hangul_is_cjamo(ch)) {
@@ -1168,7 +1168,7 @@ hangul_ic_process_romaja(HangulInputContext *hic, int ascii, ucschar ch)
 			return false;
 		    }
 		} else {
-		    ucschar choseong = 0, jongseong = 0; 
+		    ucschar choseong = 0, jongseong = 0;
 		    hangul_jongseong_decompose(hic->buffer.jongseong,
 					       &jongseong, &choseong);
 		    hic->buffer.jongseong = jongseong;
@@ -1295,14 +1295,14 @@ flush:
  * libhangul의 키 이벤트 프로세스는 ASCII 코드 값을 기준으로 처리한다.
  * 이 키 값은 US Qwerty 자판 배열에서의 키 값에 해당한다.
  * 따라서 유럽어 자판을 사용하는 경우에는 해당 키의 ASCII 코드를 직접
- * 전달하면 안되고, 그 키가 US Qwerty 자판이었을 경우에 발생할 수 있는 
+ * 전달하면 안되고, 그 키가 US Qwerty 자판이었을 경우에 발생할 수 있는
  * ASCII 코드 값을 주어야 한다.
  * 또한 ASCII 코드 이므로 Shift 상태는 대문자로 전달이 된다.
- * Capslock이 눌린 경우에는 대소문자를 뒤바꾸어 보내주지 않으면 
+ * Capslock이 눌린 경우에는 대소문자를 뒤바꾸어 보내주지 않으면
  * 마치 Shift가 눌린 것 처럼 동작할 수 있으므로 주의한다.
  * preedit, commit 스트링은 hangul_ic_get_preedit_string(),
  * hangul_ic_get_commit_string() 함수를 이용하여 구할 수 있다.
- * 
+ *
  * 이 함수의 사용법에 대한 설명은 @ref hangulicusage 부분을 참조한다.
  *
  * @remarks 이 함수는 @ref HangulInputContext 의 상태를 변화 시킨다.
@@ -1351,12 +1351,12 @@ hangul_ic_process_with_capslock(HangulInputContext *hic, int ascii, bool capsloc
  * @ingroup hangulic
  * @brief 현재 상태의 preedit string을 구하는 함수
  * @param hic preedit string을 구하고자하는 입력 상태 object
- * @return UCS4 preedit 스트링, 이 스트링은 @a hic 내부의 데이터이므로 
+ * @return UCS4 preedit 스트링, 이 스트링은 @a hic 내부의 데이터이므로
  *         수정하거나 free해서는 안된다.
- * 
+ *
  * 이 함수는  @a hic 내부의 현재 상태의 preedit string을 리턴한다.
  * 따라서 hic가 다른 키 이벤트를 처리하고 나면 그 내용이 바뀔 수 있다.
- * 
+ *
  * @remarks 이 함수는 @ref HangulInputContext 의 상태를 변화 시키지 않는다.
  */
 const ucschar*
@@ -1372,9 +1372,9 @@ hangul_ic_get_preedit_string(HangulInputContext *hic)
  * @ingroup hangulic
  * @brief 현재 상태의 commit string을 구하는 함수
  * @param hic commit string을 구하고자하는 입력 상태 object
- * @return UCS4 commit 스트링, 이 스트링은 @a hic 내부의 데이터이므로 
+ * @return UCS4 commit 스트링, 이 스트링은 @a hic 내부의 데이터이므로
  *         수정하거나 free해서는 안된다.
- * 
+ *
  * 이 함수는  @a hic 내부의 현재 상태의 commit string을 리턴한다.
  * 따라서 hic가 다른 키 이벤트를 처리하고 나면 그 내용이 바뀔 수 있다.
  *
@@ -1393,8 +1393,8 @@ hangul_ic_get_commit_string(HangulInputContext *hic)
  * @ingroup hangulic
  * @brief @ref HangulInputContext 를 초기상태로 되돌리는 함수
  * @param hic @ref HangulInputContext 를 가리키는 포인터
- * 
- * 이 함수는 @a hic가 가리키는 @ref HangulInputContext 의 상태를 
+ *
+ * 이 함수는 @a hic가 가리키는 @ref HangulInputContext 의 상태를
  * 처음 상태로 되돌린다. preedit 스트링, commit 스트링, flush 스트링이
  * 없어지고, 입력되었던 키에 대한 기록이 없어진다.
  * 영어 상태로 바뀌는 것이 아니다.
@@ -1434,13 +1434,13 @@ hangul_ic_flush_internal(HangulInputContext *hic)
  * @ingroup hangulic
  * @brief @ref HangulInputContext 의 입력 상태를 완료하는 함수
  * @param hic @ref HangulInputContext 를 가리키는 포인터
- * @return 조합 완료된 스트링, 스트링의 길이가 0이면 조합 완료된 스트링이 
+ * @return 조합 완료된 스트링, 스트링의 길이가 0이면 조합 완료된 스트링이
  *	  없는 것
  *
  * 이 함수는 @a hic가 가리키는 @ref HangulInputContext 의 입력 상태를 완료한다.
- * 조합중이던 스트링을 완성하여 리턴한다. 그리고 입력 상태가 초기 상태로 
+ * 조합중이던 스트링을 완성하여 리턴한다. 그리고 입력 상태가 초기 상태로
  * 되돌아 간다. 조합중이던 글자를 강제로 commit하고 싶을때 사용하는 함수다.
- * 보통의 경우 입력 framework에서 focus가 나갈때 이 함수를 불러서 마지막 
+ * 보통의 경우 입력 framework에서 focus가 나갈때 이 함수를 불러서 마지막
  * 상태를 완료해야 조합중이던 글자를 잃어버리지 않게 된다.
  *
  * 비교: hangul_ic_reset()
@@ -1479,9 +1479,9 @@ hangul_ic_flush(HangulInputContext *hic)
  * @brief @ref HangulInputContext 가 backspace 키를 처리하도록 하는 함수
  * @param hic @ref HangulInputContext 를 가리키는 포인터
  * @return @a hic가 키를 사용했으면 true, 사용하지 않았으면 false
- * 
+ *
  * 이 함수는 @a hic가 가리키는 @ref HangulInputContext 의 조합중이던 글자를
- * 뒤에서부터 하나 지우는 기능을 한다. backspace 키를 눌렀을 때 발생하는 
+ * 뒤에서부터 하나 지우는 기능을 한다. backspace 키를 눌렀을 때 발생하는
  * 동작을 한다. 따라서 이 함수를 부르고 나면 preedit string이 바뀌므로
  * 반드시 업데이트를 해야 한다.
  *
@@ -1693,9 +1693,9 @@ hangul_ic_get_keyboard_addon_by_id(const char *id)
  *   libhangul이 지원하는 자판에 대한 정보는 @ref hangulkeyboards 페이지를
  *   참조하라.
  * @return 없음
- * 
+ *
  * 이 함수는 @ref HangulInputContext 의 자판을 @a id로 지정된 것으로 변경한다.
- * 
+ *
  * @remarks 이 함수는 @ref HangulInputContext 의 내부 조합 상태에는 영향을
  * 미치지 않는다.  따라서 입력 중간에 자판을 변경하더라도 조합 상태는 유지된다.
  */
@@ -1742,8 +1742,8 @@ hangul_ic_set_combination(HangulInputContext *hic,
  * @param keyboard 사용하고자 하는 키보드, 사용 가능한 값에 대해서는
  *	hangul_ic_select_keyboard() 함수 설명을 참조한다.
  * @return 새로 생성된 @ref HangulInputContext 에 대한 포인터
- * 
- * 이 함수는 한글 조합 기능을 제공하는 @ref HangulInputContext 오브젝트를 
+ *
+ * 이 함수는 한글 조합 기능을 제공하는 @ref HangulInputContext 오브젝트를
  * 생성한다. 생성할때 지정한 자판은 나중에 hangul_ic_select_keyboard() 함수로
  * 다른 자판으로 변경이 가능하다.
  * 더이상 사용하지 않을 때에는 hangul_ic_delete() 함수로 삭제해야 한다.
@@ -1786,11 +1786,11 @@ hangul_ic_new(const char* keyboard)
  * @ingroup hangulic
  * @brief @ref HangulInputContext 를 삭제하는 함수
  * @param hic @ref HangulInputContext 오브젝트
- * 
+ *
  * @a hic가 가리키는 @ref HangulInputContext 오브젝트의 메모리를 해제한다.
  * hangul_ic_new() 함수로 생성된 모든 @ref HangulInputContext 오브젝트는
  * 이 함수로 메모리해제를 해야 한다.
- * 메모리 해제 과정에서 상태 변화는 일어나지 않으므로 마지막 입력된 
+ * 메모리 해제 과정에서 상태 변화는 일어나지 않으므로 마지막 입력된
  * 조합중이던 내용은 사라지게 된다.
  */
 void
