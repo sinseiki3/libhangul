@@ -210,7 +210,7 @@ hangul_is_extension_condition_sebeol (HangulInputContext *hic, int ascii, int ma
     if (hic == NULL) {
         return false;
     }
-    if (hic->extended_layout_index < max_index)
+    if (hic->extended_layout_index < max_index) {
         if (hangul_buffer_is_empty(&(hic->buffer)) ||          // ( 아무것도 없거나
                 hangul_buffer_has_jungseong(&(hic->buffer)) || // 가윗소리가 있거나
                 hic->extended_layout_index != 0) {// 확장모드 일 때
