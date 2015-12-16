@@ -1087,7 +1087,7 @@ static inline void hangul_buffer_push_extension_step(HangulBuffer *buffer, ucsch
 static inline int hangul_is_extension_symbol_key (const HangulKeyboardAddon *keyboard_addon, int ascii);
 static inline int hangul_is_extension_yetgeul_key (const HangulKeyboardAddon *keyboard_addon, int ascii);
 static inline bool hangul_is_extension_condition_sebeol_shin (HangulInputContext *hic);
-static inline bool hangul_is_extension_condition_sebeol (HangulInputContext *hic, int ascii);
+static inline bool hangul_is_extension_condition_sebeol (HangulInputContext *hic, int ascii, int max_index);
 static inline void hangul_is_extension_ready_sebeol (HangulInputContext *hic);
 static inline bool hangul_is_flag_loose_order (const HangulKeyboardAddon *keyboard_addon);
 static inline bool hangul_is_flag_right_ou (const HangulKeyboardAddon *keyboard_addon);
