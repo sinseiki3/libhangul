@@ -894,7 +894,7 @@ static const HangulCombinationItem hangul_combination_table_full_3gimguk_38A_yet
 };
 
 
-static const HangulCombinationItem hangul_combination_table_3moachigi_2014[] = {
+static const HangulCombinationItem hangul_combination_table_3moa_semoe_2014[] = {
   { 0x11001107, 0x111e }, /* choseong  kiyeok + pieup   = pieup-kiyeok  */
   { 0x11001109, 0x112d }, /* choseong  kiyeok + sios    = sios-kiyeok   */
   { 0x1100110b, 0x1101 }, /* choseong  kiyeok + ieung   = ssangkiyeok   */
@@ -1024,7 +1024,7 @@ static const HangulCombinationItem hangul_combination_table_3moachigi_2014[] = {
   { 0x11bc11c2, 0x11b5 }, /* jongseong ieung  + hieuh   = rieul-phieuph */
 };
 
-static const HangulCombinationItem hangul_combination_table_3moachigi_2015[] = {
+static const HangulCombinationItem hangul_combination_table_3moa_semoe_2015[] = {
     {0x1100110b,0x1101}, /* choseong  kiyeok + ieung   = ssangkiyeok   */
     {0x11001112,0x110f}, /* choseong  kiyeok + hieuh   = khieukh       */
     {0x1103110b,0x1104}, /* choseong  tikeut + ieung   = ssangtikeut   */
@@ -1304,8 +1304,8 @@ static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_2015[] = {
 
 static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_m[] = {
     /* choseong -> jungseong */
-    //[0x1106, 0x1174},  /* choseong mieum <ㅁ> */     /* jungseong yi <ㅢ> */
-    //[0x110b, 0x119e},  /* choseong ieung <ㅇ> */      /* jungseong araea<ㆍ> */
+    //{0x1106, 0x1174},  /* choseong mieum <ㅁ> */     /* jungseong yi <ㅢ> */
+    //{0x110b, 0x119e},  /* choseong ieung <ㅇ> */      /* jungseong araea<ㆍ> */
     {0x110e, 0x116e},  /* choseong chieuch <ㅊ> */      /* jungseong u <ㅜ> */
     {0x110f, 0x1169},  /* choseong khieukh <ㅋ> */     /* jungseong o <ㅗ> */
     {0x1111, 0x1169},  /* choseong phieuph <ㅍ> */     /* jungseong o <ㅗ> */
@@ -1434,6 +1434,22 @@ static const HangulGalmadeuliItem hangul_galmadeuli_table_3_2015_patal[] = {
     {0x11bf, 0x11aa}, /* jongseong khiyeok (ㅋ):   jongseong kiyeok-sios (ㄳ)  */
     {0x11c0, 0x11b4}, /* jongseong thikeuth (ㅌ):   jongseong rieul-thieuth (ㄾ)  */
     {0x11c1, 0x11b5},  /* jongseong phieuph (ㅍ):   jongseong rieul-phieuph (ㄿ)  */
+    {0x11c2, 0x11b2}, /* jongseong hieuh (ㅎ):   jongseong rieul-pieup (ㄼ)  */
+};
+
+static const HangulGalmadeuliItem hangul_galmadeuli_table_3_p3[] = {
+    {0x1161, 0x11c1}, /* jungseong a (ㅏ):       jongseong phieuph (ㅍ)        */
+    {0x1162, 0x1164}, /* jungseong ae (ㅐ):       jungseong yae (ㅒ)        */
+    {0x1165, 0x11be}, /* jungseong eo (ㅓ):      jongseong chieuch (ㅊ)      */
+    {0x1166, 0x11ae}, /* jungseong e (ㅔ):       jongseong tikeut (ㄷ)        */
+    {0x1167, 0x11c0}, /* jungseong yeo (ㅕ):     jongseong thikeuth (ㅌ)       */
+    {0x1169, 0x11bd}, /* jungseong o (ㅗ):       jongseong cieuc (ㅈ)        */
+    {0x1175, 0x11c2}, /* jungseong i (ㅣ):       jongseong hieuh (ㅎ)       */
+    {0x11ae, 0x11aa}, /* jongseong tikeut (ㄷ):   jongseong kiyeok-sios (ㄳ)  */
+    {0x11bd, 0x11ac}, /* jongseong cieuc (ㅈ):   jongseong nieun-cieuc (ㄵ)  */
+    {0x11be, 0x11b3}, /* jongseong chieuch (ㅊ): jongseong rieul-sios (ㄽ)  */
+    {0x11c0, 0x11b4}, /* jongseong thikeuth (ㅌ):   jongseong rieul-thieuth (ㄾ)  */
+    {0x11c1, 0x11b5}, /* jongseong phieuph (ㅍ):   jongseong rieul-phieuph (ㄿ)  */
     {0x11c2, 0x11b2}, /* jongseong hieuh (ㅎ):   jongseong rieul-pieup (ㄼ)  */
 };
 

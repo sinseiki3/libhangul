@@ -1499,7 +1499,7 @@ hangul_ic_backspace(HangulInputContext *hic)
     hic->commit_string[0] = 0;
 
     // 조합 종료 타이머가 없을 때의 모아치기
-    //if ( (strlen(hic->keyboard->id) >= 9) && (strncmp(hic->keyboard->id, "3moachigi"  , 9) == 0)) {
+    //if ( (strlen(hic->keyboard->id) >= 9) && (strncmp(hic->keyboard->id, "3moa"  , 4) == 0)) {
         //if (hangul_buffer_is_empty(&hic->buffer)) {
             //ret = false;
         //} else {
