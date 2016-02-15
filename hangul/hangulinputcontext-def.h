@@ -418,7 +418,7 @@ static const ucschar sebeol_3yet_yetgeul_value[] = {0x1168, 0x1174, 0x0000};  //
 // 세벌식 확장단계 표시
 static const ucschar sebeol_3_ext_step[] = {0x2460, 0x2461, 0x2462, 0x2463, 0x2464, 0x0000};// ①, ②, ③, ④, ⑤
 // 세벌식 겹홀소리 글쇠
-static const char sebeol_3_moeum_key[] = {'/', '9', 0x00};  // ㅗ, ㅜ  // 공병우 계열
+static const char sebeol_3_moeum_key[] = {'8', '/', '9', 0x00};  // ㅡ,ㅗ, ㅜ  // 공병우 계열
 static const char sebeol_3shin_moeum_key[] = {'I', 'O', 'P', 0x00};  // ㅡ, ㅗ, ㅜ  // 신광조 계열
 static const char sebeol_3moa_semoe_moeum_key[] = {'\'', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열
 //static const char sebeol_3moa_semoe_2015_moeum_key[] = {';', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열
