@@ -1386,14 +1386,18 @@ hangul_ic_process_jaso_sebeol (HangulInputContext *hic, int ascii, ucschar ch)
         if (symbol_key) {
             if (symbol_key > 20) {// 기호 배열로 들어가기 위한 준비글쇠가 있다.
                 if (hic->extended_layout_prevkey) {
-                    // 확장 단계를 올린다
-                    hic->extended_layout_index = symbol_key;
-                    if (hic->keyboard_addon->ext_step != NULL) {// 확장 기호 단계가 있다
-                        hangul_buffer_push_extension_step(&hic->buffer,
-                                            *(hic->keyboard_addon->ext_step+(hic->extended_layout_index - 21)));
+                    if (hic->extended_layout_index) {
+                        ;
+                    } else {
+                        // 확장 단계를 올린다
+                        hic->extended_layout_index = symbol_key;
+                        if (hic->keyboard_addon->ext_step != NULL) {// 확장 기호 단계가 있다
+                            hangul_buffer_push_extension_step(&hic->buffer,
+                                                *(hic->keyboard_addon->ext_step+(hic->extended_layout_index - 21)));
+                        }
+                        hangul_ic_save_preedit_string(hic);
+                        return true;
                     }
-                    hangul_ic_save_preedit_string(hic);
-                    return true;
                 } else if (symbol_key == 21) { // 기호 배열을 준비한다
                     hangul_ic_save_commit_string(hic);
 
