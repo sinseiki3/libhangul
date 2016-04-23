@@ -4,6 +4,7 @@
 // 확장 기호
 ucschar hangul_ascii_to_symbol_shin(int ascii, int step, int dummy);
 ucschar hangul_ascii_to_symbol_3_p3(int ascii, int step, int press);
+ucschar hangul_ascii_to_symbol_semoe(int ascii, int step, int dummy);
 ucschar hangul_ascii_to_symbol_3_2011(int ascii, int step, int dummy);
 ucschar hangul_ascii_to_symbol_3_2012(int ascii, int step, int dummy);
 ucschar hangul_ascii_to_symbol_3_2011_yet(int ascii, int step, int press);

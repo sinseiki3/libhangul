@@ -54,6 +54,11 @@ static const HangulCombination hangul_combination_3moa_semoe_2015 = {
     (HangulCombinationItem*)hangul_combination_table_3moa_semoe_2015
 };
 
+static const HangulCombination hangul_combination_3moa_semoe_2016 = {
+    N_ELEMENTS(hangul_combination_table_3moa_semoe_2016),
+    (HangulCombinationItem*)hangul_combination_table_3moa_semoe_2016
+};
+
 static const HangulCombination hangul_combination_3_91_noshift = {
     N_ELEMENTS(hangul_combination_table_3_91_noshift),
     (HangulCombinationItem*)hangul_combination_table_3_91_noshift
@@ -292,6 +297,14 @@ static const HangulKeyboard hangul_keyboard_3moa_semoe_2015 = {
     &hangul_combination_3moa_semoe_2015
 };
 
+static const HangulKeyboard hangul_keyboard_3moa_semoe_2016 = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3moa-semoe-2016",
+    N_("Sebeolsik Semoe 2016"),
+    (ucschar*)hangul_keyboard_table_3moa_semoe_2016,
+    &hangul_combination_3moa_semoe_2016
+};
+
 static const HangulKeyboard hangul_keyboard_3sun_2014 = {
     HANGUL_KEYBOARD_TYPE_JASO,
     "3sun-2014",
@@ -372,7 +385,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_90,
     &hangul_keyboard_3_91_final,
     &hangul_keyboard_3_p3,
-    &hangul_keyboard_3moa_semoe_2015,
+    &hangul_keyboard_3moa_semoe_2016,
     &hangul_keyboard_3sun_2014,
     &hangul_keyboard_3shin_p,
     &hangul_keyboard_3shin_p_yet,
@@ -397,6 +410,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_2015_patal_yet,
     &hangul_keyboard_3_14_proposal,
     &hangul_keyboard_3moa_semoe_2014,
+    &hangul_keyboard_3moa_semoe_2015,
     &hangul_keyboard_3sun_1990,
     &hangul_keyboard_3gimguk_38a_yet,
     &hangul_keyboard_3shin_1995,
@@ -410,17 +424,20 @@ static const HangulKeyboard* hangul_keyboards[] = {
 static const char sebeol_3_symbol_key[] = {'0', 'v', '8', 0x00};    //0:같은 기호 배열을 쓴다 // ㅗ, ㅜ
 static const char sebeol_3yet_symbol_key[] = {'1', '/', '9', 0x00};  //1:다른 기호 배열을 쓴다// ㅗ, ㅜ
 static const ucschar sebeol_3_symbol_value[] = {0x1169, 0x116e, 0x0000};  // ㅗ, ㅜ
+static const char sebeol_3moa_symbol_key[] = {'2', 'J', 'K', 'L', ':', 0x00};   // J + [ K, L, : ] //2: 같은 기호배열을 쓰고 준비글쇠가 있다.
+static const ucschar sebeol_3moa_symbol_value[] = {0x110b, 0x0000};   // 첫소리 ㅇ [J]
 static const char sebeol_3shin_symbol_key[] = {'j', 'k', 'l', ';', 0x00};   // j + [ k, l, ;]
 static const ucschar sebeol_3shin_symbol_value[] = {0x110b, 0x0000};   // 첫소리 ㅇ [j]
 // 세벌식 옛한글
 static const char sebeol_3yet_yetgeul_key[] = {'7', '8', 0x00};  // ㅖ, ㅢ  // 공병우 계열
 static const ucschar sebeol_3yet_yetgeul_value[] = {0x1168, 0x1174, 0x0000};  // ㅖ, ㅢ  // 공병우 계열
 // 세벌식 확장단계 표시
-static const ucschar sebeol_3_ext_step[] = {0x2460, 0x2461, 0x2462, 0x2463, 0x2464, 0x0000};// ①, ②, ③, ④, ⑤
+static const ucschar sebeol_3_ext_step[] = {0x00AE, 0x2460, 0x2461, 0x2462, 0x2463, 0x2464, 0x0000};// ®, ①, ②, ③, ④, ⑤
 // 세벌식 겹홀소리 글쇠
 static const char sebeol_3_moeum_key[] = {'8', '/', '9', 0x00};  // ㅡ,ㅗ, ㅜ  // 공병우 계열
 static const char sebeol_3shin_moeum_key[] = {'I', 'O', 'P', 0x00};  // ㅡ, ㅗ, ㅜ  // 신광조 계열
-static const char sebeol_3moa_semoe_moeum_key[] = {'\'', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열
+static const char sebeol_3moa_semoe_moeum_key[] = {'[', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열 2016~
+static const char sebeol_3moa_semoe_moeum_key_deprecated[] = {'\'', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열 2014, 2015
 //static const char sebeol_3moa_semoe_2015_moeum_key[] = {';', 'p', 0x00}; // ㅗ, ㅜ  // 신세기 계열
 static const ucschar sebeol_3_moeum_value[] = {0x1169, 0x116e, 0x1173, 0x0000};  // ㅗ, ㅜ, ㅡ
 
@@ -845,7 +862,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3moa_semoe_2014 = {
     NULL, // yetgeul_value
     NULL, // (*yetgeulFunc)(int, int, int)
     NULL, // ext_step
-    sebeol_3moa_semoe_moeum_key, // moeum_key
+    sebeol_3moa_semoe_moeum_key_deprecated, // moeum_key
     sebeol_3_moeum_value, // moeum_value
     NULL, // combination_addon
     NULL // galmadeuli_addon
@@ -862,6 +879,23 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3moa_semoe_2015 = {
     NULL, // yetgeul_value
     NULL, // (*yetgeulFunc)(int, int, int)
     NULL, // ext_step
+    sebeol_3moa_semoe_moeum_key_deprecated, // moeum_key
+    sebeol_3_moeum_value, // moeum_value
+    NULL, // combination_addon
+    NULL // galmadeuli_addon
+};
+
+static const HangulKeyboardAddon hangul_keyboard_addon_3moa_semoe_2016 = {
+    "3moa-semoe-2016", // id
+    0x0000, // replace_it // FALSE
+    0x05, // flag
+    sebeol_3moa_symbol_key, // symbol_key
+    NULL, // symbol_value
+    &hangul_ascii_to_symbol_semoe, // (*symbolFunc)(int, int, int)
+    NULL, // yetgeul_key
+    NULL, // yetgeul_value
+    NULL, // (*yetgeulFunc)(int, int, int)
+    sebeol_3_ext_step, // ext_step
     sebeol_3moa_semoe_moeum_key, // moeum_key
     sebeol_3_moeum_value, // moeum_value
     NULL, // combination_addon
@@ -1043,6 +1077,7 @@ static const HangulKeyboardAddon* hangul_keyboard_addons[] = {
     &hangul_keyboard_addon_3_14_proposal,
     &hangul_keyboard_addon_3moa_semoe_2014,
     &hangul_keyboard_addon_3moa_semoe_2015,
+    &hangul_keyboard_addon_3moa_semoe_2016,
     &hangul_keyboard_addon_3sun_2014,
     &hangul_keyboard_addon_3gimguk_38a_yet,
     &hangul_keyboard_addon_3shin_1995,
