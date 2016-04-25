@@ -1,0 +1,62 @@
+libhangul (0.1.0-3.5~trusty0419~3beol) trusty; urgency=low
+
+  * https://github.com/choehwanjin/libhangul
+  * 신세벌식 2003/2012 의 <ㅄ> 과 <ㄵ> 의 자리를 맞바꾼다
+    - http://cafe.daum.net/3bulsik/JMKX/86
+ 
+ -- floor <createsc@gmail.com>  Sat, 02 Feb 2013 22:58:35 +0900
+
+libhangul (0.1.0-3.5~trusty0403~3beol) trusty; urgency=low
+
+  * https://github.com/choehwanjin/libhangul
+  * 세벌식 모아치기 2015
+    - http://cafe.daum.net/3bulsik/JMKX/79
+ 
+ -- floor <createsc@gmail.com>  Sat, 02 Feb 2013 22:58:35 +0900
+
+libhangul (0.1.0-3.5~vivid0322~3beol) vivid; urgency=low
+
+  * https://github.com/choehwanjin/libhangul
+  * 세벌식 모아치기 2015
+    - http://cafe.daum.net/3bulsik/JMKX/79
+  * 신세벌식 M
+    - http://cafe.daum.net/3bulsik/JMKX/77
+  * 신세벌식
+    - http://cafe.daum.net/3bulsik/623N/232
+ 
+ -- floor <createsc@gmail.com>  Sat, 02 Feb 2013 22:58:35 +0900
+
+libhangul (0.1.0-3.5~vivid0316~3beol) vivid; urgency=low
+
+  * https://github.com/choehwanjin/libhangul
+  * 신세벌식 2015
+    - http://sebeol.org/gnuboard/bbs/board.php?bo_table=lab&wr_id=28
+  * 신세벌식 2012 글쇠자리 바꿈
+    - http://cafe.daum.net/3bulsik/JMKX/66
+ 
+ -- floor <createsc@gmail.com>  Sat, 02 Feb 2013 22:58:35 +0900
+
+libhangul (0.1.0-3.5~vivid0223~3beol) vivid; urgency=low
+
+  * https://github.com/choehwanjin/libhangul
+  * 신세벌식 1995 (신광조)
+  * 세벌식 3-2015M (원안:3-2015 에서 ㅓ, ㅐ 를 다르게 놓은 배열)
+     - http://cafe.daum.net/3bulsik/JMKX/46
+ 
+ -- floor <createsc@gmail.com>  Sat, 02 Feb 2013 22:58:35 +0900
+
+libhangul (0.1.0-3.5~vivid0217~3beol) vivid; urgency=low
+
+  * https://github.com/choehwanjin/libhangul
+  * 세벌식 3-2015
+     - http://cafe.daum.net/3bulsik/JMKX/34
+  * 세벌식 3-2015P (원안:3-2015 에서 겹받침을 다르게 놓은 배열)
+     - http://cafe.daum.net/3bulsik/JMKX/38
+  * 세벌식 모아치기 2014
+    - http://ssg.wo.tc/30190376124
+  * 신세벌식 2012
+    - http://pat.im/978
+  * 두벌식 순아래
+    - http://pat.im/1028?commentId=77178#comment77178
+ 
+ -- floor <createsc@gmail.com>  Sat, 02 Feb 2013 22:58:35 +0900

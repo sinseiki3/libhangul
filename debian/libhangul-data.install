@@ -1,0 +1,4 @@
+usr/share/libhangul
+usr/share/locale/*
+
+debian/keyboards/* /usr/share/libhangul/keyboards
