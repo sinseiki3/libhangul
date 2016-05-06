@@ -1107,7 +1107,7 @@ static const HangulCombinationItem hangul_combination_table_3moa_semoe_2016[] = 
     {0x11611165,0x116d}, /* jungseong a      + eo      = yo            */
     {0x11611169,0x116a}, /* jungseong a      + o       = wa            */
     {0x1161116c,0x116b}, /* jungseong a      + oe      = wae           */
-    {0x11611173,0x119e}, /* jungseong a      + eu      = araea	       */
+    {0x11611173,0x119e}, /* jungseong a      + eu      = araea         */
     {0x11611175,0x1162}, /* jungseong a      + i       = ae            */
     {0x11621169,0x116b}, /* jungseong ae     + o       = wae           */
     {0x11651161,0x116d}, /* jungseong eo     + a       = yo            */
@@ -1115,7 +1115,7 @@ static const HangulCombinationItem hangul_combination_table_3moa_semoe_2016[] = 
     {0x11651169,0x1163}, /* jungseong eo     + o       = ya            */
     {0x1165116e,0x116f}, /* jungseong eo     + u       = weo           */
     {0x11651171,0x1170}, /* jungseong eo     + wi      = we            */
-    {0x11651173,0x11a2}, /* jungseong eo     + eu      = araeya	       */
+    {0x11651173,0x11a2}, /* jungseong eo     + eu      = araeya         */
     {0x11661169,0x1168}, /* jungseong e      + o       = ye            */
     {0x1166116e,0x1170}, /* jungseong e      + u       = we            */
     {0x11671169,0x1164}, /* jungseong yeo    + o      = yae            */
@@ -1135,8 +1135,8 @@ static const HangulCombinationItem hangul_combination_table_3moa_semoe_2016[] = 
     {0x116e1175,0x1171}, /* jungseong u      + i       = wi            */
     {0x116f1175,0x1170}, /* jungseong weo    + i       = we            */
     {0x11711165,0x1170}, /* jungseong wi     + eo      = we            */
-    {0x11731161,0x119e}, /* jungseong eu     + a       = araea	       */
-    {0x11731165,0x11a2}, /* jungseong eu     + eo      = araeya	       */
+    {0x11731161,0x119e}, /* jungseong eu     + a       = araea         */
+    {0x11731165,0x11a2}, /* jungseong eu     + eo      = araeya         */
     {0x11731175,0x1174}, /* jungseong eu     + i       = yi            */
     {0x11751161,0x1162}, /* jungseong i      + a       = ae            */
     {0x11751169,0x116c}, /* jungseong i      + o       = oe            */
@@ -1464,7 +1464,7 @@ static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_m[] = {
 
 static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_p[] = {
     /*  */
-    {0x00D7,	0x302F},  /* 0x59 Y:  multiplication (×) -> 0x302F (〯) */
+    {0x00D7,  0x302F},  /* 0x59 Y:  multiplication (×) -> 0x302F (〯) */
     /* choseong -> jungseong */
     {0x1106, 0x1173},  /* choseong mieum <ㅁ> */     /* jungseong eu <ㅡ> */
     //{0x110b, 0x119e},  /* choseong ieung <ㅇ> */      /* jungseong araea<ㆍ> */
@@ -1504,7 +1504,7 @@ static const HangulGalmadeuliItem hangul_galmadeuli_table_3shin_p[] = {
     {0x11c1, 0x1161},  /* jongseong phieuph (ㅍ)       -> jungseong a (ㅏ)    */
     {0x11c2, 0x1175},  /* jongseong hieuh (ㅎ)         -> jungseong i  (ㅣ)     */
     /*  */
-    {0x25CB,	0x302E},  /* 0x55 U:  white circle (○) -> 0x302E (〮) */
+    {0x25CB,  0x302E},  /* 0x55 U:  white circle (○) -> 0x302E (〮) */
 };
 
 
@@ -1572,6 +1572,7 @@ static const HangulGalmadeuliItem hangul_galmadeuli_table_3_2015_patal[] = {
     {0x11c2, 0x11b2}, /* jongseong hieuh (ㅎ):   jongseong rieul-pieup (ㄼ)  */
 };
 
+// 3_p2  는 3_p3 의 것을 쓴다
 static const HangulGalmadeuliItem hangul_galmadeuli_table_3_p3[] = {
     {0x1161, 0x11c1}, /* jungseong a (ㅏ):       jongseong phieuph (ㅍ)        */
     {0x1162, 0x1164}, /* jungseong ae (ㅐ):       jungseong yae (ㅒ)        */
