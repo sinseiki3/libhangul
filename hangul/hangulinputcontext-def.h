@@ -265,6 +265,14 @@ static const HangulKeyboard hangul_keyboard_3_2015_patal_yet = {
     &hangul_combination_full
 };
 
+static const HangulKeyboard hangul_keyboard_3_p2 = {
+    HANGUL_KEYBOARD_TYPE_JASO,
+    "3-p2",
+    N_("Sebeolsik 3-P2"),
+    (ucschar*)hangul_keyboard_table_3_p2,
+    &hangul_combination_default_3
+};
+
 static const HangulKeyboard hangul_keyboard_3_p3 = {
     HANGUL_KEYBOARD_TYPE_JASO,
     "3-p3",
@@ -408,6 +416,7 @@ static const HangulKeyboard* hangul_keyboards[] = {
     &hangul_keyboard_3_2015_metal,
     &hangul_keyboard_3_2015_patal,
     &hangul_keyboard_3_2015_patal_yet,
+    &hangul_keyboard_3_p2,
     &hangul_keyboard_3_14_proposal,
     &hangul_keyboard_3moa_semoe_2014,
     &hangul_keyboard_3moa_semoe_2015,
@@ -800,6 +809,23 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3_2015_patal = {
     &hangul_galmadeuli_3_2015_patal // galmadeuli_addon
 };
 
+static const HangulKeyboardAddon hangul_keyboard_addon_3_p2 = {
+    "3-p2", // id
+    0x119e, // replace_it // 아래아
+    0x1b, // flag
+    sebeol_3yet_symbol_key, // symbol_key
+    sebeol_3_symbol_value, // symbol_value
+    &hangul_ascii_to_symbol_3_2012_yet, // (*symbolFunc)(int, int, int)
+    NULL, // yetgeul_key
+    NULL, // yetgeul_value
+    NULL, // (*yetgeulFunc)(int, int, int)
+    sebeol_3_ext_step, // ext_step
+    sebeol_3_moeum_key, // moeum_key
+    sebeol_3_moeum_value, // moeum_value
+    NULL, // combination_addon
+    &hangul_galmadeuli_3_p3 // galmadeuli_addon // 3_p3 의 것을 쓴다
+};
+
 static const HangulKeyboardAddon hangul_keyboard_addon_3_p3 = {
     "3-p3", // id
     0x119e, // replace_it // 아래아
@@ -1073,6 +1099,7 @@ static const HangulKeyboardAddon* hangul_keyboard_addons[] = {
     &hangul_keyboard_addon_3_2015_metal,
     &hangul_keyboard_addon_3_2015_patal,
     &hangul_keyboard_addon_3_2015_patal_yet,
+    &hangul_keyboard_addon_3_p2,
     &hangul_keyboard_addon_3_p3,
     &hangul_keyboard_addon_3_14_proposal,
     &hangul_keyboard_addon_3moa_semoe_2014,
