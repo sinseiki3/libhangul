@@ -897,7 +897,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3moa_semoe_2014 = {
 static const HangulKeyboardAddon hangul_keyboard_addon_3moa_semoe_2015 = {
     "3moa-semoe-2015", // id
     0x0000, // replace_it // FALSE
-    0x04, // flag
+    0x01, // flag
     NULL, // symbol_key
     NULL, // symbol_value
     NULL, // (*symbolFunc)(int, int, int)
@@ -914,7 +914,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3moa_semoe_2015 = {
 static const HangulKeyboardAddon hangul_keyboard_addon_3moa_semoe_2016 = {
     "3moa-semoe-2016", // id
     0x0000, // replace_it // FALSE
-    0x05, // flag
+    0x01, // flag
     sebeol_3moa_symbol_key, // symbol_key
     NULL, // symbol_value
     &hangul_ascii_to_symbol_semoe, // (*symbolFunc)(int, int, int)
@@ -931,7 +931,7 @@ static const HangulKeyboardAddon hangul_keyboard_addon_3moa_semoe_2016 = {
 static const HangulKeyboardAddon hangul_keyboard_addon_3sun_2014 = {
     "3sun-2014", // id
     0x0000, // replace_it // FALSE
-    0x00, // flag
+    0x01, // flag
     NULL, // symbol_key
     NULL, // symbol_value
     NULL, // (*symbolFunc)(int, int, int)
